@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: localhost:1313
+Sitemap: https://dingdean.github.io/my-blog/sitemap.xml
