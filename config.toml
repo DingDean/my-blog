@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "https://dingdean.github.io/my-blog/"
 languageCode = "en"
 defaultContentLanguage = "en"
 title = "二向箔"
