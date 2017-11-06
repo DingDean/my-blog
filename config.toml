@@ -54,7 +54,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   # site info (option)                                    # 站点信息（可选）
   logoTitle = "二向箔"        # default: the title value    # 默认值: 上面设置的title值
   keywords = ["丁科", "温州", "温州中学", "SFU", "Ke Ding", "后端", "机器学习", "大数据"]
-  description = "Hugo theme even example site."
+  description = "二维化我的生活"
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目
   archive-paginate = 3
