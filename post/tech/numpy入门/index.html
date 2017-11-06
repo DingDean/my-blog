@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Numpy概览 - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="丁科" />
+  <meta name="description" content="Numpy是什么 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学" />
+
+  <meta name="keywords" content="丁科, 温州, 温州中学, SFU, Ke Ding, 后端, 机器学习, 大数据" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30" />
+
+
+<link rel="canonical" href="http://localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.5" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Numpy概览" />
+<meta property="og:description" content="Numpy是什么 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/" />
+
+
+
+<meta property="article:published_time" content="2017-10-12T01:14:43&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-12T01:14:43&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Numpy概览">
+<meta itemprop="description" content="Numpy是什么 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学">
+
+
+<meta itemprop="datePublished" content="2017-10-12T01:14:43&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-12T01:14:43&#43;00:00" />
+<meta itemprop="wordCount" content="1198">
+
+
+
+<meta itemprop="keywords" content="numpy,python," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Numpy概览"/>
+<meta name="twitter:description" content="Numpy是什么 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Numpy概览</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-12 </span>
+        
+        <span class="more-meta"> 约 1198 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#numpy是什么">Numpy是什么</a></li>
+<li><a href="#用numpy创建array">用Numpy创建Array:</a></li>
+<li><a href="#numpy基础运算">Numpy基础运算:</a></li>
+<li><a href="#修改array的维度">修改Array的维度</a></li>
+<li><a href="#到底复制了没">到底复制了没?</a></li>
+<li><a href="#numpy基础概览">Numpy基础概览</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="numpy是什么">Numpy是什么</h2>
+
+<p>Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。</p>
+
+<p>Numpy的高效体现在两个层面:</p>
+
+<p>一，计算速度的高效，因为绝大部分重要计算是通过预编译的C代码实现的。</p>
+
+<p>二，代码编写的高效, 如下C的代码(有所简略)</p>
+
+<pre><code class="language-c">for (i = 0; i &lt; rows; i++): {
+  for (j = 0; j &lt; columns; j++): {
+    c[i][j] = a[i][j]*b[i][j];
+  }
+}
+</code></pre>
+
+<p>用numpy编写可以缩略成</p>
+
+<pre><code class="language-python">c = a * b
+</code></pre>
+
+<p>上面这行python代码反映出numpy计算的两大特点，那就是向量化(Vectorization)以及<a href="https://docs.scipy.org/doc/numpy-dev/user/basics.broadcasting.html#module-numpy.doc.broadcasting">泛化</a>. 在此先按下不表。</p>
+
+<h2 id="用numpy创建array">用Numpy创建Array:</h2>
+
+<ol>
+<li>np.array():</li>
+</ol>
+
+<pre><code class="language-python">np.array([2,3,4])
+np.array([2,3], [4,5])  # [[2,3], [4,5]]
+np.array([1,2], [3,4], dtype=complex) # The type of the array can be explicitly specified at creation time
+np.array([[1,2],[3,4],[5,6]]) # [[1,2], [3,4], [5,6]]
+np.array([1,2], [3,4], [5,6]) # WRONG!! 行数超过二行的矩阵要以完整的矩阵出现，如上
+</code></pre>
+
+<ol>
+<li>np.zeros(), np.ones(), np.empty():</li>
+</ol>
+
+<pre><code class="language-python">np.zeros((2,2)) # [[0, 0], [0, 0]]
+np.ones((2,2), dtype=np.int16) # [[1, 1], [1, 1]] can define dtype
+np.empty((2,2)) # [[0.2, 3.8], [23, 90]] random
+</code></pre>
+
+<ol>
+<li>np.arange(), np.linspace():</li>
+</ol>
+
+<pre><code class="language-python">np.arange(10, 30, 5) # [10, 30) with step 5 -&gt; [10, 15, 20, 25]
+np.arange(5) # [0, 5) with step 1 -&gt; [0, 1, 2, 3, 4]
+np.arange(0, 2, 0.3) # step can be floating number, but perfer using linspace
+np.linespace(0, 2, 9) # 9 numbers from 0 to 2
+</code></pre>
+
+<h2 id="numpy基础运算">Numpy基础运算:</h2>
+
+<p>由于广播的特性，我们数学中常见的运算在numpy中会被运用到矩阵中的每一个元素。</p>
+
+<pre><code class="language-python">a = np.array([20, 30, 40, 50])
+b = np.arange(4) # [0, 1, 2, 3])
+c = a -b # [20, 29, 38, 47]
+b ** 2 # [0, 1, 4, 9]
+a &lt; 35 # [True, True, False, False]
+</code></pre>
+
+<p>要想做矩阵乘积，使用dot():</p>
+
+<pre><code class="language-python">a = np.array([1, 1], [0, 1])
+b = np.array([2, 0], [3, 4])
+a * b # [[2, 0], [0, 4]]
+a.dot(b) # [[5, 4], [3, 4]]
+np.dot(a, b) # [[5, 4], [3, 4]]
+</code></pre>
+
+<p>sum, min, max:</p>
+
+<pre><code class="language-python">a = np.array([1, 2], [3, 4])
+a.sum() # 10
+a.min() # 1
+a.max() # 4
+a.sum(axis=0) # 每列之和(沿着行一个一个往下走,axis=0) [4, 6]
+a.sum(axis=1) # 每行之和(沿着列一个一个往右走,axis=1) [3, 6]
+</code></pre>
+
+<p>Index, Slicing and Iterating</p>
+
+<ul>
+<li>一维</li>
+</ul>
+
+<pre><code class="language-python">a = np.arange(6) # [0,1,2,3,4,5]
+a[2] # 2
+a[:2] # [0, 1]
+a[:6:2] # [0, 2, 4]
+a[:6:2] = 1 # [1,1,1,3,1,5]
+a[::-1] # reverse a [5,1,3,1,1,1]
+</code></pre>
+
+<ul>
+<li>多维</li>
+</ul>
+
+<pre><code class="language-python">a = np.array([[1, 2, 3], [3, 4, 5]])
+a[0, :] # 第一行 [1, 2]
+a[:, 1] # 第一列 [1, 3]
+a[:, 0:2] # 第一到第二列 [[1,2], [3,4]]
+a[0:2, :] # 第一到第二行
+for row in a:
+  print row # [1,2,3], [3,4,5]
+for ele in a.flat:
+  print ele # 1,2,3,3,4,5
+</code></pre>
+
+<h2 id="修改array的维度">修改Array的维度</h2>
+
+<ol>
+<li>A.ravel() 展开矩阵，C style</li>
+</ol>
+
+<pre><code class="language-python">a = np.array([1,3], [2, 4])
+a.ravel() # [1, 3, 2, 4]
+</code></pre>
+
+<ol>
+<li>A.reshape((x,y)) 返回一个指定大小的矩阵，原素从A中提取, C style. 与之相似的是A.resize((x,y)), 不同点在于此方法直接修改A, 而不是返回一个新矩阵</li>
+</ol>
+
+<pre><code class="language-python">a = np.array([[1,2], [4,5], [7,8]])
+a.reshape((2,3)) # [[1,2,4], [5,7,8]]
+</code></pre>
+
+<ol>
+<li>Transpose of Array</li>
+</ol>
+
+<pre><code class="language-python">a = np.array([[1,2], [4,5], [7,8]])
+a.T # [[1,4,7], [2,5,8]]
+</code></pre>
+
+<h2 id="到底复制了没">到底复制了没?</h2>
+
+<p>上文中的reshape以及resize，一个复制了矩阵，一个直接修改矩阵。类似这样一个方法到底有没有复制矩阵的问题经常给初学者造成困扰，在此有必要理清何时会导致复制的发生。</p>
+
+<p>没有复制:
+简单的赋值操作是不会产生复制的</p>
+
+<pre><code class="language-python">a = np.arange(12)
+b = a # b reference a
+b.resize((2, 6))
+a.shape # (2,6)
+</code></pre>
+
+<p>浅复制(View):
+ndarray.view() 方法相当于产生了一个类C指针的对象。这个对象有独立的Meta信息，如shape等，但底层的数据是和原矩阵共享的。</p>
+
+<pre><code class="language-python">a = np.zeros((3,4))
+c = a.view()
+c.shape = 2,6
+a.shape # 不变，依旧为(3,4)
+c[0,1] = 1
+a[0,1] # 变为1
+s = a[:, 1:3] # s是a的一个view
+</code></pre>
+
+<p>深复制copy():</p>
+
+<pre><code class="language-python">a = np.empty((3,4))
+b = a.copy()
+b.base is a # False
+b[0,0] = 1
+a[0,0] == b[0,0] # False
+</code></pre>
+
+<h2 id="numpy基础概览">Numpy基础概览</h2>
+
+<ul>
+<li>创建矩阵:
+
+<ul>
+<li>arange, array, copy, empty, empty_like, eye, fromfile, fromfunctoin, identity, linspace, logspace, mgrid, ogrid, ones, one_like, r, zeros, zeros_like</li>
+</ul></li>
+<li>转化:
+
+<ul>
+<li>ndarray.astype, atleast_1d, atleast_2d, atleast_3d, mat</li>
+</ul></li>
+<li>操纵:
+
+<ul>
+<li>array_split, column_stack, concatenate, diagonal, dsplit, dstack, hsplit, hstack, ndarray.item, newaxis, ravel, repeat, reshape, resize, squeeze, swapaxes, take, transpose, vsplit, vstack</li>
+</ul></li>
+<li>Questions:
+
+<ul>
+<li>all, any, nonzero, where</li>
+</ul></li>
+<li>Ordering:
+
+<ul>
+<li>argmax, argmin, argsort, max, min, ptp, searchsorted, sort</li>
+</ul></li>
+<li>Operations:
+
+<ul>
+<li>choose, compress, cumprod, cumsum, inner, ndarray.fill, imag, prod, put, putmask, real, sum</li>
+</ul></li>
+<li>Basic Statistics:
+
+<ul>
+<li>cov, mean, std, var</li>
+</ul></li>
+<li>Basic Linear Algebra:
+
+<ul>
+<li>cross, dot, outer, linalg.svd, vdot</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丁科</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017-10-12</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/numpy/">numpy</a>
+          
+          <a href="/tags/python/">python</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/">
+            <span class="next-text nav-default">弹星者和二向箔</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:dingkework@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2017
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.5"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+</body>
+</html>

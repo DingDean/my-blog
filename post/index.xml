@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 二向箔</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 12 Oct 2017 01:14:43 +0000</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Numpy概览</title>
+      <link>http://localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Thu, 12 Oct 2017 01:14:43 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/</guid>
+      <description>Numpy是什么 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学</description>
+    </item>
+    
+    <item>
+      <title>弹星者和二向箔</title>
+      <link>http://localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</link>
+      <pubDate>Thu, 20 Apr 2017 16:14:43 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</guid>
+      <description>我需要一块二向箔，清理用 音乐，终端与命令行。平日的生活简单如斯。 在一个喧嚣的都市，却活在一个容器里。这容器是自我，是象牙塔。难以分享，难以自</description>
+    </item>
+    
+  </channel>
+</rss>
