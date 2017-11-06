@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="http://localhost:1313/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://dingdean.github.io/my-blog/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://dingdean.github.io/my-blog/about/</loc>
     <lastmod>2017-08-28T21:41:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</loc>
     <lastmod>2017-04-20T16:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://dingdean.github.io/my-blog/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/numpy/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/numpy/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/python/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/python/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://dingdean.github.io/my-blog/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
