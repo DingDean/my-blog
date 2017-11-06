@@ -3,11 +3,12 @@ title: 'Numpy概览'
 author: '丁科'
 date: "2017-10-12T01:14:43.358Z"
 tags: ["numpy", "python"]
+categories: ["技术"]
 ---
 
-## Numpy是什么
-
 Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。
+
+<!--more-->
 
 Numpy的高效体现在两个层面:
 
