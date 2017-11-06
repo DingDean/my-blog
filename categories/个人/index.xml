@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>个人 on 二向箔</title>
+    <link>localhost:1313/categories/%E4%B8%AA%E4%BA%BA/</link>
+    <description>Recent content in 个人 on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 20 Apr 2017 16:14:43 +0000</lastBuildDate>
+    
+	<atom:link href="localhost:1313/categories/%E4%B8%AA%E4%BA%BA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>弹星者和二向箔</title>
+      <link>localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</link>
+      <pubDate>Thu, 20 Apr 2017 16:14:43 +0000</pubDate>
+      
+      <guid>localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;我需要一块二向箔，清理用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

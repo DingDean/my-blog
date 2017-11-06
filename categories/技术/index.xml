@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 二向箔</title>
-    <link>localhost:1313/post/</link>
-    <description>Recent content in Posts on 二向箔</description>
+    <title>技术 on 二向箔</title>
+    <link>localhost:1313/categories/%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 技术 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 12 Oct 2017 01:14:43 +0000</lastBuildDate>
     
-	<atom:link href="localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="localhost:1313/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,19 +18,6 @@
       
       <guid>localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;p&gt;Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>弹星者和二向箔</title>
-      <link>localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</link>
-      <pubDate>Thu, 20 Apr 2017 16:14:43 +0000</pubDate>
-      
-      <guid>localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;我需要一块二向箔，清理用&lt;/p&gt;
-&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
