@@ -12,7 +12,7 @@ author: "丁科"
 
 SFU, 我未来四年的校园，很美很宁静。
 
-<img src="https://raw.githubusercontent.com/DingDean/my-blog/master/static/pics/first_year_school_autumn.jpg" alt="Drawing" style="width: 500px;"/>
+<img src="/my-blog/pics/first_year_school_autumn.jpg" alt="Drawing" style="width: 500px;"/>
 
 <!--more-->
 
@@ -23,7 +23,7 @@ SFU, 我未来四年的校园，很美很宁静。
 
 在今天的Orientation上，认识了几位朋友，Omar 和 Qais。希望大家在以后的四年能成为好朋友吧！
 
-<img src="https://raw.githubusercontent.com/DingDean/my-blog/master/static/pics/first_day_sfu_omar_qais.jpg" alt="OmarAndQais" style="width: 600px;"/>
+<img src="/my-blog/pics/first_day_sfu_omar_qais.jpg" alt="OmarAndQais" style="width: 600px;"/>
 
 
 
