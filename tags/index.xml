@@ -6,10 +6,28 @@
     <description>Recent content in Tags on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 12 Oct 2017 01:14:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2015 21:53:35 +0800</lastBuildDate>
     
 	<atom:link href="https://dingdean.github.io/my-blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Afterlife</title>
+      <link>https://dingdean.github.io/my-blog/tags/afterlife/</link>
+      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/afterlife/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chill</title>
+      <link>https://dingdean.github.io/my-blog/tags/chill/</link>
+      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/chill/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Numpy</title>
@@ -21,11 +39,92 @@
     </item>
     
     <item>
+      <title>Omar</title>
+      <link>https://dingdean.github.io/my-blog/tags/omar/</link>
+      <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/omar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Python</title>
       <link>https://dingdean.github.io/my-blog/tags/python/</link>
       <pubDate>Thu, 12 Oct 2017 01:14:43 +0000</pubDate>
       
       <guid>https://dingdean.github.io/my-blog/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Qais</title>
+      <link>https://dingdean.github.io/my-blog/tags/qais/</link>
+      <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/qais/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sfu</title>
+      <link>https://dingdean.github.io/my-blog/tags/sfu/</link>
+      <pubDate>Tue, 08 Nov 2011 12:27:52 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/sfu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数学</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E6%95%B0%E5%AD%A6/</link>
+      <pubDate>Tue, 08 Nov 2011 12:27:52 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E6%95%B0%E5%AD%A6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>枫叶</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E6%9E%AB%E5%8F%B6/</link>
+      <pubDate>Fri, 26 Aug 2011 23:45:19 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E6%9E%AB%E5%8F%B6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>温哥华</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</link>
+      <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>雪</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E9%9B%AA/</link>
+      <pubDate>Fri, 09 Dec 2011 13:01:53 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E9%9B%AA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>音乐</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90/</link>
+      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>音乐感受</title>
+      <link>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</link>
+      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      
+      <guid>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</guid>
       <description></description>
     </item>
     
