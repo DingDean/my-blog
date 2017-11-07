@@ -1,4 +1,4 @@
 .*.swp
 public
 .DS_Store
-publish_to_my_server.sh
+pub.sh
