@@ -5,7 +5,7 @@ lastmod: 2011-11-06T23:45:19+08:00
 draft: false
 keywords: ["SFU", "Burnaby"]
 description: "第一次去SFU，一切都是那么美好"
-tags: ["SFU", "枫叶", "Omar"]
+tags: ["SFU", "枫叶", "Omar", "Qais"]
 categories: ["个人"]
 author: "丁科"
 ---
