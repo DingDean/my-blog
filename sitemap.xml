@@ -1,197 +1,197 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="localhost:1313"?>
+<?xml-stylesheet type="text/xsl" href="https://dingdean.github.io/my-blog/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>localhost:1313/post/tech/numpy%E5%85%A5%E9%97%A8/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/about/</loc>
+    <loc>https://dingdean.github.io/my-blog/about/</loc>
     <lastmod>2017-08-28T21:41:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/musics/miracle_afterlife/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</loc>
     <lastmod>2014-04-20T16:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/personal/%E8%BF%B7%E9%80%94/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</loc>
     <lastmod>2011-11-26T13:10:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/personal/%E5%88%9D%E9%9B%AA/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</loc>
     <lastmod>2011-12-10T13:01:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</loc>
     <lastmod>2011-11-09T12:27:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/personal/%E5%88%9D%E6%8E%A2sfu/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E6%8E%A2sfu/</loc>
     <lastmod>2011-11-06T23:45:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/afterlife/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/afterlife/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/categories/</loc>
+    <loc>https://dingdean.github.io/my-blog/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/chill/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/chill/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/numpy/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/numpy/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/omar/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/omar/</loc>
     <lastmod>2011-11-26T13:10:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/post/</loc>
+    <loc>https://dingdean.github.io/my-blog/post/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/python/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/python/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/qais/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/qais/</loc>
     <lastmod>2011-11-26T13:10:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/sfu/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/sfu/</loc>
     <lastmod>2011-11-09T12:27:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/categories/%E4%B8%AA%E4%BA%BA/</loc>
+    <loc>https://dingdean.github.io/my-blog/categories/%E4%B8%AA%E4%BA%BA/</loc>
     <lastmod>2014-04-20T16:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/</loc>
+    <loc>https://dingdean.github.io/my-blog/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/categories/%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://dingdean.github.io/my-blog/categories/%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2017-10-12T01:14:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E6%95%B0%E5%AD%A6/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2011-11-09T12:27:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E6%9E%AB%E5%8F%B6/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E6%9E%AB%E5%8F%B6/</loc>
     <lastmod>2011-11-06T23:45:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</loc>
     <lastmod>2011-11-26T13:10:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E9%9B%AA/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E9%9B%AA/</loc>
     <lastmod>2011-12-10T13:01:53+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E9%9F%B3%E4%B9%90/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/categories/%E9%9F%B3%E4%B9%90/</loc>
+    <loc>https://dingdean.github.io/my-blog/categories/%E9%9F%B3%E4%B9%90/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>localhost:1313/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</loc>
+    <loc>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</loc>
     <lastmod>2017-11-06T21:53:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>

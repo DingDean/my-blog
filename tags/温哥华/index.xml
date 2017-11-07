@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>温哥华 on 二向箔</title>
-    <link>localhost:1313/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</link>
+    <link>https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</link>
     <description>Recent content in 温哥华 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 22 Dec 2011 13:10:40 +0800</lastBuildDate>
     
-	<atom:link href="localhost:1313/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>迷途</title>
-      <link>localhost:1313/post/personal/%E8%BF%B7%E9%80%94/</link>
+      <link>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</link>
       <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
       
-      <guid>localhost:1313/post/personal/%E8%BF%B7%E9%80%94/</guid>
+      <guid>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</guid>
       <description>&lt;p&gt;我发誓我再也不要和这两个醉酒的疯子出去玩了！&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/DingDean/my-blog/master/static/pics/lost_in_hotspring.jpg&#34; alt=&#34;lost in harrison hot spring&#34; style=&#34;width: 500px;&#34;/&gt;
@@ -25,13 +25,13 @@
     
     <item>
       <title>初雪</title>
-      <link>localhost:1313/post/personal/%E5%88%9D%E9%9B%AA/</link>
+      <link>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</link>
       <pubDate>Fri, 09 Dec 2011 13:01:53 +0800</pubDate>
       
-      <guid>localhost:1313/post/personal/%E5%88%9D%E9%9B%AA/</guid>
+      <guid>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</guid>
       <description>&lt;p&gt;下雪啦！一个南方人终于在雪地中滚做一团！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;localhost:1313/pics/first_home_snow_01.jpg&#34; alt=&#34;snow in vancouver home 01&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/pics/first_home_snow_01.jpg&#34; alt=&#34;snow in vancouver home 01&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

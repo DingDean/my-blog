@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>音乐感受 on 二向箔</title>
-    <link>localhost:1313/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</link>
+    <link>https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/</link>
     <description>Recent content in 音乐感受 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 06 Aug 2015 21:53:35 +0800</lastBuildDate>
     
-	<atom:link href="localhost:1313/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://dingdean.github.io/my-blog/tags/%E9%9F%B3%E4%B9%90%E6%84%9F%E5%8F%97/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Miracle-Afterlife音乐感受</title>
-      <link>localhost:1313/post/musics/miracle_afterlife/</link>
+      <link>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</link>
       <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
       
-      <guid>localhost:1313/post/musics/miracle_afterlife/</guid>
+      <guid>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</guid>
       <description>&lt;iframe style=&#34;max-width: 100%&#34;
       class=&#34;music163&#34;
       frameborder=&#34;no&#34;
