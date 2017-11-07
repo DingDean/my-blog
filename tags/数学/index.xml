@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数学 on 二向箔</title>
-    <link>https://dingdean.github.io/my-blog/tags/%E6%95%B0%E5%AD%A6/</link>
+    <link>localhost:1313/tags/%E6%95%B0%E5%AD%A6/</link>
     <description>Recent content in 数学 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 08 Nov 2011 12:27:52 +0800</lastBuildDate>
     
-	<atom:link href="https://dingdean.github.io/my-blog/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="localhost:1313/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>这都不是事</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</link>
+      <link>localhost:1313/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</link>
       <pubDate>Tue, 08 Nov 2011 12:27:52 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</guid>
+      <guid>localhost:1313/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</guid>
       <description>&lt;p&gt;这个学期选了5门数学课程，Omar看到都要疯了。然而我觉得这都不是事儿，哈哈哈。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/DingDean/my-blog/master/static/pics/math_semester.jpg&#34; alt=&#34;semester schedule&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
