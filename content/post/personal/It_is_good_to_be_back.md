@@ -19,7 +19,7 @@ author: "丁科"
 
 终于找到了打网球的好地方。
 
-<img src="/pics/tennis_omar_central_park.jpg" alt="tennis with Omar" style="width: 500px;"/>
+{{% figure src="/pics/tennis_omar_central_park.jpg" alt="tennis with Omar" title="请无视我这不堪的站姿"%}}
 
 <!--more-->
 

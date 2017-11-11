@@ -1,0 +1,9 @@
+/*
+  Localized versions of Info.plist keys
+
+  Copyright Spotify. All rights reserved.
+*/
+
+
+"CFBundleDisplayName" = "Installera Spotify";
+"CFBundleName" = "Installera Spotify";

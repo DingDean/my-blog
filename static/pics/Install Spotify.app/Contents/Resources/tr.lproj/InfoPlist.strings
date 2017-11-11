@@ -1,0 +1,9 @@
+/*
+  Localized versions of Info.plist keys
+
+  Copyright Spotify. All rights reserved.
+*/
+
+
+"CFBundleDisplayName" = "Spotify Yükleyici";
+"CFBundleName" = "Spotify Yükleyici";
