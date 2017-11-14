@@ -1,0 +1,31 @@
+{
+  "name": "my-static-blog",
+  "version": "1.0.0",
+  "description": "我的个人静态博客，由Hugo驱动。",
+  "main": "index.js",
+  "dependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DingDean/my-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DingDean/my-blog/issues"
+  },
+  "homepage": "https://github.com/DingDean/my-blog#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
