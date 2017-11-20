@@ -3,3 +3,4 @@ public
 .DS_Store
 pub.sh
 node_modules
+JupyterNotebooks/.ipynb_checkpoints
