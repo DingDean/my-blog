@@ -15,4 +15,6 @@ lastmod: 2017-08-28T21:41:52+08:00
 如果你对我有更大的兴趣，你可以在我的个人主页中找到更多信息:
 https://dingkewz.com
 
+同时也可以给我发邮件: dingkework@hotmail.com
+
 祝你一天愉快！
