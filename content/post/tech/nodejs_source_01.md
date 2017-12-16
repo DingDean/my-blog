@@ -28,47 +28,45 @@ author: "丁科"
 require大概是我在NodeJS最经常使用的函数了。在使用它的过程中，我对它到底是如何运作的感到非常好奇：
 
 * require函数看起来像是一个全局变量，那么它的确是吗？
-* 为什么通过require函数所调用的JS文件有独立的作用域？
+* 为什么通过require函数所调用的JS文件不会污染当前文件？
 * NodeJS的模块(Module)系统和require的关系又是如何？
 
-首先，请看一下源代码[lib/internal/bootstrap_node.js](https://github.com/nodejs/node/blob/ad80c2120672975018f5d93dad5e5cb9cf900de2/lib/internal/bootstrap_node.js#L610)中的几行代码:
+简单的说，require函数是一个闭包的返回值，此闭包封装了此require函数所在的模块(Module)实例。进一步说，我们所使用的require函数是对Module.require的简单封装。后文会对Module模块做出更详细的解释。
+
+require同时还拥有以下属性：resolve, main, extension以及cache。后文会介绍这几个属性的作用。
+
+请允许我直接给出[源码](https://github.com/nodejs/node/blob/604578f47ea360980110e2cd7d4a636f9942b1f0/lib/internal/module.js#L5)中对require的定义：
 ``` JavaScript
-  // Below you find a minimal module system, which is used to load the node
-  // core modules found in lib/*.js. All core modules are compiled into the
-  // node binary, so they can be loaded faster.
-  
-  // ......
+function makeRequireFunction(mod) {
+  const Module = mod.constructor;
 
-  NativeModule.wrap = function(script) {
-    return NativeModule.wrapper[0] + script + NativeModule.wrapper[1];
-  };
-  
-  NativeModule.wrapper = [
-    '(function (exports, require, module, __filename, __dirname) { ',
-    '\n});'
-  ];
-
-  NativeModule.prototype.compile = function() {
-    var source = NativeModule.getSource(this.id);
-    source = NativeModule.wrap(source);
-
-    this.loading = true;
-
+  function require(path) {
     try {
-      const fn = runInThisContext(source, {
-        filename: this.filename,
-        lineOffset: 0,
-        displayErrors: true
-      });
-      fn(this.exports, NativeModule.require, this, this.filename);
-
-      this.loaded = true;
+      exports.requireDepth += 1;
+      return mod.require(path);
     } finally {
-      this.loading = false;
+      exports.requireDepth -= 1;
     }
-  };
+  }
+
+  function resolve(request) {
+    return Module._resolveFilename(request, mod);
+  }
+
+  require.resolve = resolve;
+
+  require.main = process.mainModule;
+
+  // Enable support to add extra extension types.
+  require.extensions = Module._extensions;
+
+  require.cache = Module._cache;
+
+  return require;
+}
+
 ```
-这段代码里很神奇的出现了require, 是不是？事实上，这段代码正如注释中所示，是用来加载lib/文件夹中的Node核心模块的，而这段流程也正是我们实际使用require时会用到的流程。
+可以看到，require是闭包makeRequireFunction的返回值。那问题在于，此闭包它什么时候被执行呢？返回的require又是怎么提供给我们的JS代码的呢？
 
 假设我们有一个非常简单的a.js如下:
 ``` JavaScript
@@ -79,16 +77,55 @@ const B = require('b.js');
 ``` bash
 node a.js
 ```
-事实上，真正的代码是运行在一个闭包之中的：
-``` JavaScript
-(function (exports, require, module, __filename, __dirname) {
-  // 是的，我们写的JS代码会被注射到这里
-  const B = require('b.js')
-});
-```
-熟悉NodeJS的朋友肯定非常熟悉这个闭包的各个参数。require如同exports等变量一样，都是NodeJS事先实例化后供我们引用的变量。这也就解释了require看起来是个全局变量的原因。
 
-接下来让我们仔细看一下require的流程。不过在此之前，我们要来熟悉一下[lib/module.js](https://github.com/nodejs/node/blob/master/lib/module.js)中定义的类，Module。
+此时，node会做以下几个事情：
+
+1. 生成一个Module实例，此实例可以看成是a.js这个文件的抽象。
+2. 读取a.js的文件内容
+3. 将a.js封装在一个匿名函数中
+4. 执行此匿名函数
+
+我们的require函数就是在步骤2和步骤3之间被生成的, 同时在步骤4时传入3中的匿名函数。可以在源码[lib/module.js](https://github.com/nodejs/node/blob/604578f47ea360980110e2cd7d4a636f9942b1f0/lib/module.js#L652)中看到这些步骤的部分细节：
+``` JavaScript
+// 这里的content就是a.js中的代码
+Module.prototype._compile = function(content, filename) {
+
+  content = internalModule.stripShebang(content);
+
+  // Module.wrap将content封装在下面这个匿名函数里
+  // (function (exports, require, module, __filename, __dirname) { 
+  //    ...a.js的代码会被注入到这里
+  // })
+  var wrapper = Module.wrap(content);
+
+  var compiledWrapper = vm.runInThisContext(wrapper, {
+    filename: filename,
+    lineOffset: 0,
+    displayErrors: true
+  });
+  
+  // ....
+  var dirname = path.dirname(filename); // 这是我们常用的__dirname变量
+  var require = internalModule.makeRequireFunction(this); // 这是require
+  var depth = internalModule.requireDepth;
+  if (depth === 0) stat.cache = new Map();
+  var result;
+  if (//...)
+    // ...
+  } else {
+    // 这里执行了我们上面得到的闭包
+    result = compiledWrapper.call(this.exports, this.exports, require, this,
+                                  filename, dirname);
+  }
+  if (depth === 0) stat.cache = null;
+  return result;
+}
+```
+通过上述代码，我们可以看到，require函数其实是我们的JS代码执行时所在的函数作用域的一个参数，所以我们才可以直接使用require。
+
+那么require到底会做什么事情呢？
+
+在此之前，我们要来熟悉一下[lib/module.js](https://github.com/nodejs/node/blob/master/lib/module.js)中定义的类，Module。
 
 ## Module类
 
