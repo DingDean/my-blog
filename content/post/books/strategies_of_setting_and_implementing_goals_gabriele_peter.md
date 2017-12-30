@@ -19,7 +19,7 @@ author: "丁科"
 
 > Life ultimately means tasking the responsibility to find the right answer to its problems and to fulfill the tasks which it constantly sets for each individuals.
 
-这篇论文论证了设定目标与实现目标的个别方法论，分别为Mental Contrasting以及Implementation Intentions。
+这篇[论文](http://www.psych.nyu.edu/gollwitzer/OettingenGollwitzer.pdf)论证了设定目标与实现目标的个别方法论，分别为Mental Contrasting以及Implementation Intentions。
 
 Mental Contrasting是一个对比的过程：对比理想中的自己与现实中的自己，发现其中的差距。为了弥补两者的差距，需要定量得发觉其中的原因，从而提炼出需要的目标。
 比如我想象一年后的自己拥有六块腹肌，而现实是我有“一大块”腹肌。
