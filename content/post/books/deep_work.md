@@ -2,11 +2,11 @@
 title: "与碎片交战：《深度工作》摘记"
 date: 2018-01-13T22:14:00+08:00
 lastmod: 2018-01-13T22:14:00+08:00
-draft: true
-keywords: []
-description: ""
-tags: []
-categories: []
+draft: false
+keywords: ["规划", "时间管理"]
+description: "我们的注意力越来越分散，信息的来源越来越分散，同时我们也越来越难以长时间保持专注。我们需要深度工作来提升自己。"
+tags: ["笔记"]
+categories: ["读后感"]
 author: "丁科"
 # you can close something for this content if you open it in config.toml.
 # comment: false
@@ -16,6 +16,7 @@ author: "丁科"
 # reward: false
 # mathjax: false
 ---
+简单的说，少看手机，多看书。
 
 <!--more-->
 
@@ -40,3 +41,9 @@ author: "丁科"
 > 第四间是办公空间，有会议室，白板和一些带桌子的小隔间，用于完成“浮浅工作”
 >
 > 最后一间是“深度工作室”，有非常良好的隔音效果，用于实现全身心投入和毫无干扰工作。
+
+我的博客就是我的极乐机
+
+片段三: 
+
+> 如果在你全部的清醒时间里，都能给自己的大脑找到有意义的事情去做，而不是放任自己在迷糊的状态下漫无目的地浏览几个小时网页，那么在一天结束时，你会觉得更加充实，第二天开始时更加轻松。
