@@ -42,3 +42,27 @@ author: "丁科"
 ## 闭包 Closure
 
 一个函数本身就是一个闭包。
+
+## 例子
+
+``` JavaScript
+const db = (function () {
+  return {
+    desc: "a db mock"
+  }
+})()
+
+const B = function (db) {
+  this.db = db
+}
+
+B.prototype.echo = function () {
+  console.log(this.db.desc)
+}
+
+const b = new B(db)
+
+b.echo() // "a db mock"
+setTimeout(b.echo, 1000) // uncaughtException
+setTimeout(() => b.echo(), 1000) // "a db mock"
+```
