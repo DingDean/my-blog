@@ -78,7 +78,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   changyanAppid = ""        # Changyan app id             # 畅言
   changyanAppkey = ""       # Changyan app key
   baidu_push = false        # baidu push                  # 百度
-  baidu_analytics = ""      # Baidu Analytics
+  baidu_analytics = "4f291681012b4d621f71f4207e8964e4"      # Baidu Analytics
   baidu_verification = ""   # Baidu Verification
   google_verification = ""  # Google_Verification         # 谷歌
 
@@ -95,7 +95,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
-    a-email = "mailto:dingkework@hotmail.com"
+    a-email = ""
     b-stack-overflow = ""
     c-twitter = ""
     d-facebook = ""
