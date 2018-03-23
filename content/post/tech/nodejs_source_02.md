@@ -5,7 +5,7 @@ lastmod: 2017-12-15T22:26:12+08:00
 draft: true
 keywords: ["NodeJS", "源码探秘", "virtual machine"]
 description: "NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。第二篇文章要搞清楚NodeJS到底是怎么为每一个JS文件提供单独的作用域的。"
-tags: ["NodeJS", "JavaScript"]
+tags: ["NodeJS", "JavaScript", "NodeJS源码探秘"]
 categories: ["技术"]
 author: "丁科"
 # you can close something for this content if you open it in config.toml.

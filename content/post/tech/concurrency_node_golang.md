@@ -5,7 +5,7 @@ lastmod: 2018-03-18T10:34:20+08:00
 draft: true
 keywords: ["NodeJS", "并发"]
 description: "并发是一个实现一个复杂系统的自然选择。在其解决方案上，我们大致有两条技术线，一是NodeJS的基于事件的，异步的并发模型，一种是GoLang使用同步Channel沟通的并发模型。这篇文章主要是要用NodeJS和GoLang实现同一个复杂系统，比较两者的优缺点和异同，加深对并发模型的理解。"
-tags: ["NodeJS", "GoLang"]
+tags: ["NodeJS", "JavaScript", "V8", "libuv"]
 categories: ["技术"]
 author: "丁科"
 # you can close something for this content if you open it in config.toml.
@@ -48,6 +48,8 @@ Rob Pike大神在油管上的[这个视频](https://www.youtube.com/watch?v=cN_D
 
 NodeJS是多线程的，它由一个主线程(Event Loop / Main Thread)，和一个线程池(Worker Pool)组成。
 
+这个组合来源于libuv。
+
 但NodeJS更是单进程的，因为对于开发者而言，Worker Pool在绝大多数时间都是由NodeJS在底层操办的，开发者只需要关心Event Loop中的代码逻辑。
 
 我们在接下来的文章会发现，正是因为NodeJS有这样的一个线程组合，才造就了它非常自然的并发模型。
@@ -56,4 +58,6 @@ NodeJS是多线程的，它由一个主线程(Event Loop / Main Thread)，和一
 
 NodeJS的并发模型非常聪明，我个人的理解就是它用“单线程”实现了一个多线程程序所能实现的并发模型。它的特点，正如其文档所说，在于“事件驱动”以及“非阻塞I/O“。
 
-并发需有解决一个复杂系统的输出问题。我们在此就把这个复杂系统定为大家熟悉的网页服务器吧。假设我们需要向用户
+让我们拿网页服务器为例。假设我们有一个路由，要给客户端提供我们的```index.html```。那么基本的逻辑就是我们首先要读取```index.html```然后再发送给客户端。再假设读取```index.html```的时间很长，为2s。
+
+因为NodeJS事实上只是单线程

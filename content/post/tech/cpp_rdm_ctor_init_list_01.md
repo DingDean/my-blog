@@ -71,3 +71,10 @@ class Ke
             bool isDumb_;
 }
 ```
+
+## 详细的解释
+
+有用的链接:
+
+1. [Understanding Initialization Lists in C++](https://www.cprogramming.com/tutorial/initialization-lists-c++.html)
+2. [When do we use Initializer List in C++?](https://www.geeksforgeeks.org/when-do-we-use-initializer-list-in-c/)

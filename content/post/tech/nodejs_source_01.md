@@ -5,7 +5,7 @@ lastmod: 2017-11-25T14:16:22+08:00
 draft: false
 keywords: ["NodeJS", "源码探秘", "require"]
 description: "NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。第一篇文章就是要搞清楚我们经常使用的require()函数到底是如何运作的。"
-tags: ["NodeJS", "JavaScript"]
+tags: ["NodeJS", "JavaScript", "NodeJS源码探秘"]
 categories: ["技术"]
 author: "丁科"
 # you can close something for this content if you open it in config.toml.
