@@ -1,6 +1,6 @@
 baseURL = "https://blog.dingkewz.com/"
 languageCode = "en"
-defaultContentLanguage = "en"
+defaultContentLanguage = "zh-cn"
 title = "二向箔"
 enableRobotsTXT = true
 enableEmoji = true
