@@ -47,6 +47,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   url = "/about/"
 
 [params]
+  version = "3.x"           # Used to give a friendly message when you have an incompatible update
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
 
   since = "2017"            # Site creation time          # 站点建立时间
@@ -57,7 +58,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   description = "嘿，你好，我叫丁科，来自温州。二向箔是我的博客，在这里你能看到我的一些私人絮语，技术文章以及音乐/游戏体验。"
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目
-  archive-paginate = 10
+  archivePaginate = 50
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
   dateFormatToUse = "2006-01-02"
@@ -68,11 +69,12 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   # 一些全局开关，你可以在每一篇内容的 front matter 中单独关闭某些选项
   # Some global options, you can close something in front matter.
   toc = true                                                                            # 是否开启目录
+  autoCollapseToc = false   # Auto expand and collapse toc                              # 目录自动展开/折叠
   fancybox = true           # see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）
-  bootcdn = false           # In china. @Deprecated: use [params.publicCDN]             # 是否使用bootcdn(@Deprecated: 请使用[params.publicCDN])
   mathjax = true            # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
-  linkToMarkDown = false    # if you config contentCopyright and hugo output .md files. # 是否在链接到markdown原始文件（如果你配置了下面的许可协议并允许hugo生成markdown文件）
 
+  postMetaInFooter = true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
+  linkToMarkDown = false    # if you config contentCopyright and hugo output .md files. # 是否在链接到markdown原始文件（如果你配置了下面的许可协议并允许hugo生成markdown文件）
   contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
 
   changyanAppid = ""        # Changyan app id             # 畅言
@@ -88,6 +90,26 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     slideout = '<script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>'
     fancyboxJs = '<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>'
     fancyboxCss = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">'
+
+  [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
+    owner = ""              # Your GitHub ID
+    repo = ""               # The repo to store comments
+    clientId = ""           # Your client ID
+    clientSecret = ""       # Your client secret
+
+  [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
+    enable = false
+    options = ""
+
+  [params.sequenceDiagrams] # see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/
+    enable = false
+    options = ""            # default: "{theme: 'simple'}"
+
+  [params.busuanzi]         # count web traffic by busuanzi                             # 是否使用不蒜子统计站点访问量
+    enable = false
+    siteUV = true
+    sitePV = true
+    pagePV = true
 
   [params.reward]                                         # 文章打赏
     enable = false
