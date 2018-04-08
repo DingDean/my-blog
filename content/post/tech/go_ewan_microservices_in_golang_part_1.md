@@ -1,7 +1,7 @@
 ---
 title: "[译]用GoLang实现微服务（一）"
 date: 2018-03-26T20:19:00+08:00
-lastmod: 2018-03-26T20:19:00+08:00
+lastmod: 2018-04-07T20:19:00+08:00
 draft: false
 keywords: ["golang", "microservices", "google", "go", "programming", "grpc", "protobuf", "prot", "proto"]
 description: "系列文章的第一篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"
@@ -21,17 +21,19 @@ __*此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其首
 __*原著作者：[Ewan Valentine](https://ewanvalentine.io/)*__   
 __*原文连接：[https://ewanvalentine.io/microservices-in-golang-part-1/](https://ewanvalentine.io/microservices-in-golang-part-1/)*__    
 
+*~~初稿~~ -> 润色*
+
 # 导言
 在本文中，我们将了解一些基础的概念，术语。同时将创建我们的第一个微服务，尽管它会非常简陋。
 
 在接下来的文章中，我们会陆续创建以下微服务:
 
-* consignments
-* inventory
-* users
-* authentication
-* roles
-* vessels
+* consignments (货运)
+* inventory (仓库)
+* users (用户)
+* authentication (认证)
+* roles (角色)
+* vessels (货船)
 
 完整的技术栈如下：golang, mongodb, grpc, docker, Google Cloud, Kubernetes, NATS, CircleCI, Terrafrom and go-micro.
 
@@ -57,7 +59,7 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 我们要写一个简单的集装箱管理平台。之所以选择它，当然是因为它有一定的复杂性，可以展示微服务的作用，毕竟用微服务来实现一个博客真是大材小用了。好了，让我们开始吧！
 
 # 何为微服务？
-在传统的应用中，所有的功能都是存在于单一的代码库中。在表面上看，代码库中的代码可以有几种聚合方式。可能会按照其类型分割，比如controllers, entity, factories，也有可能按照其功能拆分成几个包，比如auth, articles等等。但无论如何，整个应用是建立在一个单一代码库上的。
+在传统的应用中，所有的功能都是存在于单一的代码库(Monotholic Code Base)中。在表面上看，代码库中的代码可以有几种聚合方式。可能会按照其类型分割，比如controllers, entity, factories，也有可能按照其功能拆分成几个包，比如auth, articles等等。但无论如何，整个应用是建立在一个单一代码库上的。
 
 微服务是对于上述第二种聚合方式的拓展。我们依旧将应用按照其功能拆分成几个包，但不同的是，这些功能包现在都是一个可独立运行的代码库。
 
