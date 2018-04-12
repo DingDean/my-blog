@@ -1,7 +1,7 @@
 ---
 title: "[译]用GoLang实现微服务（二）"
 date: 2018-04-02T12:34:31+08:00
-lastmod: 2018-04-03T12:34:31+08:00
+lastmod: 2018-04-08T12:34:31+08:00
 draft: false
 keywords: ["golang", "microservices", "google", "go", "programming", "grpc", "protobuf", "prot", "proto"]
 description: "系列文章的第二篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"
