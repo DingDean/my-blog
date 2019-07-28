@@ -1,5 +1,5 @@
 ---
-title: 'Numpy概览'
+title: '[学无止境]之Numpy概览'
 author: '丁科'
 date: "2017-10-12T01:14:43.358Z"
 tags: ["numpy", "python"]

@@ -1,8 +1,8 @@
 ---
-title: "NodeJS源码探秘之process.binding()"
+title: "[NodeJS源码探秘]之process.binding()"
 date: 2018-03-22T17:22:42+08:00
 lastmod: 2018-03-22T17:22:42+08:00
-draft: false
+draft: true
 keywords: ["NodeJs", "源码探秘", "process.binding"]
 description: "NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。 这篇文章是要写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。"
 tags: ["NodeJS", "JavaScript", "NodeJS源码探秘", "cpp"]

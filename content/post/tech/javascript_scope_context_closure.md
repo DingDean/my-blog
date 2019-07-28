@@ -1,12 +1,12 @@
 ---
-title: "简明JavaScript之Context, Scope与Closure"
-date: 2017-12-16T10:37:10+08:00
-lastmod: 2017-12-16T10:37:10+08:00
+title: "[简明JavaScript]之Context, Scope与Closure"
+date: 2016-03-16T10:37:10+08:00
+lastmod: 2016-03-16T10:37:10+08:00
 draft: true
 keywords: ["JavaScript", "scope", "context", "closure", "let", "var"]
 description: "JavaScript愈加流行，此系列文章旨在帮助大家理解它的一些重要概念。其中的基础就是作用域(Scope), 上下文(Context), 闭包(Closure)的概念及它们之间的区别。"
 tags: ["NodeJS", "JavaScript"]
-categories: ["技术"]
+categories: ["技术", "简明JavaScript"]
 author: "丁科"
 # you can close something for this content if you open it in config.toml.
 # comment: false
@@ -17,7 +17,7 @@ author: "丁科"
 # mathjax: false
 ---
 
-*JavaScript愈加流行，此系列文章旨在帮助大家理解它的一些重要概念。*
+___**简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。**___
 
 其中的基础就是上下文(Context)，作用域(Scope)，闭包(Closure)的概念及它们之间的区别。
 

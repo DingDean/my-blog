@@ -1,5 +1,5 @@
 ---
-title: "NodeJS源码探秘之vm虚拟机"
+title: "[NodeJS源码探秘]之vm虚拟机"
 date: 2017-12-15T22:26:12+08:00
 lastmod: 2017-12-15T22:26:12+08:00
 draft: true

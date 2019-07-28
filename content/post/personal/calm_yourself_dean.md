@@ -8,6 +8,7 @@ description: "今天在公司里受了点刺激，需要平复下心情"
 tags: ["随感"]
 categories: ["个人"]
 author: "丁科"
+hiddenFromHomePage: true
 # you can close something for this content if you open it in config.toml.
 # comment: false
 # toc: false

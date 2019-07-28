@@ -2,7 +2,7 @@
 title: "C++杂记：Initialization List"
 date: 2018-01-27T09:45:59+08:00
 lastmod: 2018-01-27T09:45:59+08:00
-draft: false
+draft: true
 keywords: ["C++", "cpp", "V8"]
 description: "从使用C++的项目的源码学到的知识点以及技巧"
 tags: ["C++", "V8"]

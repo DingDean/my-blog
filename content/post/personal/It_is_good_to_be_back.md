@@ -2,12 +2,13 @@
 title: "It's good to be back."
 date: 2012-01-05T16:33:44+08:00
 lastmod: 2012-01-07T16:33:44+08:00
-draft: false
+draft: true
 keywords: ["网球", "Burnaby", "Central Park"]
 description: "看来Omar这个圣诞过得还是不错得"
 tags: ["Omar", "温哥华"]
 categories: ["个人"]
 author: "丁科"
+hiddenFromHomePage: true
 # you can close something for this content if you open it in config.toml.
 # comment: false
 # toc: false

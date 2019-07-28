@@ -20,6 +20,7 @@ author: "Ewan Valentine"
 __*此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其首。*__   
 __*原著作者：[Ewan Valentine](https://ewanvalentine.io/)*__   
 __*原文连接：[https://ewanvalentine.io/microservices-in-golang-part-1/](https://ewanvalentine.io/microservices-in-golang-part-1/)*__    
+__*友情提示：系列文章的后五篇翻译请移步至[wuYin's blog](https://wuyin.io)*__
 
 *~~初稿~~ -> 润色*
 

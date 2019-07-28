@@ -1,5 +1,5 @@
 ---
-title: "NodeJS源码探秘之启动全流程"
+title: "[NodeJS源码探秘]之启动全流程"
 date: 2018-03-21T16:53:53+08:00
 lastmod: 2018-03-22T16:53:53+08:00
 draft: false

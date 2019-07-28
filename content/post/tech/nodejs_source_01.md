@@ -1,5 +1,5 @@
 ---
-title: "NodeJS源码探秘之require()"
+title: "[NodeJS源码探秘]之require()"
 date: 2017-11-17T14:16:22+08:00
 lastmod: 2017-11-25T14:16:22+08:00
 draft: false

@@ -1,5 +1,5 @@
 ---
-title: "摘记：Strategies of setting and implementing goals"
+title: "他山之石之Strategies of setting and implementing goals"
 date: 2017-12-30T10:54:48+08:00
 lastmod: 2017-12-30T10:54:48+08:00
 draft: false
