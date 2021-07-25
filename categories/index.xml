@@ -1,39 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 二向箔</title>
-    <link>https://dingdean.github.io/my-blog/categories/</link>
+    <link>https://blog.dingkewz.com/categories/</link>
     <description>Recent content in Categories on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    
-	<atom:link href="https://dingdean.github.io/my-blog/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 14 Jul 2018 10:33:02 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>个人</title>
-      <link>https://dingdean.github.io/my-blog/categories/%E4%B8%AA%E4%BA%BA/</link>
-      <pubDate>Sun, 20 Apr 2014 16:14:43 +0000</pubDate>
+      <title>技术</title>
+      <link>https://blog.dingkewz.com/categories/%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Sat, 14 Jul 2018 10:33:02 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/categories/%E4%B8%AA%E4%BA%BA/</guid>
+      <guid>https://blog.dingkewz.com/categories/%E6%8A%80%E6%9C%AF/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>技术</title>
-      <link>https://dingdean.github.io/my-blog/categories/%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Thu, 12 Oct 2017 01:14:43 +0000</pubDate>
+      <title>个人</title>
+      <link>https://blog.dingkewz.com/categories/%E4%B8%AA%E4%BA%BA/</link>
+      <pubDate>Thu, 01 Feb 2018 22:03:18 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/categories/%E6%8A%80%E6%9C%AF/</guid>
+      <guid>https://blog.dingkewz.com/categories/%E4%B8%AA%E4%BA%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>读后感</title>
+      <link>https://blog.dingkewz.com/categories/%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
+      <pubDate>Sat, 13 Jan 2018 22:14:00 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/categories/%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>游戏</title>
+      <link>https://blog.dingkewz.com/categories/%E6%B8%B8%E6%88%8F/</link>
+      <pubDate>Wed, 08 Nov 2017 20:48:47 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/categories/%E6%B8%B8%E6%88%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>简明JavaScript</title>
+      <link>https://blog.dingkewz.com/categories/%E7%AE%80%E6%98%8Ejavascript/</link>
+      <pubDate>Sat, 10 Jun 2017 14:40:04 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/categories/%E7%AE%80%E6%98%8Ejavascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>音乐</title>
-      <link>https://dingdean.github.io/my-blog/categories/%E9%9F%B3%E4%B9%90/</link>
+      <link>https://blog.dingkewz.com/categories/%E9%9F%B3%E4%B9%90/</link>
       <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/categories/%E9%9F%B3%E4%B9%90/</guid>
+      <guid>https://blog.dingkewz.com/categories/%E9%9F%B3%E4%B9%90/</guid>
       <description></description>
     </item>
     

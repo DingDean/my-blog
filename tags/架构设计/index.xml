@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>架构设计 on 二向箔</title>
+    <link>https://blog.dingkewz.com/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</link>
+    <description>Recent content in 架构设计 on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 14 Jul 2018 10:33:02 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>他山之石之Byzantine Generals Problem</title>
+      <link>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</link>
+      <pubDate>Sat, 14 Jul 2018 10:33:02 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;论文出处: &lt;a href=&#34;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&#34;&gt;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reliable computer systems must handle malfunctioning components that give confilicting information to different parts of the system.
+This situation can be expressed abstractly in terms of a group of generals of the Byzantine army camped with their troops around an enmemy city.
+Communicating only by messenger, the generals must agree upon a common battle plan.
+However, one or more of them may be traitors who will try to confuse the others.
+The problem is to &lt;strong&gt;find an algorithm to ensure that the loyal generals will reach agreement.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个可靠的计算系统需要得当的处理其子部件因紊乱而向系统的其他部分发送相左的消息的情况。
+这种情况可以抽象为以下场景：&lt;/p&gt;
+&lt;p&gt;一群拜占庭将军围着一座敌城驻扎了多个军团，每个军团存在一位将军。在只能通过信使通信的情况下，他们需要决定一个共同的作战行动。
+其中的几位将军有可能是叛徒，会不遗余力得误导其他人。
+问题的关键就是&lt;strong&gt;找出一个算法，从而确保所有的忠将作出一致的决定。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

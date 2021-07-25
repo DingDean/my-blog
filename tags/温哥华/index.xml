@@ -1,39 +1,122 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>温哥华 on 二向箔</title>
-    <link>https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</link>
+    <link>https://blog.dingkewz.com/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/</link>
     <description>Recent content in 温哥华 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Dec 2011 13:10:40 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 07 Nov 2014 22:36:14 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>搬家(二)</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%BA%8C/</link>
+      <pubDate>Fri, 07 Nov 2014 22:36:14 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%BA%8C/</guid>
+      <description>&lt;p&gt;这是Omar在SFU的最后一年了，我们两个都觉得是应该一起租个房子做室友了。于是，我从Gary和Jecqueline那里搬了出来。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
     
-	<atom:link href="https://dingdean.github.io/my-blog/tags/%E6%B8%A9%E5%93%A5%E5%8D%8E/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>斯坦利公园</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%96%AF%E5%9D%A6%E5%88%A9%E5%85%AC%E5%9B%AD/</link>
+      <pubDate>Fri, 11 Apr 2014 18:15:02 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%96%AF%E5%9D%A6%E5%88%A9%E5%85%AC%E5%9B%AD/</guid>
+      <description>&lt;p&gt;今天天气大好，来市区和Omar走了圈斯坦利公园。听着Omar讲述他这回去意大利探亲时碰到的一位女生。他是完全迷上这位姑娘了。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
     
+    <item>
+      <title>期中考</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%9C%9F%E4%B8%AD%E8%80%83/</link>
+      <pubDate>Tue, 04 Mar 2014 21:37:11 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%9C%9F%E4%B8%AD%E8%80%83/</guid>
+      <description>&lt;p&gt;这个学期选了一门Computer Algebra的课程，非常有趣。&lt;/p&gt;
+&lt;p&gt;其中期中考更是需要带回家来完成。一共有24个小时可以用来完成期中考，可以参考任何资料，唯独不能去搜现成的答案（当然不可以），最终结果也不能手写，只能用Latex排版。&lt;/p&gt;
+&lt;p&gt;这就非常有趣了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>生日</title>
+      <link>https://blog.dingkewz.com/post/personal/%E7%94%9F%E6%97%A5/</link>
+      <pubDate>Mon, 18 Nov 2013 17:57:55 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E7%94%9F%E6%97%A5/</guid>
+      <description>&lt;p&gt;今天我生日，太感谢室友了！他们两人做了一桌的菜给我庆生啊！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>日落</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%97%A5%E8%90%BD/</link>
+      <pubDate>Fri, 20 Sep 2013 17:51:07 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%97%A5%E8%90%BD/</guid>
+      <description>&lt;p&gt;日落真美！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>我不适合打德州</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%88%91%E4%B8%8D%E9%80%82%E5%90%88%E6%89%93%E5%BE%B7%E5%B7%9E/</link>
+      <pubDate>Tue, 15 Jan 2013 17:36:04 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%88%91%E4%B8%8D%E9%80%82%E5%90%88%E6%89%93%E5%BE%B7%E5%B7%9E/</guid>
+      <description>&lt;p&gt;我完全不适合打德州啊……输得只能当手表了！哈哈哈！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;身边的小伙伴都是戏精啊。玩德州，一个个都是扑克脸。玩狼人杀，节奏带的飞起。完全被秒杀。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搬家</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6/</link>
+      <pubDate>Tue, 02 Oct 2012 17:27:47 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6/</guid>
+      <description>&lt;p&gt;花了好长时间终于搬完家了，感觉很棒！交通便利，风景比以前的地下室好太多! 房东还是一对很友好的山东夫妇！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>午后的校园</title>
+      <link>https://blog.dingkewz.com/post/personal/%E5%8D%88%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD/</link>
+      <pubDate>Wed, 15 Aug 2012 17:10:22 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E5%8D%88%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD/</guid>
+      <description>&lt;p&gt;夏日午后的学校最是惬意。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>赏樱</title>
+      <link>https://blog.dingkewz.com/post/personal/%E8%B5%8F%E6%A8%B1/</link>
+      <pubDate>Tue, 27 Mar 2012 16:45:23 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E8%B5%8F%E6%A8%B1/</guid>
+      <description>&lt;p&gt;樱花很美呀。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
     
     <item>
       <title>迷途</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E8%BF%B7%E9%80%94/</link>
       <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E8%BF%B7%E9%80%94/</guid>
       <description>&lt;p&gt;我发誓我再也不要和这两个醉酒的疯子出去玩了！&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/lost_in_hotspring.jpg&#34; alt=&#34;lost in harrison hot spring&#34; style=&#34;width: 500px;&#34;/&gt;
-&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>初雪</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E5%88%9D%E9%9B%AA/</link>
       <pubDate>Fri, 09 Dec 2011 13:01:53 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E5%88%9D%E9%9B%AA/</guid>
       <description>&lt;p&gt;下雪啦！一个南方人终于在雪地中滚做一团！&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/first_home_snow_01.jpg&#34; alt=&#34;snow in vancouver home 01&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
   </channel>

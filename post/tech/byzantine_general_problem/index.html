@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>他山之石之Byzantine Generals Problem - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="丁科" /><meta name="description" content="如何实现一个可靠的分布式计算系统？" />
+<meta name="keywords" content="Byzantine General Problem, 拜占庭将军问题" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/byzantine_general_problem/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="他山之石之Byzantine Generals Problem" />
+<meta property="og:description" content="如何实现一个可靠的分布式计算系统？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/byzantine_general_problem/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-07-14T10:33:02+08:00" />
+<meta property="article:modified_time" content="2018-07-14T10:33:02+08:00" />
+
+<meta itemprop="name" content="他山之石之Byzantine Generals Problem">
+<meta itemprop="description" content="如何实现一个可靠的分布式计算系统？"><meta itemprop="datePublished" content="2018-07-14T10:33:02+08:00" />
+<meta itemprop="dateModified" content="2018-07-14T10:33:02+08:00" />
+<meta itemprop="wordCount" content="2443">
+<meta itemprop="keywords" content="有趣的论文,NodeJS,架构设计," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="他山之石之Byzantine Generals Problem"/>
+<meta name="twitter:description" content="如何实现一个可靠的分布式计算系统？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">他山之石之Byzantine Generals Problem</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-14 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2443 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一些表达规范">一些表达规范</a></li>
+    <li><a href="#导论">导论</a>
+      <ul>
+        <li><a href="#大问题">大问题</a></li>
+        <li><a href="#化繁为简">化繁为简</a></li>
+        <li><a href="#interactive-consistency">Interactive Consistency</a></li>
+        <li><a href="#可能无解">可能无解</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p><strong>论文出处: <a href="https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf">https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf</a></strong></p>
+<blockquote>
+<p>Reliable computer systems must handle malfunctioning components that give confilicting information to different parts of the system.
+This situation can be expressed abstractly in terms of a group of generals of the Byzantine army camped with their troops around an enmemy city.
+Communicating only by messenger, the generals must agree upon a common battle plan.
+However, one or more of them may be traitors who will try to confuse the others.
+The problem is to <strong>find an algorithm to ensure that the loyal generals will reach agreement.</strong></p>
+<p>一个可靠的计算系统需要得当的处理其子部件因紊乱而向系统的其他部分发送相左的消息的情况。
+这种情况可以抽象为以下场景：</p>
+<p>一群拜占庭将军围着一座敌城驻扎了多个军团，每个军团存在一位将军。在只能通过信使通信的情况下，他们需要决定一个共同的作战行动。
+其中的几位将军有可能是叛徒，会不遗余力得误导其他人。
+问题的关键就是<strong>找出一个算法，从而确保所有的忠将作出一致的决定。</strong></p>
+</blockquote>
+<p>周末闲来无事，希望了解下分布式系统。</p>
+<p>在谷歌的过程中发现了这篇论文，名为<code>The Byzantine Generals Problem</code>。</p>
+<p>对于一个分布式系统，错误即是常量。如何在错误一定会出现的情况下，设计一个稳定可靠的系统，一直是分布式系统设计的关键。
+这篇论文设计了一个抽象的问题，即 <code>The Byzantine Generals Problem</code>，通过对此问题的推导，作者们为设计分布式系统提出了些许建议。</p>
+<p>全篇论文分为六个部分:</p>
+<ol>
+<li>Introduction</li>
+</ol>
+<ul>
+<li>抽象出Byzantine Generals Problem的模型基础和设计目标</li>
+</ul>
+<ol start="2">
+<li>Impossibility Results</li>
+</ol>
+<ul>
+<li>提出和证明了 The Byzantine Generals Problem 在何时无解。</li>
+</ul>
+<ol start="3">
+<li>A solution with Oral Messages</li>
+</ol>
+<ul>
+<li>在问题有解的条件下，作者提出并论证了了 OM(m) 算法的真实性。</li>
+</ul>
+<ol start="4">
+<li>A solution with Signed Messages</li>
+</ol>
+<ul>
+<li>在问题有解的条件下，作者提出并论证了了 SM(m) 算法的真实性。</li>
+</ul>
+<ol start="5">
+<li>Missing Communication Paths</li>
+</ol>
+<ul>
+<li>结合图论，解释了在通讯部分受阻的情况下 OM(m) 与 SM(m) 的变形。</li>
+</ul>
+<ol start="6">
+<li>Reliable System</li>
+</ol>
+<ul>
+<li>将 Byzantine Generals Problem 推而广之到电脑系统。</li>
+</ul>
+<p><strong>论文本身不长，但在后期涉及了图论和一些复杂的算法，所以想读完论文的话，需要反复多次。</strong>
+<strong>此文是对论文的第1和第2部分的笔记，之后具体的证明以及发散在此不表，如感兴趣，请直接读论文。</strong></p>
+<h2 id="一些表达规范">一些表达规范</h2>
+<p><code>n</code> 代表 <code>将军的人数</code></p>
+<p><code>m</code> 代表 <code>叛徒的人数上限</code></p>
+<p><code>k</code> 代表 <code>叛徒的人数</code></p>
+<p><code>i</code> 代表 <code>特定的将军i</code></p>
+<p><code>v(i)</code> 泛指 <code>某个将军所获得的将军i的决定</code></p>
+<p><code>majority</code> 指 <code>OM(m)算法中的决策函数</code></p>
+<h2 id="导论">导论</h2>
+<h3 id="大问题">大问题</h3>
+<p>我们的目标是找出一种算法，从而满足以下两个条件:</p>
+<p><strong>A. 所有的忠将会作出一致的决定。（一致的决定不代表有利的决定)</strong></p>
+<p><strong>B. 少数的叛徒不会误导忠将们作出 <em><strong>不利</strong></em> 的决定。（对条件A的加强）</strong></p>
+<p>由于难以定量得定义何为<strong>不利</strong>的决定，论文只讨论这群将军们如何作出决定。</p>
+<p>从宏观上，作者提出了一种作出决定的过程，即:</p>
+<ul>
+<li>每个将军<code>i</code>，将自己的决定 <code>v(i)</code> 告诉其他所有的将军。</li>
+<li>在经过一段消息传递后，每个将军都知道其他将军的决定，即每人手上有一个决定集合S</li>
+<li>根据S，每个将军使用少数服从多数的原则作出决定。</li>
+</ul>
+<p>事实上，如果我们将场景简化成一群将军在<strong>同一个</strong>房间里做决定的话，上述的决定过程根本用不到什么复杂的算法来确保一致性，因为每个将军所获得的S肯定是一致的。</p>
+<h3 id="化繁为简">化繁为简</h3>
+<p>现在由于只能通过信使来传递信息，那么就会出现 S 并不一致的情况，比如叛徒会对每个将军传递不一样的 <code>v(i)</code>。所以现在系统设计的关键就是如何让每个将军，或者更有效得说，是让每个<strong>忠将</strong>手上的 S 一致，从而使系统满足<strong>条件A</strong>。为此，作者细化了条件A的等价条件：</p>
+<ol>
+<li><strong>所有的忠将必须持有相同的决定集，<code>v(1), ..., v(n)</code></strong></li>
+<li><strong>如果将军<code>i</code>是忠诚的，那么另外所有忠将手中<code>v(i)</code>的值，一定是将军<code>i</code>发出的值</strong></li>
+</ol>
+<p>此后，作者更进一步细化考虑问题的颗粒度。我们可以看到，条件2的颗粒度是单个<code>v(i)</code>的值，而条件1的颗粒度依然还是集合 S。如果条件1的颗粒度也能细化为单个元素，那么我们就能将整个问题从讨论集合细化为讨论元素，这也是论文经一步推理获得条件1的等价条件的所在：</p>
+<p>1'. <strong>对于<code>v(i)</code>, 忠将之间两两相同。</strong></p>
+<h3 id="interactive-consistency">Interactive Consistency</h3>
+<p>细化到这里，论文终于祭出了Byzantine Generals Problem的模型：</p>
+<blockquote>
+<p><em><strong>拜占庭将军问题</strong></em> 一个指挥官要向其<code>n-1</code>个副官下达指令，从而<br>
+IC1. 所有忠诚的副官（此后称为忠臣）执行相同的命令<br>
+IC2. 如果指挥官是忠诚的，那么忠臣们所执行的命令一定是指挥官所下达的命令</p>
+</blockquote>
+<p>IC1，IC2 合称为 <em><strong>interactive consistency</strong></em> 条件。</p>
+<p><strong>为了通论的便利，让我们将命令的内容限定为<code>进攻</code>或者<code>撤退</code>。</strong></p>
+<p>让我们思考一下拜占庭将军问题为什么会称为问题。最重要的一点就是副官们不能信任从指挥官处获取的命令。指挥官有可能是叛徒。
+正是对命令的怀疑，导致副官们需要额外的信息输入，即副官需要知道其他副官所收到的指令。
+但同样的，副官们也不能信任从其他副官发来的消息。而唯一的信任都需要建立在整个通讯算法的数学基础之上，因为这是不会骗人的。（区块链了解下)</p>
+<p>下图展示了这个非常自然的猜疑和求证逻辑。</p>
+<pre><code class="language-sequence" data-lang="sequence">指挥官-&gt;A: v(i) = 进攻
+指挥官-&gt;B: v(i) = 进攻
+指挥官-&gt;C: v(i) = 进攻
+Note right of A: A想v(i)有可能会被篡改, 需要求证
+A-&gt;B: 于是向别的副官发送v(i) = 进攻
+A-&gt;C: 于是向别的副官求证v(i) = 进攻
+B-&gt;A: v(i) = 撤退
+C-&gt;A: v(i) = 进攻
+Note right of A: A手上有三个v(i)的值\n {进攻，撤退，进攻}\n作出正确决定:进攻
+</code></pre><h3 id="可能无解">可能无解</h3>
+<p>拜占庭将军问题在特定情况下是无解的。如果指挥官和副官之间只能发送口头消息(Oral Messages)，那么
+$$ \forall m &gt; 0, 若 n \leq 3m, 则问题无解。 $$
+口头消息即代表消息的内容完全由发送者决定，因此存在发送者向不同对象发送不同内容的可能。</p>
+<p>可以试着考虑最简单的初始情况，即<code>m=1, n=3</code>。既然只有一个叛徒，那么我们可以将这个情况一分为二：</p>
+<ol>
+<li>指挥官不是叛徒。</li>
+<li>指挥官是叛徒。</li>
+</ol>
+<p>当指挥官不是叛徒时，那么其中一个副官肯定就是叛徒了。设两个副官为 A 和 B。</p>
+<pre><code class="language-sequence" data-lang="sequence">指挥官-&gt;A: v(i) = 进攻
+指挥官-&gt;B: v(i) = 进攻
+Note right of B: B 乃叛徒
+B-&gt;A: v(i) = 撤退
+Note right of A:  A手上有两个v(i)的值\n {进攻，撤退}\n 无法作出决定
+</code></pre><p>当指挥官是叛徒时，</p>
+<pre><code class="language-sequence" data-lang="sequence">指挥官-&gt;A: v(i) = 进攻
+指挥官-&gt;B: v(i) = 撤退
+Note left of 指挥官: 指挥官乃叛徒
+A-&gt;B: v(i) = 进攻
+B-&gt;A: v(i) = 撤退
+Note right of A:  A手上有两个v(i)的值\n {进攻，撤退}\n 无法作出决定
+Note right of B:  B手上有两个v(i)的值\n {进攻，撤退}\n 无法作出决定
+</code></pre><p>这两种情况展示了在这种情况下，问题无解。具体的推广大家可以直接看论文，这里就不赘述了。
+当然，这里无解的条件是建立在每个指挥官和副官只能发送口头信息的基础上的。
+如果可以发送签名信息(Signed Messages)的话，那么情况会有所不同。具体同样还是直接看论文吧。</p>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丁科</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-07-14</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%9C%89%E8%B6%A3%E7%9A%84%E8%AE%BA%E6%96%87/">有趣的论文</a>
+          
+          <a href="/tags/nodejs/">NodeJS</a>
+          
+          <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/tech/go_ewan_microservices_in_golang_part_4/">
+            <span class="next-text nav-default">[译]用GoLang实现微服务（四）</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+<script></script>
+<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

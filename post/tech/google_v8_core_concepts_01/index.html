@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>谷歌V8引擎探秘：基础概念 - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="丁科" /><meta name="description" content="在深入研究NodeJS时，不可避免要触及谷歌的V8引擎，同时也有必要去深入了解它。此系列文章就是我自己探索学习V8引擎的笔记。" />
+<meta name="keywords" content="V8, C&#43;&#43;, 编程" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="谷歌V8引擎探秘：基础概念" />
+<meta property="og:description" content="在深入研究NodeJS时，不可避免要触及谷歌的V8引擎，同时也有必要去深入了解它。此系列文章就是我自己探索学习V8引擎的笔记。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-01-27T17:18:37+08:00" />
+<meta property="article:modified_time" content="2018-01-31T15:02:37+08:00" />
+
+<meta itemprop="name" content="谷歌V8引擎探秘：基础概念">
+<meta itemprop="description" content="在深入研究NodeJS时，不可避免要触及谷歌的V8引擎，同时也有必要去深入了解它。此系列文章就是我自己探索学习V8引擎的笔记。"><meta itemprop="datePublished" content="2018-01-27T17:18:37+08:00" />
+<meta itemprop="dateModified" content="2018-01-31T15:02:37+08:00" />
+<meta itemprop="wordCount" content="2642">
+<meta itemprop="keywords" content="V8,NodeJS,C&#43;&#43;," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="谷歌V8引擎探秘：基础概念"/>
+<meta name="twitter:description" content="在深入研究NodeJS时，不可避免要触及谷歌的V8引擎，同时也有必要去深入了解它。此系列文章就是我自己探索学习V8引擎的笔记。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">谷歌V8引擎探秘：基础概念</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-01-27 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2642 字 </span>
+        <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#isolates-和-context">Isolates 和 Context</a></li>
+    <li><a href="#handle-和-handle-scope">Handle 和 Handle Scope</a></li>
+    <li><a href="#templates">Templates</a>
+      <ul>
+        <li><a href="#function-template">Function Template</a></li>
+        <li><a href="#object-template">Object Template</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p><em>V8引擎是驱动NodeJS的核心。为此有必要深入了解其API和运行机制。此系列文章旨在记录我自己探索学习V8引擎的记录。</em></p>
+<p>本文章是此系列的第一篇，将梳理一遍V8引擎的几个总要概念：</p>
+<ol>
+<li>Context</li>
+<li>Handle</li>
+<li>Handle Scope</li>
+<li>Templates</li>
+<li>Isolates</li>
+</ol>
+<h2 id="isolates-和-context">Isolates 和 Context</h2>
+<p>Isolate是一个完整的V8实例，有着完整的堆栈和Heap。</p>
+<p>Context顾名思义，是一个上下文。所有的JS代码都是在某个V8 Context中运行的。</p>
+<p>在Stack Overflow有个回答解释了<a href="https://stackoverflow.com/questions/19383724/what-exactly-is-the-difference-between-v8isolate-and-v8context/19384199">Isolate与Context的差别</a>，在此直接翻译：</p>
+<blockquote>
+<p>An isolate is an independent copy of the V8 runtime, including a heap manager, a garbage collector, etc. Only one thread may access a given isolate at a time, but different threads may access different isolates simultaneously.</p>
+<p>一个Isolate是一份独立的V8 runtime, 包括但不限于一个heap管理器，垃圾回收器等。在一个时间段内，有且只有一个线程能使用此isolate。不过，多个线程可以同时使用多个isolate。</p>
+<p>An isolate is not sufficient for running scripts, however. You also need a global (root) object. A context defines a complete script execution environment by designating an object in an isolate&rsquo;s heap as a global object.</p>
+<p>单独的Isolate是不足以运行脚本的，我们在此需要一个全局对象。Context就是提供此全局变量的工具。它在其所处的Isolate管理的heap中建立一个对象，并以此为全局变量构建出一个完成的执行环境供我们的脚本使用。</p>
+<p>Therefore, not only can many contexts &ldquo;exist&rdquo; in a given isolate, but they can also share any or all of their objects easily and safely. That&rsquo;s because their objects actually belong to the isolate and are protected by the isolate&rsquo;s exclusive lock.</p>
+<p>因此，对于一个给定的Isolate, 不仅其可以有多个Context，并且这些Context之间可以共享某些对象。</p>
+</blockquote>
+<p>V8的官方文档告诉我们，我们可以随时在代码中步入任意一个Context:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// create contextA和contextB, 并且步入ContextA
+</span><span style="color:#75715e"></span>Local<span style="color:#f92672">&lt;</span>Context<span style="color:#f92672">&gt;</span> contextA <span style="color:#f92672">=</span> Context<span style="color:#f92672">::</span>New(isolate);
+Local<span style="color:#f92672">&lt;</span>Context<span style="color:#f92672">&gt;</span> contextB <span style="color:#f92672">=</span> Context<span style="color:#f92672">::</span>New(isolate);
+Context<span style="color:#f92672">::</span>Scope enter_scope(contextA);
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+Context<span style="color:#f92672">::</span>Scope enter_scope(contextB);
+<span style="color:#75715e">// ... 在contextB中执行操作
+</span><span style="color:#75715e"></span>Context:<span style="color:#f92672">~</span>Scope contextB; <span style="color:#75715e">// 步出contextB, 回到contextA
+</span><span style="color:#75715e">// ... 在contextA中执行操作
+</span></code></pre></div><h2 id="handle-和-handle-scope">Handle 和 Handle Scope</h2>
+<p>Handle，简单的说，是对一个特定JS对象的索引。它指向此JS对象在V8所管理的Heap中的位置。需要注意的是，Handle不存于Heap中，而是存在于stack中。只有一个Handle被释放后，此Handle才会从stack中推出。这就带来一个问题，在执行特定操作时，我们可能需要声明很多Handle。如果要一个个手动释放，未免太麻烦。为此，我们使用Handle Scope来集中释放这些Handle。</p>
+<p>Handle Scope，形象的说是一个可以包含很多Handle的工作区。当这个工作区Handle Scope被移出堆栈时，其所包含的所有Handle都会被移出堆栈，并且被垃圾管理器标注，从而在后续的垃圾回收过程快速的定位到这些可能需要被销毁的Handle。</p>
+<p>Handle有几种类型:</p>
+<ul>
+<li>Local Handle</li>
+<li>Persistent Handle</li>
+<li>UniquePersistent Handle</li>
+<li>Eternal Handle</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<p>Templates用于在C++中自定义一个JS函数。它有两种类型：</p>
+<ol>
+<li>Function Template: 用于生成JS函数的C++对象。</li>
+<li>Object Template: 每一个Function Template都有一个对应的Object Template。当一个Function Template对应的JS函数被当作构造器创建对象时，V8会实际使用Object Template来实例化此对象。</li>
+</ol>
+<p>我们可以用一个具体的例子来理解Template。在V8源码的<a href="https://github.com/v8/v8/tree/master/samples">Samples</a>中，我们可以找到<code>process.cc</code>以及<code>count-host.js</code>文件。因为<code>count-host.js</code>非常简短，那么直接摘抄如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Initialize</span>() { }
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">request</span>) {
+  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">verbose</span>) {
+    <span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Processing &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">host</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">path</span> <span style="color:#f92672">+</span>
+        <span style="color:#e6db74">&#34; from &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">referrer</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;@&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">userAgent</span>);
+  }
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">output</span>[<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">host</span>]) {
+    <span style="color:#a6e22e">output</span>[<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">host</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">output</span>[<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">host</span>]<span style="color:#f92672">++</span>
+  }
+}
+
+<span style="color:#a6e22e">Initialize</span>();
+</code></pre></div><p>在这里，我们需要使用到options, log, output这几个全局函数。
+它们都是V8事先用Template在C++中生成对应的C++对象或者函数,
+然后再注入到此JS作用域的全局对象中。
+同时，我们定义的这个Process函数同样可以在C++中被获取和使用。
+我们可以在<a href="https://github.com/v8/v8/blob/master/samples/process.cc">process.cc</a>脚本中看到V8是如何做到这两点的。</p>
+<h3 id="function-template">Function Template</h3>
+<p>首先，我们看一下Function Template的用法。它使得我们可以在JS中调用在C++里定义的函数。以log函数为例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">HandleScope <span style="color:#a6e22e">handle_scope</span>(GetIsolate());    
+
+<span style="color:#75715e">// Create a template for the global object where we set the
+</span><span style="color:#75715e">// built-in global functions.
+</span><span style="color:#75715e"></span>Local<span style="color:#f92672">&lt;</span>ObjectTemplate<span style="color:#f92672">&gt;</span> global <span style="color:#f92672">=</span> ObjectTemplate<span style="color:#f92672">::</span>New(GetIsolate());
+
+<span style="color:#75715e">// 这是最重要的一行。LogCallback是一个原生的C++函数。
+</span><span style="color:#75715e">// 通过使用FunctionTemplate，V8可以将其绑定到JS环境下的log函数。
+</span><span style="color:#75715e"></span>global<span style="color:#f92672">-&gt;</span>Set(String<span style="color:#f92672">::</span>NewFromUtf8(GetIsolate(), <span style="color:#e6db74">&#34;log&#34;</span>, 
+          NewStringType<span style="color:#f92672">::</span>kNormal).ToLocalChecked(),
+          FunctionTemplate<span style="color:#f92672">::</span>New(GetIsolate(), LogCallback)); 
+</code></pre></div><h3 id="object-template">Object Template</h3>
+<p>现在，我们来看一下ObjectTemplate的使用方法。ObjectTemplate是一个JS对象在C++中的模版。这个ObjectTemplate会有属性值，这些属性值可以是静态变量，也可以是动态变量。在V8中，这两种区别会使用不同的方法来设置一个ObjectTemplate的属性值。</p>
+<p>我们依旧像上段代码一样，想要给JS上下文提供一个<code>global</code>作为全局对象。<code>global</code>本身是一个ObjectTemplate的实例。</p>
+<h4 id="静态变量">静态变量</h4>
+<p>假设我们想要暴露一个静态变量x做为<code>global</code>的一个属性值。我们可以使用SetAccessor方法来实现这一点。SetAccessor是给一个ObjectTemplate设置属性的一种方法，其细节在此不表，但它给JS提供了访问C++对象属性的能力。</p>
+<p>SetAccessor需要两个函数回调，一个Getter, 一个Setter。这非常好理解，其作用就是读取和修改对象属性值。</p>
+<p>具体实例可以在<a href="https://github.com/v8/v8/wiki/Embedder%27s-Guide#accessing-static-global-variables">Embedder&rsquo;s Guide</a>看到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">HandleScope <span style="color:#a6e22e">handle_scope</span>(GetIsolate());    
+Local<span style="color:#f92672">&lt;</span>ObjectTemplate<span style="color:#f92672">&gt;</span> global_templ <span style="color:#f92672">=</span> ObjectTemplate<span style="color:#f92672">::</span>New(isolate);
+global_templ<span style="color:#f92672">-&gt;</span>SetAccessor(String<span style="color:#f92672">::</span>NewFromUtf8(isolate, <span style="color:#e6db74">&#34;x&#34;</span>), XGetter, XSetter); <span style="color:#75715e">// x的值由XGetter提供，而XSetter则可以将JS中对x值的修改反映到C++中。
+</span><span style="color:#75715e"></span>Persistent<span style="color:#f92672">&lt;</span>Context<span style="color:#f92672">&gt;</span> context <span style="color:#f92672">=</span> Context<span style="color:#f92672">::</span>New(isolate, NULL, global_templ);
+</code></pre></div><p>可以看到，当设置静态变量为属性值时，流程是比较简单的。相对而言，设置动态变量则要麻烦一下。</p>
+<h4 id="动态变量">动态变量</h4>
+<p>在设置动态变量时，我们需要一个媒介来让JS获取到我们的动态变量。这个媒介被称为<code>External Value</code>， 其是对一个动态变量的简单封装。我们可以在下面代码中看到其在<a href="https://github.com/v8/v8/blob/master/samples/process.cc">process.cc</a>的应用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// 我们可以看到，opts和output都是动态变量
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> JsHttpRequestProcessor<span style="color:#f92672">::</span>InstallMaps(map<span style="color:#f92672">&lt;</span>string, string<span style="color:#f92672">&gt;*</span> opts,
+                                         map<span style="color:#f92672">&lt;</span>string, string<span style="color:#f92672">&gt;*</span> output) {
+  HandleScope <span style="color:#a6e22e">handle_scope</span>(GetIsolate());
+
+  <span style="color:#75715e">// 因为opts是动态变量，我们需要将其封装起来。
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 在源文件中，封装函数名为WrapMap。为了方便讲解，我直接提取其流程于下方。
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 这是源码中的代码: Local&lt;Object&gt; opts_obj = WrapMap(opts)
+</span><span style="color:#75715e"></span>  
+  <span style="color:#75715e">// 下面是提取WrapMap后的代码
+</span><span style="color:#75715e"></span>  Local<span style="color:#f92672">&lt;</span>ObjectTemplate<span style="color:#f92672">&gt;</span> templ <span style="color:#f92672">=</span> ObjectTemplate<span style="color:#f92672">::</span>New(isolate);
+  <span style="color:#75715e">// 下面这一行非常关键
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 它相当于提供了一个指针，至于指向什么，请继续向下看
+</span><span style="color:#75715e"></span>  templ<span style="color:#f92672">-&gt;</span>SetInternalFieldCount(<span style="color:#ae81ff">1</span>); 
+  templ<span style="color:#f92672">-&gt;</span>SetHandler(NamedPropertyHandlerConfiguration(MapGet, MapSet)); <span style="color:#75715e">// 这一样类似SetAccessor
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// Create an empty map wrapper.
+</span><span style="color:#75715e"></span>  Local<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> templ<span style="color:#f92672">-&gt;</span>NewInstance(GetIsolate()<span style="color:#f92672">-&gt;</span>GetCurrentContext()).ToLocalChecked();
+
+  <span style="color:#75715e">// 在这里，我们的opts被封装进了map_ptr这个External Value中
+</span><span style="color:#75715e"></span>  Local<span style="color:#f92672">&lt;</span>External<span style="color:#f92672">&gt;</span> map_ptr <span style="color:#f92672">=</span> External<span style="color:#f92672">::</span>New(GetIsolate(), opts);
+
+  <span style="color:#75715e">// 就这样，Internal Field的第一个位置指向了我们的动态变量opts所在的External Value
+</span><span style="color:#75715e"></span>  result<span style="color:#f92672">-&gt;</span>SetInternalField(<span style="color:#ae81ff">0</span>, map_ptr);  
+}
+</code></pre></div>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丁科</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-01-31</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/v8/">V8</a>
+          
+          <a href="/tags/nodejs/">NodeJS</a>
+          
+          <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/personal/calm_yourself_dean/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">平心静气</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/books/deep_work/">
+            <span class="next-text nav-default">与碎片交战：《深度工作》摘记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

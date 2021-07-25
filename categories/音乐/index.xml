@@ -1,34 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>音乐 on 二向箔</title>
-    <link>https://dingdean.github.io/my-blog/categories/%E9%9F%B3%E4%B9%90/</link>
+    <link>https://blog.dingkewz.com/categories/%E9%9F%B3%E4%B9%90/</link>
     <description>Recent content in 音乐 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 06 Aug 2015 21:53:35 +0800</lastBuildDate>
-    
-	<atom:link href="https://dingdean.github.io/my-blog/categories/%E9%9F%B3%E4%B9%90/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 06 Aug 2015 21:53:35 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/categories/%E9%9F%B3%E4%B9%90/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Miracle-Afterlife音乐感受</title>
-      <link>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</link>
+      <link>https://blog.dingkewz.com/post/musics/miracle_afterlife/</link>
       <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</guid>
-      <description>&lt;iframe style=&#34;max-width: 100%&#34;
-      class=&#34;music163&#34;
-      frameborder=&#34;no&#34;
-      border=&#34;0&#34;
-      marginwidth=&#34;0&#34;
-      marginheight=&#34;0&#34;
-      width=&#34;330&#34;
-      height=&#34;86&#34;
-      src=&#34;//music.163.com/outchain/player?type=2&amp;id=1059181&amp;auto=0&amp;height=66&#34;&gt;
-    &lt;/iframe&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+      <guid>https://blog.dingkewz.com/post/musics/miracle_afterlife/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
   </channel>

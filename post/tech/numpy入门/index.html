@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Numpy概览 - 二向箔</title>
+  <title>[学无止境]之Numpy概览 - 二向箔</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -18,7 +18,6 @@
 
 <meta name="author" content="丁科" />
   <meta name="description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。
-
 " />
 
   <meta name="keywords" content="丁科, 温州, 温州中学, SFU, Ke Ding, 后端, 机器学习, 大数据" />
@@ -28,64 +27,43 @@
 
 
 
-<meta name="generator" content="Hugo 0.30" />
+<meta name="generator" content="Hugo 0.86.0" />
 
 
-<link rel="canonical" href="https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/" />
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/numpy%E5%85%A5%E9%97%A8/" />
 
-<link rel="apple-touch-icon" sizes="180x180" href="/my-blog/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/my-blog/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/my-blog/favicon-16x16.png">
-<link rel="icon" href="/my-blog/favicon.ico" />
-<link rel="manifest" href="/my-blog/manifest.json">
-<link rel="mask-icon" href="/my-blog/safari-pinned-tab.svg" color="#5bbad5">
-
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
 
-<link href="/my-blog/dist/even.min.css?v=2.6.5" rel="stylesheet">
-<link href="/my-blog/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Numpy概览" />
-<meta property="og:description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。
 
-" />
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="[学无止境]之Numpy概览" />
+<meta property="og:description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/numpy%E5%85%A5%E9%97%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-10-12T01:14:43+00:00" />
+<meta property="article:modified_time" content="2017-10-12T01:14:43+00:00" />
 
-
-
-<meta property="article:published_time" content="2017-10-12T01:14:43&#43;00:00"/>
-
-<meta property="article:modified_time" content="2017-10-12T01:14:43&#43;00:00"/>
-
-
-
-
-
-
-
-
-
-
-
-<meta itemprop="name" content="Numpy概览">
-<meta itemprop="description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。
-
-">
-
-
-<meta itemprop="datePublished" content="2017-10-12T01:14:43&#43;00:00" />
-<meta itemprop="dateModified" content="2017-10-12T01:14:43&#43;00:00" />
+<meta itemprop="name" content="[学无止境]之Numpy概览">
+<meta itemprop="description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。"><meta itemprop="datePublished" content="2017-10-12T01:14:43+00:00" />
+<meta itemprop="dateModified" content="2017-10-12T01:14:43+00:00" />
 <meta itemprop="wordCount" content="1198">
-
-
-
-<meta itemprop="keywords" content="numpy,python," />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Numpy概览"/>
-<meta name="twitter:description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。
-
-"/>
+<meta itemprop="keywords" content="numpy,python," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[学无止境]之Numpy概览"/>
+<meta name="twitter:description" content="Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -100,7 +78,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/my-blog/" class="logo">二向箔</a>
+    <a href="/" class="logo">二向箔</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -110,15 +88,15 @@
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/my-blog/">
+    <a href="/">
         <li class="mobile-menu-item">首页</li>
-      </a><a href="/my-blog/post/">
+      </a><a href="/post/">
         <li class="mobile-menu-item">归档</li>
-      </a><a href="/my-blog/tags/">
+      </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
-      </a><a href="/my-blog/categories/">
+      </a><a href="/categories/">
         <li class="mobile-menu-item">分类</li>
-      </a><a href="/my-blog/about/">
+      </a><a href="/about/">
         <li class="mobile-menu-item">关于我</li>
       </a>
   </ul>
@@ -126,21 +104,21 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/my-blog/" class="logo">二向箔</a>
+  <a href="/" class="logo">二向箔</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/my-blog/">首页</a>
+        <a class="menu-item-link" href="/">首页</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/my-blog/post/">归档</a>
+        <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/my-blog/tags/">标签</a>
+        <a class="menu-item-link" href="/tags/">标签</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/my-blog/categories/">分类</a>
+        <a class="menu-item-link" href="/categories/">分类</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/my-blog/about/">关于我</a>
+        <a class="menu-item-link" href="/about/">关于我</a>
       </li>
   </ul>
 </nav>
@@ -152,15 +130,18 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Numpy概览</h1>
+      <h1 class="post-title">[学无止境]之Numpy概览</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2017-10-12 </span>
         <div class="post-category">
-            <a href="/my-blog/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
           </div>
         <span class="more-meta"> 约 1198 字 </span>
         <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
       </div>
     </header>
 
@@ -168,248 +149,187 @@
     
 <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content">
-      <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#用numpy创建array">用Numpy创建Array:</a></li>
-<li><a href="#numpy基础运算">Numpy基础运算:</a></li>
-<li><a href="#修改array的维度">修改Array的维度</a></li>
-<li><a href="#到底复制了没">到底复制了没?</a></li>
-<li><a href="#numpy基础概览">Numpy基础概览</a></li>
-</ul></li>
-</ul>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#用numpy创建array">用Numpy创建Array:</a></li>
+    <li><a href="#numpy基础运算">Numpy基础运算:</a></li>
+    <li><a href="#修改array的维度">修改Array的维度</a></li>
+    <li><a href="#到底复制了没">到底复制了没?</a></li>
+    <li><a href="#numpy基础概览">Numpy基础概览</a></li>
+  </ul>
 </nav>
   </div>
 </div>
 
     
+    
+
+    
     <div class="post-content">
       <p>Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。</p>
-
-<p></p>
-
 <p>Numpy的高效体现在两个层面:</p>
-
 <p>一，计算速度的高效，因为绝大部分重要计算是通过预编译的C代码实现的。</p>
-
 <p>二，代码编写的高效, 如下C的代码(有所简略)</p>
-
-<pre><code class="language-c">for (i = 0; i &lt; rows; i++): {
-  for (j = 0; j &lt; columns; j++): {
-    c[i][j] = a[i][j]*b[i][j];
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> rows; i<span style="color:#f92672">++</span>)<span style="color:#f92672">:</span> {
+  <span style="color:#66d9ef">for</span> (j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> columns; j<span style="color:#f92672">++</span>)<span style="color:#f92672">:</span> {
+    c[i][j] <span style="color:#f92672">=</span> a[i][j]<span style="color:#f92672">*</span>b[i][j];
   }
 }
-</code></pre>
-
-<p>用numpy编写可以缩略成</p>
-
-<pre><code class="language-python">c = a * b
-</code></pre>
-
-<p>上面这行python代码反映出numpy计算的两大特点，那就是向量化(Vectorization)以及<a href="https://docs.scipy.org/doc/numpy-dev/user/basics.broadcasting.html#module-numpy.doc.broadcasting">泛化</a>. 在此先按下不表。</p>
-
+</code></pre></div><p>用numpy编写可以缩略成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> b
+</code></pre></div><p>上面这行python代码反映出numpy计算的两大特点，那就是向量化(Vectorization)以及<a href="https://docs.scipy.org/doc/numpy-dev/user/basics.broadcasting.html#module-numpy.doc.broadcasting">泛化</a>. 在此先按下不表。</p>
 <h2 id="用numpy创建array">用Numpy创建Array:</h2>
-
 <ol>
 <li>np.array():</li>
 </ol>
-
-<pre><code class="language-python">np.array([2,3,4])
-np.array([2,3], [4,5])  # [[2,3], [4,5]]
-np.array([1,2], [3,4], dtype=complex) # The type of the array can be explicitly specified at creation time
-np.array([[1,2],[3,4],[5,6]]) # [[1,2], [3,4], [5,6]]
-np.array([1,2], [3,4], [5,6]) # WRONG!! 行数超过二行的矩阵要以完整的矩阵出现，如上
-</code></pre>
-
-<ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>])
+np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>], [<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>])  <span style="color:#75715e"># [[2,3], [4,5]]</span>
+np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>], dtype<span style="color:#f92672">=</span>complex) <span style="color:#75715e"># The type of the array can be explicitly specified at creation time</span>
+np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>],[<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>],[<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>]]) <span style="color:#75715e"># [[1,2], [3,4], [5,6]]</span>
+np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>], [<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>]) <span style="color:#75715e"># WRONG!! 行数超过二行的矩阵要以完整的矩阵出现，如上</span>
+</code></pre></div><ol start="2">
 <li>np.zeros(), np.ones(), np.empty():</li>
 </ol>
-
-<pre><code class="language-python">np.zeros((2,2)) # [[0, 0], [0, 0]]
-np.ones((2,2), dtype=np.int16) # [[1, 1], [1, 1]] can define dtype
-np.empty((2,2)) # [[0.2, 3.8], [23, 90]] random
-</code></pre>
-
-<ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)) <span style="color:#75715e"># [[0, 0], [0, 0]]</span>
+np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>), dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>int16) <span style="color:#75715e"># [[1, 1], [1, 1]] can define dtype</span>
+np<span style="color:#f92672">.</span>empty((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)) <span style="color:#75715e"># [[0.2, 3.8], [23, 90]] random</span>
+</code></pre></div><ol start="3">
 <li>np.arange(), np.linspace():</li>
 </ol>
-
-<pre><code class="language-python">np.arange(10, 30, 5) # [10, 30) with step 5 -&gt; [10, 15, 20, 25]
-np.arange(5) # [0, 5) with step 1 -&gt; [0, 1, 2, 3, 4]
-np.arange(0, 2, 0.3) # step can be floating number, but perfer using linspace
-np.linespace(0, 2, 9) # 9 numbers from 0 to 2
-</code></pre>
-
-<h2 id="numpy基础运算">Numpy基础运算:</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">5</span>) <span style="color:#75715e"># [10, 30) with step 5 -&gt; [10, 15, 20, 25]</span>
+np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">5</span>) <span style="color:#75715e"># [0, 5) with step 1 -&gt; [0, 1, 2, 3, 4]</span>
+np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.3</span>) <span style="color:#75715e"># step can be floating number, but perfer using linspace</span>
+np<span style="color:#f92672">.</span>linespace(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">9</span>) <span style="color:#75715e"># 9 numbers from 0 to 2</span>
+</code></pre></div><h2 id="numpy基础运算">Numpy基础运算:</h2>
 <p>由于广播的特性，我们数学中常见的运算在numpy中会被运用到矩阵中的每一个元素。</p>
-
-<pre><code class="language-python">a = np.array([20, 30, 40, 50])
-b = np.arange(4) # [0, 1, 2, 3])
-c = a -b # [20, 29, 38, 47]
-b ** 2 # [0, 1, 4, 9]
-a &lt; 35 # [True, True, False, False]
-</code></pre>
-
-<p>要想做矩阵乘积，使用dot():</p>
-
-<pre><code class="language-python">a = np.array([1, 1], [0, 1])
-b = np.array([2, 0], [3, 4])
-a * b # [[2, 0], [0, 4]]
-a.dot(b) # [[5, 4], [3, 4]]
-np.dot(a, b) # [[5, 4], [3, 4]]
-</code></pre>
-
-<p>sum, min, max:</p>
-
-<pre><code class="language-python">a = np.array([1, 2], [3, 4])
-a.sum() # 10
-a.min() # 1
-a.max() # 4
-a.sum(axis=0) # 每列之和(沿着行一个一个往下走,axis=0) [4, 6]
-a.sum(axis=1) # 每行之和(沿着列一个一个往右走,axis=1) [3, 6]
-</code></pre>
-
-<p>Index, Slicing and Iterating</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">50</span>])
+b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">4</span>) <span style="color:#75715e"># [0, 1, 2, 3])</span>
+c <span style="color:#f92672">=</span> a <span style="color:#f92672">-</span>b <span style="color:#75715e"># [20, 29, 38, 47]</span>
+b <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># [0, 1, 4, 9]</span>
+a <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">35</span> <span style="color:#75715e"># [True, True, False, False]</span>
+</code></pre></div><p>要想做矩阵乘积，使用dot():</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>])
+a <span style="color:#f92672">*</span> b <span style="color:#75715e"># [[2, 0], [0, 4]]</span>
+a<span style="color:#f92672">.</span>dot(b) <span style="color:#75715e"># [[5, 4], [3, 4]]</span>
+np<span style="color:#f92672">.</span>dot(a, b) <span style="color:#75715e"># [[5, 4], [3, 4]]</span>
+</code></pre></div><p>sum, min, max:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>])
+a<span style="color:#f92672">.</span>sum() <span style="color:#75715e"># 10</span>
+a<span style="color:#f92672">.</span>min() <span style="color:#75715e"># 1</span>
+a<span style="color:#f92672">.</span>max() <span style="color:#75715e"># 4</span>
+a<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>) <span style="color:#75715e"># 每列之和(沿着行一个一个往下走,axis=0) [4, 6]</span>
+a<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 每行之和(沿着列一个一个往右走,axis=1) [3, 6]</span>
+</code></pre></div><p>Index, Slicing and Iterating</p>
 <ul>
 <li>一维</li>
 </ul>
-
-<pre><code class="language-python">a = np.arange(6) # [0,1,2,3,4,5]
-a[2] # 2
-a[:2] # [0, 1]
-a[:6:2] # [0, 2, 4]
-a[:6:2] = 1 # [1,1,1,3,1,5]
-a[::-1] # reverse a [5,1,3,1,1,1]
-</code></pre>
-
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">6</span>) <span style="color:#75715e"># [0,1,2,3,4,5]</span>
+a[<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># 2</span>
+a[:<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># [0, 1]</span>
+a[:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># [0, 2, 4]</span>
+a[:<span style="color:#ae81ff">6</span>:<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># [1,1,1,3,1,5]</span>
+a[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#75715e"># reverse a [5,1,3,1,1,1]</span>
+</code></pre></div><ul>
 <li>多维</li>
 </ul>
-
-<pre><code class="language-python">a = np.array([[1, 2, 3], [3, 4, 5]])
-a[0, :] # 第一行 [1, 2]
-a[:, 1] # 第一列 [1, 3]
-a[:, 0:2] # 第一到第二列 [[1,2], [3,4]]
-a[0:2, :] # 第一到第二行
-for row in a:
-  print row # [1,2,3], [3,4,5]
-for ele in a.flat:
-  print ele # 1,2,3,3,4,5
-</code></pre>
-
-<h2 id="修改array的维度">修改Array的维度</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+a[<span style="color:#ae81ff">0</span>, :] <span style="color:#75715e"># 第一行 [1, 2]</span>
+a[:, <span style="color:#ae81ff">1</span>] <span style="color:#75715e"># 第一列 [1, 3]</span>
+a[:, <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># 第一到第二列 [[1,2], [3,4]]</span>
+a[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">2</span>, :] <span style="color:#75715e"># 第一到第二行</span>
+<span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> a:
+  print row <span style="color:#75715e"># [1,2,3], [3,4,5]</span>
+<span style="color:#66d9ef">for</span> ele <span style="color:#f92672">in</span> a<span style="color:#f92672">.</span>flat:
+  print ele <span style="color:#75715e"># 1,2,3,3,4,5</span>
+</code></pre></div><h2 id="修改array的维度">修改Array的维度</h2>
 <ol>
 <li>A.ravel() 展开矩阵，C style</li>
 </ol>
-
-<pre><code class="language-python">a = np.array([1,3], [2, 4])
-a.ravel() # [1, 3, 2, 4]
-</code></pre>
-
-<ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>], [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>])
+a<span style="color:#f92672">.</span>ravel() <span style="color:#75715e"># [1, 3, 2, 4]</span>
+</code></pre></div><ol start="2">
 <li>A.reshape((x,y)) 返回一个指定大小的矩阵，原素从A中提取, C style. 与之相似的是A.resize((x,y)), 不同点在于此方法直接修改A, 而不是返回一个新矩阵</li>
 </ol>
-
-<pre><code class="language-python">a = np.array([[1,2], [4,5], [7,8]])
-a.reshape((2,3)) # [[1,2,4], [5,7,8]]
-</code></pre>
-
-<ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>], [<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>]])
+a<span style="color:#f92672">.</span>reshape((<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>)) <span style="color:#75715e"># [[1,2,4], [5,7,8]]</span>
+</code></pre></div><ol start="3">
 <li>Transpose of Array</li>
 </ol>
-
-<pre><code class="language-python">a = np.array([[1,2], [4,5], [7,8]])
-a.T # [[1,4,7], [2,5,8]]
-</code></pre>
-
-<h2 id="到底复制了没">到底复制了没?</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>], [<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>]])
+a<span style="color:#f92672">.</span>T <span style="color:#75715e"># [[1,4,7], [2,5,8]]</span>
+</code></pre></div><h2 id="到底复制了没">到底复制了没?</h2>
 <p>上文中的reshape以及resize，一个复制了矩阵，一个直接修改矩阵。类似这样一个方法到底有没有复制矩阵的问题经常给初学者造成困扰，在此有必要理清何时会导致复制的发生。</p>
-
 <p>没有复制:
 简单的赋值操作是不会产生复制的</p>
-
-<pre><code class="language-python">a = np.arange(12)
-b = a # b reference a
-b.resize((2, 6))
-a.shape # (2,6)
-</code></pre>
-
-<p>浅复制(View):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">12</span>)
+b <span style="color:#f92672">=</span> a <span style="color:#75715e"># b reference a</span>
+b<span style="color:#f92672">.</span>resize((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>))
+a<span style="color:#f92672">.</span>shape <span style="color:#75715e"># (2,6)</span>
+</code></pre></div><p>浅复制(View):
 ndarray.view() 方法相当于产生了一个类C指针的对象。这个对象有独立的Meta信息，如shape等，但底层的数据是和原矩阵共享的。</p>
-
-<pre><code class="language-python">a = np.zeros((3,4))
-c = a.view()
-c.shape = 2,6
-a.shape # 不变，依旧为(3,4)
-c[0,1] = 1
-a[0,1] # 变为1
-s = a[:, 1:3] # s是a的一个view
-</code></pre>
-
-<p>深复制copy():</p>
-
-<pre><code class="language-python">a = np.empty((3,4))
-b = a.copy()
-b.base is a # False
-b[0,0] = 1
-a[0,0] == b[0,0] # False
-</code></pre>
-
-<h2 id="numpy基础概览">Numpy基础概览</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>))
+c <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>view()
+c<span style="color:#f92672">.</span>shape <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">6</span>
+a<span style="color:#f92672">.</span>shape <span style="color:#75715e"># 不变，依旧为(3,4)</span>
+c[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+a[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># 变为1</span>
+s <span style="color:#f92672">=</span> a[:, <span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># s是a的一个view</span>
+</code></pre></div><p>深复制copy():</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>empty((<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>))
+b <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>copy()
+b<span style="color:#f92672">.</span>base <span style="color:#f92672">is</span> a <span style="color:#75715e"># False</span>
+b[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+a[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> b[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># False</span>
+</code></pre></div><h2 id="numpy基础概览">Numpy基础概览</h2>
 <ul>
 <li>创建矩阵:
-
 <ul>
 <li>arange, array, copy, empty, empty_like, eye, fromfile, fromfunctoin, identity, linspace, logspace, mgrid, ogrid, ones, one_like, r, zeros, zeros_like</li>
-</ul></li>
+</ul>
+</li>
 <li>转化:
-
 <ul>
 <li>ndarray.astype, atleast_1d, atleast_2d, atleast_3d, mat</li>
-</ul></li>
+</ul>
+</li>
 <li>操纵:
-
 <ul>
 <li>array_split, column_stack, concatenate, diagonal, dsplit, dstack, hsplit, hstack, ndarray.item, newaxis, ravel, repeat, reshape, resize, squeeze, swapaxes, take, transpose, vsplit, vstack</li>
-</ul></li>
+</ul>
+</li>
 <li>Questions:
-
 <ul>
 <li>all, any, nonzero, where</li>
-</ul></li>
+</ul>
+</li>
 <li>Ordering:
-
 <ul>
 <li>argmax, argmin, argsort, max, min, ptp, searchsorted, sort</li>
-</ul></li>
+</ul>
+</li>
 <li>Operations:
-
 <ul>
 <li>choose, compress, cumprod, cumsum, inner, ndarray.fill, imag, prod, put, putmask, real, sum</li>
-</ul></li>
+</ul>
+</li>
 <li>Basic Statistics:
-
 <ul>
 <li>cov, mean, std, var</li>
-</ul></li>
+</ul>
+</li>
 <li>Basic Linear Algebra:
-
 <ul>
 <li>cross, dot, outer, linalg.svd, vdot</li>
-</ul></li>
+</ul>
+</li>
 </ul>
     </div>
 
     
-    
-<div class="post-copyright">
+    <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
     <span class="item-content">丁科</span>
@@ -431,19 +351,24 @@ a[0,0] == b[0,0] # False
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/my-blog/tags/numpy/">numpy</a>
+          <a href="/tags/numpy/">numpy</a>
           
-          <a href="/my-blog/tags/python/">python</a>
+          <a href="/tags/python/">python</a>
           
         </div>
 
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/personal/%E6%90%AC%E5%AE%B6%E4%B8%89/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">搬家(三)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         
-          <a class="next" href="/my-blog/post/musics/miracle_afterlife/">
-            <span class="next-text nav-default">Miracle-Afterlife音乐感受</span>
-            <span class="prev-text nav-mobile">下一篇</span>
+          <a class="next" href="/post/tech/javascript_async_await/">
+            <span class="next-text nav-default">[简明JavaScript]之async/await</span>
+            <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
       </nav>
@@ -454,14 +379,15 @@ a[0,0] == b[0,0] # False
   
 
   
-      </div>  
+
+      </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="social-links">
-      <a href="mailto:dingkework@hotmail.com" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
-  <a href="https://dingdean.github.io/my-blog/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -474,9 +400,13 @@ a[0,0] == b[0,0] # False
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
+  
+
   <span class="copyright-year">
     &copy; 
-    2017
+    
+      2017 - 
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -490,18 +420,32 @@ a[0,0] == b[0,0] # False
     </div>
   </div>
   
-<script src="/my-blog/lib/highlight/highlight.pack.js?v=20171001"></script>
-<script type="text/javascript" src="/my-blog/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/my-blog/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/my-blog/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/my-blog/dist/even.min.js?v=2.6.5"></script>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
   <script type="text/javascript">
     window.MathJax = {
       showProcessingMessages: false,
       messageStyle: 'none'
     };
   </script>
-  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
 
 
 

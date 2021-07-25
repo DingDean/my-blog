@@ -1,119 +1,523 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>二向箔</title>
-    <link>https://dingdean.github.io/my-blog/</link>
+    <link>https://blog.dingkewz.com/</link>
     <description>Recent content on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 12 Oct 2017 01:14:43 +0000</lastBuildDate>
-    
-	<atom:link href="https://dingdean.github.io/my-blog/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 14 Jul 2018 10:33:02 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>他山之石之Byzantine Generals Problem</title>
+      <link>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</link>
+      <pubDate>Sat, 14 Jul 2018 10:33:02 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;论文出处: &lt;a href=&#34;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&#34;&gt;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reliable computer systems must handle malfunctioning components that give confilicting information to different parts of the system.
+This situation can be expressed abstractly in terms of a group of generals of the Byzantine army camped with their troops around an enmemy city.
+Communicating only by messenger, the generals must agree upon a common battle plan.
+However, one or more of them may be traitors who will try to confuse the others.
+The problem is to &lt;strong&gt;find an algorithm to ensure that the loyal generals will reach agreement.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个可靠的计算系统需要得当的处理其子部件因紊乱而向系统的其他部分发送相左的消息的情况。
+这种情况可以抽象为以下场景：&lt;/p&gt;
+&lt;p&gt;一群拜占庭将军围着一座敌城驻扎了多个军团，每个军团存在一位将军。在只能通过信使通信的情况下，他们需要决定一个共同的作战行动。
+其中的几位将军有可能是叛徒，会不遗余力得误导其他人。
+问题的关键就是&lt;strong&gt;找出一个算法，从而确保所有的忠将作出一致的决定。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
     
     <item>
-      <title>Numpy概览</title>
-      <link>https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/</link>
+      <title>[译]用GoLang实现微服务（四）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/</link>
+      <pubDate>Tue, 17 Apr 2018 18:11:32 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其四。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-4/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-3/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们创建用户(User)服务，并且引入了数据库来保存数据。这回，我们希望用户微服务能安全的保存用户密码，并且有完整的机制来验证用户，从而在我们的几个微服务之间分发安全秘钥以互相沟通。&lt;/p&gt;
+&lt;p&gt;请特别注意，我重构了项目结构，现在每个微服务都是一个单独的仓库，不再共处于一个父目录之下了。这样做更方便于代码的部署。你们大概记得，我一开始是想把所有微服务都放在一个仓库下的，但后来发现这样做使我很难管理 Go 项目的依赖，总是遇到一些冲突。随着每个项目的独立，我有必要讲讲如何测试，运行和部署一个个微服务。与此同时，由于各个微服务的独立，我们目前也不能使用 docker-compose 了，但这对我们的影响暂时不大。如果你对此有什么好的建议，欢迎给我&lt;a href=&#34;mailto:ewan.valentine89@gmail.com&#34;&gt;写邮件&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;此外，你需要手动运行数据库了，就像下面这样:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ docker run -d -p 5432:5432 postgres
+$ docker run -d -p 27017:27017 mongo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;独立出来的项目代码链接如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-consignment-service&#34;&gt;https://github.com/EwanValentine/shippy-consignment-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-user-service&#34;&gt;https://github.com/EwanValentine/shippy-user-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-vessel-service&#34;&gt;https://github.com/EwanValentine/shippy-vessel-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-user-cli&#34;&gt;https://github.com/EwanValentine/shippy-user-cli&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-consignment-cli&#34;&gt;https://github.com/EwanValentine/shippy-consignment-cli&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（三）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/</link>
+      <pubDate>Sun, 08 Apr 2018 17:04:26 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其三。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-3/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-3/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们了解了&lt;a href=&#34;https://github.com/micro/go-micro&#34;&gt;go-micro&lt;/a&gt; 以及 &lt;a href=&#34;https://www.docker.com/&#34;&gt;Docker&lt;/a&gt;的基础。同时引入了我们的第二个微服务，货船服务（vessel-service）。那么在此文中，我们将要了解一下 &lt;a href=&#34;https://docs.docker.com/compose/&#34;&gt;docker-compose&lt;/a&gt;，并学会用它更好的运行和管理部署在本地的众多微服务。此外，我们还会稍微讲一下几种不同的数据库以及写下我们的第三个微服务！&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（二）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/</link>
+      <pubDate>Mon, 02 Apr 2018 12:34:31 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其二。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-2/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-2/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们大致掌握了如何用gRPC来构建微服务。在这篇文章中，我们要介绍如何容器化(Dockerize)我们的微服务，在此过程中，我们将引入使用go-micro以及写下我们的第二个微服务。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（一）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/</link>
+      <pubDate>Mon, 26 Mar 2018 20:19:00 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其首。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-1/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-1/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;del&gt;初稿&lt;/del&gt; -&amp;gt; 润色&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id=&#34;导言&#34;&gt;导言&lt;/h1&gt;
+&lt;p&gt;在本文中，我们将了解一些基础的概念，术语。同时将创建我们的第一个微服务，尽管它会非常简陋。&lt;/p&gt;
+&lt;p&gt;在接下来的文章中，我们会陆续创建以下微服务:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;consignments (货运)&lt;/li&gt;
+&lt;li&gt;inventory (仓库)&lt;/li&gt;
+&lt;li&gt;users (用户)&lt;/li&gt;
+&lt;li&gt;authentication (认证)&lt;/li&gt;
+&lt;li&gt;roles (角色)&lt;/li&gt;
+&lt;li&gt;vessels (货船)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完整的技术栈如下：golang, mongodb, grpc, docker, Google Cloud, Kubernetes, NATS, CircleCI, Terrafrom and go-micro.&lt;/p&gt;
+&lt;p&gt;在你跟随此文学习时，请务必设置合适的GOPATH，以及使用这个&lt;a href=&#34;https://github.com/EwanValentine/shippy&#34;&gt;git仓库&lt;/a&gt;(每篇文章对应一个分支)。&lt;/p&gt;
+&lt;p&gt;另外，我的工作平台是Macbook，所以如果你的工作平台有所不同，那么文章中的些许地方需要相应的改动，比如Makefiles中的&lt;code&gt;$GOPATH&lt;/code&gt;和&lt;code&gt;$(GOPATH)&lt;/code&gt;，请您自行关注。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[NodeJS源码探秘]之启动全流程</title>
+      <link>https://blog.dingkewz.com/post/tech/nodejs_source_startup03/</link>
+      <pubDate>Wed, 21 Mar 2018 16:53:53 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/nodejs_source_startup03/</guid>
+      <description>&lt;p&gt;&lt;em&gt;NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章将研究NodeJS的启动全流程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>平心静气</title>
+      <link>https://blog.dingkewz.com/post/personal/calm_yourself_dean/</link>
+      <pubDate>Thu, 01 Feb 2018 22:03:18 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/calm_yourself_dean/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;时不我与，只争朝夕。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>谷歌V8引擎探秘：基础概念</title>
+      <link>https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/</link>
+      <pubDate>Sat, 27 Jan 2018 17:18:37 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/</guid>
+      <description>&lt;p&gt;&lt;em&gt;V8引擎是驱动NodeJS的核心。为此有必要深入了解其API和运行机制。此系列文章旨在记录我自己探索学习V8引擎的记录。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;本文章是此系列的第一篇，将梳理一遍V8引擎的几个总要概念：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Context&lt;/li&gt;
+&lt;li&gt;Handle&lt;/li&gt;
+&lt;li&gt;Handle Scope&lt;/li&gt;
+&lt;li&gt;Templates&lt;/li&gt;
+&lt;li&gt;Isolates&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>与碎片交战：《深度工作》摘记</title>
+      <link>https://blog.dingkewz.com/post/books/deep_work/</link>
+      <pubDate>Sat, 13 Jan 2018 22:14:00 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/books/deep_work/</guid>
+      <description>&lt;p&gt;简单的说，少看手机，多看书。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>他山之石之Strategies of setting and implementing goals</title>
+      <link>https://blog.dingkewz.com/post/books/strategies_of_setting_and_implementing_goals_gabriele_peter/</link>
+      <pubDate>Sat, 30 Dec 2017 10:54:48 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/books/strategies_of_setting_and_implementing_goals_gabriele_peter/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Life ultimately means tasking the responsibility to find the right answer to its problems and to fulfill the tasks which it constantly sets for each individuals.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这篇&lt;a href=&#34;http://www.psych.nyu.edu/gollwitzer/OettingenGollwitzer.pdf&#34;&gt;论文&lt;/a&gt;论证了设定目标与实现目标的个别方法论，分别为Mental Contrasting以及Implementation Intentions。&lt;/p&gt;
+&lt;p&gt;Mental Contrasting是一个对比的过程：对比理想中的自己与现实中的自己，发现其中的差距。为了弥补两者的差距，需要定量得发觉其中的原因，从而提炼出需要的目标。
+比如我想象一年后的自己拥有六块腹肌，而现实是我有“一大块”腹肌。
+为了拥有六块腹肌，我需要达成的目标是，每天运动1小时，控制饮食等等。
+与Mental Contrasting相伴的还有两种不健康的形式，即Mental Indulging与Mental Dwelling。
+前者只沉浸在对理想的假象中，不面对现实，而后者则想法，只看到了现实的不足而不去设想理想的未来。应该避免这两种情况的发生。&lt;/p&gt;
+&lt;p&gt;Implementation Intentions即一种心理预设，它大致上以“如果&amp;hellip;，我要&amp;hellip;.”的形式出现。
+文中总结了四个阻碍目标达成的原因：难以开始行动，难以坚持，无法意识到目标是徒劳的，以及不挑战自己的极限。
+Implementation Intensions为这四个困难都提供了解决的心理预设。
+比如我要练腹肌，那么我给我自己一个心理预设，“如果看书看不下去时，那么我要做一组卷腹”。
+那么每当看书看不下去时，心理会在很大程度上触发“做一组卷腹”的预设。&lt;/p&gt;
+&lt;p&gt;其实，我们可以把寻找目标，实现目标的过程比喻为运用神经元网络学习数据的过程。
+我们的目标即学习的目标，每一个“如果&amp;hellip;，我要&amp;hellip;”即神经元，“看书看不下去”就是一个阈值，“做一组卷腹”即单元输出。寻找这些“如果..，我要&amp;hellip;”的过程即各种神经元网络算法。&lt;/p&gt;
+&lt;p&gt;以下是详细的摘记，希望能有所裨益。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[NodeJS源码探秘]之require()</title>
+      <link>https://blog.dingkewz.com/post/tech/nodejs_source_01/</link>
+      <pubDate>Fri, 17 Nov 2017 14:16:22 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/nodejs_source_01/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;部分源码已过时 -&amp;gt; 升级至9.11&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;第一篇文章就是要搞清楚我们经常使用的require()函数到底是如何运作的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>《看火人》/ Firewatch</title>
+      <link>https://blog.dingkewz.com/post/personal/%E7%9C%8B%E7%81%AB%E4%BA%BA/</link>
+      <pubDate>Wed, 08 Nov 2017 20:48:47 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E7%9C%8B%E7%81%AB%E4%BA%BA/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;……换句话说，这里百分之九十九的土地都是货真价实的原始荒地，放眼望去几乎都是贫瘠陡峭的花岗岩高原和奇形怪状的岩石，偶尔出现气度棱线和冰碛穹丘，或许是最后一次冰川时期的遗迹，也可能是上年冬天的杰作。宝蓝色的湖泊气势惊人，绸带般的支流好像小蛇，蜿蜒在酷似北极的寒带草原上，滋育着生气勃勃如毛刷般的草丛和树林……&lt;/p&gt;
+&lt;p&gt;巡山员有男有女，自成一族，是万中选一的精英，热诚，无惧，坚毅。他们虽然为了不同目的前来，纵横山林个有特色，但都渴望离群索居，追求荒野的灿烂。&lt;/p&gt;
+&lt;p&gt;在这里，生活只剩下最基本所需：食物，水和住所。人在这里很可能迷失自己，身体或心灵皆然。人在这里也很容易就能摆脱一切人与事，甩开文明，几乎毫不费力。&lt;/p&gt;
+&lt;p&gt;然而，清澈的高山湖泊映照着一位巡山高手的倒影，提醒我们：人能摆脱一切，却无法甩开自己。&lt;br&gt;
+&amp;mdash;&lt;a href=&#34;https://book.douban.com/subject/26801537/&#34;&gt;《山中最后一季》[美]埃里克 布雷姆&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;星火，萤火，烛火，山火。火之及处，映出孑孑之身影。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>高山仰止</title>
+      <link>https://blog.dingkewz.com/post/personal/%E9%AB%98%E5%B1%B1%E4%BB%B0%E6%AD%A2/</link>
+      <pubDate>Wed, 08 Nov 2017 10:27:15 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E9%AB%98%E5%B1%B1%E4%BB%B0%E6%AD%A2/</guid>
+      <description>&lt;p&gt;这两天，在温哥华认识的毛兄回浙大办点手续，顺便寄住在我家里。毛兄还是毛兄，让我佩服。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>《The Moon Is A Harsh Mistress》读后感</title>
+      <link>https://blog.dingkewz.com/post/books/the_moon_is_a_harsh_mistress/</link>
+      <pubDate>Mon, 06 Nov 2017 21:21:20 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/books/the_moon_is_a_harsh_mistress/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;嘿，Mike, 你还醒着在吗？&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>搬家(三)</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%B8%89/</link>
+      <pubDate>Wed, 01 Nov 2017 13:20:50 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%B8%89/</guid>
+      <description>&lt;p&gt;在杭州一年后，终于搬进了一间让我满意的单身公寓。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>[学无止境]之Numpy概览</title>
+      <link>https://blog.dingkewz.com/post/tech/numpy%E5%85%A5%E9%97%A8/</link>
       <pubDate>Thu, 12 Oct 2017 01:14:43 +0000</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/tech/numpy%E5%85%A5%E9%97%A8/</guid>
-      <description>&lt;p&gt;Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+      <guid>https://blog.dingkewz.com/post/tech/numpy%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;p&gt;Numpy是用于python的矩阵计算库, 被用来创建矩阵和操作与矩阵相关的各种运算。Numpy非常之高效，是python科学计算栈Scipy Stack的基石。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>关于我</title>
-      <link>https://dingdean.github.io/my-blog/about/</link>
+      <link>https://blog.dingkewz.com/about/</link>
       <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/about/</guid>
-      <description>嘿，你好，欢迎来到我的二向箔！ 我叫丁科，现居杭州，是一名后端工程师。 我惯用JavaScript, Python以及Go。 在这个博客，你可以找到</description>
+      <guid>https://blog.dingkewz.com/about/</guid>
+      <description>嘿，你好，欢迎来到我的二向箔！ 我叫丁科，现居杭州，是一名后端(NodeJS)工程师。 在这个博客，你可以找到我的书评，技术文章以及一些私人絮语</description>
     </item>
     
     <item>
-      <title>Miracle-Afterlife音乐感受</title>
-      <link>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</link>
-      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      <title>[简明JavaScript]之async/await</title>
+      <link>https://blog.dingkewz.com/post/tech/javascript_async_await/</link>
+      <pubDate>Sat, 10 Jun 2017 14:40:04 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/musics/miracle_afterlife/</guid>
-      <description>&lt;iframe style=&#34;max-width: 100%&#34;
-      class=&#34;music163&#34;
-      frameborder=&#34;no&#34;
-      border=&#34;0&#34;
-      marginwidth=&#34;0&#34;
-      marginheight=&#34;0&#34;
-      width=&#34;330&#34;
-      height=&#34;86&#34;
-      src=&#34;//music.163.com/outchain/player?type=2&amp;id=1059181&amp;auto=0&amp;height=66&#34;&gt;
-    &lt;/iframe&gt;
+      <guid>https://blog.dingkewz.com/post/tech/javascript_async_await/</guid>
+      <description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;strong&gt;简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。&lt;/strong&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It will be legen, wait for it&amp;hellip;, and I hope you&amp;rsquo;re not lactose intolerant because the second half of that word is&amp;hellip; dairy!&lt;br&gt;
+-&lt;a href=&#34;https://en.wikipedia.org/wiki/Barney_Stinson&#34;&gt;Barney Stinson&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitForIt&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;) {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-wait for it... and I hope you&amp;#39;re not lactose intolerant because the second half of that word is—&amp;#34;&lt;/span&gt;)
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;setTimeout&lt;/span&gt;(() =&amp;gt; {
+      &lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dairy!&amp;#34;&lt;/span&gt;)
+    }, &lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;)
+  })
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;barneySays&lt;/span&gt; () {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;It will be legen&amp;#34;&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;word&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitForIt&lt;/span&gt;()
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;word&lt;/span&gt;)
+}
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;barneySays&lt;/span&gt;()
+&lt;span style=&#34;color:#75715e&#34;&gt;// It will be legen-wait for it... and I hope you&amp;#39;re not lactose intolerant because the second half of that word is—dairy!
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;照例，以下是学习资料:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9&#34;&gt;Why async/await is better than Promise&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://javascript.info/async-await&#34;&gt;JavaScript.Info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
       <title>弹星者和二向箔</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</link>
-      <pubDate>Sun, 20 Apr 2014 16:14:43 +0000</pubDate>
+      <link>https://blog.dingkewz.com/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</link>
+      <pubDate>Tue, 20 Dec 2016 16:14:43 +0000</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;我需要一块二向箔，清理用&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>[简明JavaScript]之Promise</title>
+      <link>https://blog.dingkewz.com/post/tech/javascript_promise/</link>
+      <pubDate>Mon, 11 Apr 2016 09:33:05 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/javascript_promise/</guid>
+      <description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;strong&gt;简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。&lt;/strong&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;readline&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;readline&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rl&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;readline&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;createInterface&lt;/span&gt;({
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stdin&lt;/span&gt;,
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;output&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stdout&lt;/span&gt;
+})
 
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;span style=&#34;color:#75715e&#34;&gt;// 请原谅我这庸俗的剧情
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Will you always be here with me?&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Oh dear Alice, why would I ever want to leave you?&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Promise me!&amp;#34;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makePromise&lt;/span&gt;()
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt;
+  .&lt;span style=&#34;color:#a6e22e&#34;&gt;then&lt;/span&gt;(() =&amp;gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice and Bob were happy ever after.&amp;#39;&lt;/span&gt;)
+  })
+  .&lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt; =&amp;gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob eventually left Alice, what a jerk.&amp;#39;&lt;/span&gt;)
+  })
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;who&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;) {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;who&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; said: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;)
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 到了这里会有一个问题，试着跑一下？
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makePromise&lt;/span&gt; () {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;I promise I would never leave you.&amp;#39;&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;rl&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;question&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;你来决定故事的走向: &amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;answer&lt;/span&gt; =&amp;gt; {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;answer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;good&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob is true to his words&amp;#39;&lt;/span&gt;)
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob is a total ass&amp;#39;&lt;/span&gt;)
+    })
+  })
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;女士们，先生们，看到了吗，这就是我们今天的主角 Promise。照例，以下是学习资料:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://liubin.org/promises-book/#then-return-new-promise&#34;&gt;JavaScript Promise 迷你书&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://javascript.info/promise-chaining#error-handling&#34;&gt;Promise Chain Error Handling&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://spin.atomicobject.com/2017/04/06/nodejs-promises-callbacks/&#34;&gt;Never Mix Promises and Callbacks in NodeJS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Miracle-Afterlife音乐感受</title>
+      <link>https://blog.dingkewz.com/post/musics/miracle_afterlife/</link>
+      <pubDate>Thu, 06 Aug 2015 21:53:35 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/musics/miracle_afterlife/</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>搬家(二)</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%BA%8C/</link>
+      <pubDate>Fri, 07 Nov 2014 22:36:14 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6%E4%BA%8C/</guid>
+      <description>&lt;p&gt;这是Omar在SFU的最后一年了，我们两个都觉得是应该一起租个房子做室友了。于是，我从Gary和Jecqueline那里搬了出来。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>诺基亚威武</title>
+      <link>https://blog.dingkewz.com/post/personal/%E8%AF%BA%E5%9F%BA%E4%BA%9A%E5%A8%81%E6%AD%A6/</link>
+      <pubDate>Fri, 09 May 2014 22:16:36 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E8%AF%BA%E5%9F%BA%E4%BA%9A%E5%A8%81%E6%AD%A6/</guid>
+      <description>&lt;p&gt;2010年的冬天，我的Nokia E72掉进水里后，我脑残般得没晾干就开机了。结果自然是机器就残了。我很理智得把E72封印在了箱底。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>斯坦利公园</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%96%AF%E5%9D%A6%E5%88%A9%E5%85%AC%E5%9B%AD/</link>
+      <pubDate>Fri, 11 Apr 2014 18:15:02 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%96%AF%E5%9D%A6%E5%88%A9%E5%85%AC%E5%9B%AD/</guid>
+      <description>&lt;p&gt;今天天气大好，来市区和Omar走了圈斯坦利公园。听着Omar讲述他这回去意大利探亲时碰到的一位女生。他是完全迷上这位姑娘了。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>期中考</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%9C%9F%E4%B8%AD%E8%80%83/</link>
+      <pubDate>Tue, 04 Mar 2014 21:37:11 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%9C%9F%E4%B8%AD%E8%80%83/</guid>
+      <description>&lt;p&gt;这个学期选了一门Computer Algebra的课程，非常有趣。&lt;/p&gt;
+&lt;p&gt;其中期中考更是需要带回家来完成。一共有24个小时可以用来完成期中考，可以参考任何资料，唯独不能去搜现成的答案（当然不可以），最终结果也不能手写，只能用Latex排版。&lt;/p&gt;
+&lt;p&gt;这就非常有趣了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>生日</title>
+      <link>https://blog.dingkewz.com/post/personal/%E7%94%9F%E6%97%A5/</link>
+      <pubDate>Mon, 18 Nov 2013 17:57:55 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E7%94%9F%E6%97%A5/</guid>
+      <description>&lt;p&gt;今天我生日，太感谢室友了！他们两人做了一桌的菜给我庆生啊！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>日落</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%97%A5%E8%90%BD/</link>
+      <pubDate>Fri, 20 Sep 2013 17:51:07 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%97%A5%E8%90%BD/</guid>
+      <description>&lt;p&gt;日落真美！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>我不适合打德州</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%88%91%E4%B8%8D%E9%80%82%E5%90%88%E6%89%93%E5%BE%B7%E5%B7%9E/</link>
+      <pubDate>Tue, 15 Jan 2013 17:36:04 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%88%91%E4%B8%8D%E9%80%82%E5%90%88%E6%89%93%E5%BE%B7%E5%B7%9E/</guid>
+      <description>&lt;p&gt;我完全不适合打德州啊……输得只能当手表了！哈哈哈！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;身边的小伙伴都是戏精啊。玩德州，一个个都是扑克脸。玩狼人杀，节奏带的飞起。完全被秒杀。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搬家</title>
+      <link>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6/</link>
+      <pubDate>Tue, 02 Oct 2012 17:27:47 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E6%90%AC%E5%AE%B6/</guid>
+      <description>&lt;p&gt;花了好长时间终于搬完家了，感觉很棒！交通便利，风景比以前的地下室好太多! 房东还是一对很友好的山东夫妇！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>午后的校园</title>
+      <link>https://blog.dingkewz.com/post/personal/%E5%8D%88%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD/</link>
+      <pubDate>Wed, 15 Aug 2012 17:10:22 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E5%8D%88%E5%90%8E%E7%9A%84%E6%A0%A1%E5%9B%AD/</guid>
+      <description>&lt;p&gt;夏日午后的学校最是惬意。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>回家真好</title>
+      <link>https://blog.dingkewz.com/post/personal/%E5%9B%9E%E5%AE%B6%E7%9C%9F%E5%A5%BD/</link>
+      <pubDate>Tue, 14 Aug 2012 17:05:11 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E5%9B%9E%E5%AE%B6%E7%9C%9F%E5%A5%BD/</guid>
+      <description>&lt;p&gt;暑假回国感觉好舒服！&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>赏樱</title>
+      <link>https://blog.dingkewz.com/post/personal/%E8%B5%8F%E6%A8%B1/</link>
+      <pubDate>Tue, 27 Mar 2012 16:45:23 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/personal/%E8%B5%8F%E6%A8%B1/</guid>
+      <description>&lt;p&gt;樱花很美呀。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>迷途</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E8%BF%B7%E9%80%94/</link>
       <pubDate>Thu, 22 Dec 2011 13:10:40 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E8%BF%B7%E9%80%94/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E8%BF%B7%E9%80%94/</guid>
       <description>&lt;p&gt;我发誓我再也不要和这两个醉酒的疯子出去玩了！&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/lost_in_hotspring.jpg&#34; alt=&#34;lost in harrison hot spring&#34; style=&#34;width: 500px;&#34;/&gt;
-&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>初雪</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E5%88%9D%E9%9B%AA/</link>
       <pubDate>Fri, 09 Dec 2011 13:01:53 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E9%9B%AA/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E5%88%9D%E9%9B%AA/</guid>
       <description>&lt;p&gt;下雪啦！一个南方人终于在雪地中滚做一团！&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/first_home_snow_01.jpg&#34; alt=&#34;snow in vancouver home 01&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>这都不是事</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</link>
       <pubDate>Tue, 08 Nov 2011 12:27:52 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E8%BF%99%E9%83%BD%E4%B8%8D%E6%98%AF%E4%BA%8B/</guid>
       <description>&lt;p&gt;这个学期选了5门数学课程，Omar看到都要疯了。然而我觉得这都不是事儿，哈哈哈。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/math_semester.jpg&#34; alt=&#34;semester schedule&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
-
-&lt;p&gt;仔细想来，我选这么多数学课程也是挺神奇的一件事情。
-&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;仔细想来，我选这么多数学课程也是挺神奇的一件事情。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>初探SFU</title>
-      <link>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E6%8E%A2sfu/</link>
+      <link>https://blog.dingkewz.com/post/personal/%E5%88%9D%E6%8E%A2sfu/</link>
       <pubDate>Fri, 26 Aug 2011 23:45:19 +0800</pubDate>
       
-      <guid>https://dingdean.github.io/my-blog/post/personal/%E5%88%9D%E6%8E%A2sfu/</guid>
+      <guid>https://blog.dingkewz.com/post/personal/%E5%88%9D%E6%8E%A2sfu/</guid>
       <description>&lt;p&gt;SFU, 我未来四年的校园，很美很宁静。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://dingdean.github.io/my-blog/my-blog/pics/first_year_school_autumn.jpg&#34; alt=&#34;Drawing&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
   </channel>

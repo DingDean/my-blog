@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[译]用GoLang实现微服务（四） - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Ewan Valentine" /><meta name="description" content="系列文章的第四篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术" />
+<meta name="keywords" content="golang, microservices, google, go, programming, grpc, protobuf, prot, proto" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="[译]用GoLang实现微服务（四）" />
+<meta property="og:description" content="系列文章的第四篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-04-17T18:11:32+08:00" />
+<meta property="article:modified_time" content="2018-05-14T18:11:32+08:00" />
+
+<meta itemprop="name" content="[译]用GoLang实现微服务（四）">
+<meta itemprop="description" content="系列文章的第四篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"><meta itemprop="datePublished" content="2018-04-17T18:11:32+08:00" />
+<meta itemprop="dateModified" content="2018-05-14T18:11:32+08:00" />
+<meta itemprop="wordCount" content="3738">
+<meta itemprop="keywords" content="Golang,翻译,Docker,Kubernetes,CI,Microservice_Golang," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[译]用GoLang实现微服务（四）"/>
+<meta name="twitter:description" content="系列文章的第四篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[译]用GoLang实现微服务（四）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3738 字 </span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其四。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-4/">https://ewanvalentine.io/microservices-in-golang-part-3/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><del><em><strong>初稿</strong></em></del> -&gt; <em><strong>润色</strong></em></p>
+<p>在<a href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/">上一篇文章中</a>, 我们创建用户(User)服务，并且引入了数据库来保存数据。这回，我们希望用户微服务能安全的保存用户密码，并且有完整的机制来验证用户，从而在我们的几个微服务之间分发安全秘钥以互相沟通。</p>
+<p>请特别注意，我重构了项目结构，现在每个微服务都是一个单独的仓库，不再共处于一个父目录之下了。这样做更方便于代码的部署。你们大概记得，我一开始是想把所有微服务都放在一个仓库下的，但后来发现这样做使我很难管理 Go 项目的依赖，总是遇到一些冲突。随着每个项目的独立，我有必要讲讲如何测试，运行和部署一个个微服务。与此同时，由于各个微服务的独立，我们目前也不能使用 docker-compose 了，但这对我们的影响暂时不大。如果你对此有什么好的建议，欢迎给我<a href="mailto:ewan.valentine89@gmail.com">写邮件</a>。</p>
+<p>此外，你需要手动运行数据库了，就像下面这样:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -d -p 5432:5432 postgres
+$ docker run -d -p 27017:27017 mongo
+</code></pre></div><p>独立出来的项目代码链接如下:</p>
+<ul>
+<li><a href="https://github.com/EwanValentine/shippy-consignment-service">https://github.com/EwanValentine/shippy-consignment-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-user-service">https://github.com/EwanValentine/shippy-user-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-vessel-service">https://github.com/EwanValentine/shippy-vessel-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-user-cli">https://github.com/EwanValentine/shippy-user-cli</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-consignment-cli">https://github.com/EwanValentine/shippy-consignment-cli</a></li>
+</ul>
+<h1 id="保存用户密码">保存用户密码</h1>
+<p>首先，我们要更新用户微服务的句柄，从而将用户的密码以哈希值的形式保存下来。你可能会想这不是废话吗，当然不能存明文！但即使如此强调，但还是有项目明文存储密码啊！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-user-service/handler.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">...</span> 
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Auth</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Logging in with:&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Email</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Password</span>)
+	<span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">GetByEmail</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Email</span>)
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">user</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#75715e">// Compares our given password against the hashed password
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// stored in the database
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">CompareHashAndPassword</span>([]byte(<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Password</span>), []byte(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Password</span>)); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">tokenService</span>.<span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">user</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Token</span> = <span style="color:#a6e22e">token</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+
+	<span style="color:#75715e">// Generates a hashed version of our password
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">hashedPass</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">GenerateFromPassword</span>([]byte(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Password</span>), <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">DefaultCost</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Password</span> = string(<span style="color:#a6e22e">hashedPass</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">req</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">User</span> = <span style="color:#a6e22e">req</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>如你所见，我们在创建新用户之前，会先将其密码哈希化，并以此哈希值作为其实际密码。除此之外，在认证的时候，我们是以此哈希值做匹配的。</p>
+<p>至此，我们可以确信的通过数据库比对用户。我们需要一个机制来在各个服务和用户界面随时随地的使用此能力。虽然有很多解决方案，但我所知最简单的一个方案就是使用<a href="https://jwt.io/">JWT</a>。</p>
+<p>在我们继续之前，请务必查看一下 Dockerfile 和 Makefile 文件的些许变化。新的 Git 项目结构意味着新的依赖引入语句。</p>
+<h1 id="jwt">JWT</h1>
+<p><a href="https://jwt.io/">JWT</a> 代表 JSON Web Token，是一个分布式的安全协议。和Oauth相似，协议使用算法为一个用户生成唯一的哈希值，然后使用此哈希值来比对用户。不仅如此，此哈希值包含了用户的元信息，因此，它也可以成为另一个 Token 的一部分。让我们看一个具体的 JWT 例子：</p>
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+</code></pre><p>此 Token 被 <code>.</code> 分割成三个部分。每个部分都有其重要性。第一部分包含了用于描述 Token 自身的元数据，包括其类型，所用的算法。客户端将以此信息来解析它。第二个部分包含了用户自定义的元数据，可以是用户的细节信息，一个过期时间，或者任何你想得到的信息。最后一个部分是验证签名，我们能用它验证此 Token 在传输的过程中未被修改。</p>
+<p>当然了，JWT有其缺点和风险，<a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/">这篇文章</a>对此做了非常好的总结。我也建议你读一下<a href="https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java">这篇文章</a>来学习确保安全性的最佳实践。</p>
+<p>说到安全性的最佳实践，有一点我想特别强调一下，那就是在生成 Token 时使用用户的 IP 地址。这能防止另一个人在盗取你的 Token 后在另一个设备上使用。同时请确保你使用Https，它的加密信道可以有效防止中间人攻击。</p>
+<p>我们可以将用于生成 JWT 的众多算法大致分为两个类别，即对称和非对称。对称算法就像我们现在用的，加密和解密使用的是同一个秘钥。非对称算法则使用公钥和私钥进行验证。非对称算法非常适合于在多个服务间进行认证。</p>
+<p>下面的两个链接将提供更多的资源:</p>
+<ul>
+<li><a href="https://auth0.com/blog/json-web-token-signing-algorithms-overview/">Autho</a></li>
+<li><a href="https://tools.ietf.org/html/rfc7518#section-3">RFC spec for algorithms</a></li>
+</ul>
+<p>既然我们已经大致了解了 JWT，那是时候在 token_service.go 中小试牛刀了。我们将使用 <code>github.com/dgrijalva/jwt-go</code> 来帮助我们实现 JWT，这个库同时还有很多非常棒的实例可供我们参考。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-user-service/token_service.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;time&#34;</span>
+
+    <span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy-user-service/proto/user&#34;</span>
+    <span style="color:#e6db74">&#34;github.com/dgrijalva/jwt-go&#34;</span>
+    )
+
+<span style="color:#66d9ef">var</span> (
+
+    <span style="color:#75715e">// 定义一个安全秘钥，它将用于生成我们的token
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在您实际的使用中，请务必使用一个更安全的方法来
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 生成此安全秘钥，比如 md5。
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">key</span> = []byte(<span style="color:#e6db74">&#34;mySuperSecretKeyLol&#34;</span>)
+    )
+
+<span style="color:#75715e">// CustomClaims 是一个自定义的元数据，它的哈希值会被当作JWT的第二部分
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">CustomClaims</span> <span style="color:#66d9ef">struct</span> {
+  <span style="color:#a6e22e">User</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>
+    <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">StandardClaims</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Authable</span> <span style="color:#66d9ef">interface</span> {
+  <span style="color:#a6e22e">Decode</span>(<span style="color:#a6e22e">token</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">CustomClaims</span>, <span style="color:#66d9ef">error</span>)
+    <span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>)
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TokenService</span> <span style="color:#66d9ef">struct</span> {
+  <span style="color:#a6e22e">repo</span> <span style="color:#a6e22e">Repository</span>
+}
+
+<span style="color:#75715e">// 将一个 token 字符串解码成 token 对象
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TokenService</span>) <span style="color:#a6e22e">Decode</span>(<span style="color:#a6e22e">tokenString</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">CustomClaims</span>, <span style="color:#66d9ef">error</span>) {
+
+  <span style="color:#75715e">// 解析 token
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">ParseWithClaims</span>(<span style="color:#a6e22e">tokenString</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">CustomClaims</span>{}, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Token</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">error</span>) {
+      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">key</span>, <span style="color:#66d9ef">nil</span>
+      })
+
+  <span style="color:#75715e">// 验证 token 并且返回自定义的 claims
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">claims</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Claims</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">CustomClaims</span>); <span style="color:#a6e22e">ok</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Valid</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">claims</span>, <span style="color:#66d9ef">nil</span>
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+  }
+}
+
+<span style="color:#75715e">// 将一个 claim 编程成一个 JWT
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TokenService</span>) <span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+
+<span style="color:#a6e22e">expireToken</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Hour</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">72</span>).<span style="color:#a6e22e">Unix</span>()
+  <span style="color:#75715e">// 生成 claims
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">claims</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CustomClaims</span>{
+   <span style="color:#a6e22e">user</span>,
+     <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">StandardClaims</span>{
+  <span style="color:#a6e22e">ExpiresAt</span>: <span style="color:#a6e22e">expireToken</span>,
+  <span style="color:#a6e22e">Issuer</span>:    <span style="color:#e6db74">&#34;go.micro.srv.user&#34;</span>,
+     },
+  }
+
+  <span style="color:#75715e">// 生成 token
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewWithClaims</span>(<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">SigningMethodHS256</span>, <span style="color:#a6e22e">claims</span>)
+
+  <span style="color:#75715e">// 返回签名后的 token 
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">SignedString</span>(<span style="color:#a6e22e">key</span>)
+}
+</code></pre></div><p>一如既往，我把许多的细节都写在了代码注释中。总的来说，Decode 接受一个字符串 token，将其解析成 token 对象，随之认证，最后如果认证通过，则返回 claim。我们可以使用这 claim 中包含的用户元数据来认证用户。</p>
+<p>Encode 恰好与 Decode 相反，它接收你自定义的元数据，将其哈希成一个JWT，并返回它。</p>
+<p>请注意我们在文件开头定义了一个 &lsquo;key&rsquo; 变量，这是我们的安全秘钥，请在生产环境中务必使用更为安全的方法生成此安全秘钥！</p>
+<p>恭喜，我们现在有了一个微服务可以用于认证 token。</p>
+<p>让我们再更新一下 user-cli 吧。在这一版代码中，我将其精简成了一个单纯的脚本，不接收任何参数，且只返回一个固定的token。但这是暂时的，在以后我会来优化此脚本。我们就暂时使用它来做测试之用吧！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-user-cli/cli.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy-user-service/proto/user&#34;</span>
+	<span style="color:#a6e22e">micro</span> <span style="color:#e6db74">&#34;github.com/micro/go-micro&#34;</span>
+	<span style="color:#a6e22e">microclient</span> <span style="color:#e6db74">&#34;github.com/micro/go-micro/client&#34;</span>
+	<span style="color:#e6db74">&#34;golang.org/x/net/context&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">srv</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">NewService</span>(
+
+		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Name</span>(<span style="color:#e6db74">&#34;go.micro.srv.user-cli&#34;</span>),
+		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Version</span>(<span style="color:#e6db74">&#34;latest&#34;</span>),
+	)
+
+	<span style="color:#75715e">// Init will parse the command line flags.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">Init</span>()
+
+	<span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">NewUserServiceClient</span>(<span style="color:#e6db74">&#34;go.micro.srv.user&#34;</span>, <span style="color:#a6e22e">microclient</span>.<span style="color:#a6e22e">DefaultClient</span>)
+
+	<span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Ewan Valentine&#34;</span>
+	<span style="color:#a6e22e">email</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;ewan.valentine89@gmail.com&#34;</span>
+	<span style="color:#a6e22e">password</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;test123&#34;</span>
+	<span style="color:#a6e22e">company</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;BBC&#34;</span>
+
+	<span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{
+		<span style="color:#a6e22e">Name</span>:     <span style="color:#a6e22e">name</span>,
+		<span style="color:#a6e22e">Email</span>:    <span style="color:#a6e22e">email</span>,
+		<span style="color:#a6e22e">Password</span>: <span style="color:#a6e22e">password</span>,
+		<span style="color:#a6e22e">Company</span>:  <span style="color:#a6e22e">company</span>,
+	})
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Created: %s&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">User</span>.<span style="color:#a6e22e">Id</span>)
+
+	<span style="color:#a6e22e">getAll</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">GetAll</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Request</span>{})
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not list users: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">getAll</span>.<span style="color:#a6e22e">Users</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>)
+	}
+
+	<span style="color:#a6e22e">authResponse</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Auth</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{
+		<span style="color:#a6e22e">Email</span>:    <span style="color:#a6e22e">email</span>,
+		<span style="color:#a6e22e">Password</span>: <span style="color:#a6e22e">password</span>,
+	})
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not authenticate user: %s error: %v\n&#34;</span>, <span style="color:#a6e22e">email</span>, <span style="color:#a6e22e">err</span>)
+	}
+
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Your access token is: %s \n&#34;</span>, <span style="color:#a6e22e">authResponse</span>.<span style="color:#a6e22e">Token</span>)
+
+	<span style="color:#75715e">// let&#39;s just exit because
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+}
+</code></pre></div><p>你瞧，代码中我们写死了几个变量(name, email, password, company)，请用你认为合适的值替换它们，并运行<code>make build &amp; make run</code>，你应该获得一个 token。请保存好这个 token, 你很快就会用到它的！</p>
+<p>现在让我们更新 consignment-cli, 从而让它接受一个字符串token，并将其传入我们 consignment-service 的上下文中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-consignment-cli/cli.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">...</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+  <span style="color:#a6e22e">cmd</span>.<span style="color:#a6e22e">Init</span>()
+
+    <span style="color:#75715e">// Create new greeter client
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">NewShippingServiceClient</span>(<span style="color:#e6db74">&#34;go.micro.srv.consignment&#34;</span>, <span style="color:#a6e22e">microclient</span>.<span style="color:#a6e22e">DefaultClient</span>)
+
+    <span style="color:#75715e">// Contact the server and print out its response.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">file</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">defaultFilename</span>
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">token</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>)
+
+    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>) &lt; <span style="color:#ae81ff">3</span> {
+      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;Not enough arguments, expecing file and token.&#34;</span>))
+    }
+
+  <span style="color:#a6e22e">file</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>]
+    <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">2</span>]
+
+    <span style="color:#a6e22e">consignment</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parseFile</span>(<span style="color:#a6e22e">file</span>)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+      <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not parse file: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+  <span style="color:#75715e">// 创建一个包含自定义token 的上下文
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 这个上下文会在我们调用consignment-service时被传入
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">metadata</span>.<span style="color:#a6e22e">NewContext</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{
+  <span style="color:#e6db74">&#34;token&#34;</span>: <span style="color:#a6e22e">token</span>,
+  })
+
+   <span style="color:#75715e">// First call using our tokenised context
+</span><span style="color:#75715e"></span>   <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">CreateConsignment</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">consignment</span>)
+     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+       <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+     }
+   <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Created: %t&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Created</span>)
+
+     <span style="color:#75715e">// Second call
+</span><span style="color:#75715e"></span>     <span style="color:#a6e22e">getAll</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">GetConsignments</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">GetRequest</span>{})
+     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+       <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not list consignments: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+     }
+   <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">getAll</span>.<span style="color:#a6e22e">Consignments</span> {
+     <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>)
+   }
+}
+</code></pre></div><p>现在，consignment-service 需要监听任何使用token 请求，并将其传入 user-service：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-consignment-service/main.go
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+  <span style="color:#f92672">...</span> 
+    <span style="color:#75715e">// Create a new service. Optionally include some options here.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">srv</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">NewService</span>(
+
+        <span style="color:#75715e">// This name must match the package name given in your protobuf definition
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Name</span>(<span style="color:#e6db74">&#34;go.micro.srv.consignment&#34;</span>),
+        <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Version</span>(<span style="color:#e6db74">&#34;latest&#34;</span>),
+        <span style="color:#75715e">// Our auth middleware
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">WrapHandler</span>(<span style="color:#a6e22e">AuthWrapper</span>),
+        )
+    <span style="color:#f92672">...</span>
+}
+
+<span style="color:#f92672">...</span> 
+
+<span style="color:#75715e">// AuthWrapper 是一个高阶函数，它接受一个函数A，且返回一个函数B。其返回值函数接受三个参数：
+</span><span style="color:#75715e">// context, request 以及 response interface.
+</span><span style="color:#75715e">// Token 值提取于consignment-ci中定义的上下文。我们将使用 user-service 认证这个 token.
+</span><span style="color:#75715e">// 如果认证通过，那么函数A会被执行，否则将返回错误。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AuthWrapper</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">HandlerFunc</span>) <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">HandlerFunc</span> {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">resp</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">meta</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">metadata</span>.<span style="color:#a6e22e">FromContext</span>(<span style="color:#a6e22e">ctx</span>)
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;no auth meta-data found in request&#34;</span>)
+    }
+
+    <span style="color:#75715e">// Note this is now uppercase (not entirely sure why this is...)
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">meta</span>[<span style="color:#e6db74">&#34;Token&#34;</span>]
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Authenticating with token: &#34;</span>, <span style="color:#a6e22e">token</span>)
+
+    <span style="color:#75715e">// Auth here
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">authClient</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">userService</span>.<span style="color:#a6e22e">NewUserServiceClient</span>(<span style="color:#e6db74">&#34;go.micro.srv.user&#34;</span>, <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">DefaultClient</span>)
+    <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">authClient</span>.<span style="color:#a6e22e">ValidateToken</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">userService</span>.<span style="color:#a6e22e">Token</span>{
+      <span style="color:#a6e22e">Token</span>: <span style="color:#a6e22e">token</span>,
+      })
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+    }
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">resp</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+  }
+}
+</code></pre></div><p>让我们使用一下 consignment-cli吧。步入我们全新的 shippy-consignmnt-cli 文件夹并运行 <code>make build</code> 来构建一个全新的 docker 镜像:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ make build
+$ docker run --net<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;host&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span> -e MICRO_REGISTRY<span style="color:#f92672">=</span>mdns <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      consignment-cli consignment.json <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>      &lt;TOKEN_HERE&gt;
+</code></pre></div><p>请注意我们使用了 <code>--net=&quot;host&quot;</code> 来运行我们的 docker 镜像。它让 docker 运行在我们的本地网络，即 127.0.0.1 或者 localhost，而不是一个 docker 的内部网络。如此，你便不需要进行端口的映射了，即你只需要指定 <code>-p 8080</code> 而非 <code>-p 8080:8080</code>。你可以在这里参考 <a href="https://docs.docker.com/engine/userguide/networking/">docker 网络的更多细节</a>。</p>
+<p>如果你执行了上述命令，你将看到一个新的consignment被创建出来。 试着从安全秘钥中删除几个字符，再运行上述命令，不出意外，你将收获一个错误。</p>
+<p>好了，我们终于创建了一个 JWT 服务以及一个用于认证 JWT 秘钥的中间层来认证我们的用户。如果你不想使用 go-micro，而是使用原生的 grpc, 你需要将你的中间件改成下面的样子:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#f92672">...</span> 
+    <span style="color:#a6e22e">myServer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">NewServer</span>(
+        <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">UnaryInterceptor</span>(<span style="color:#a6e22e">grpc_middleware</span>.<span style="color:#a6e22e">ChainUnaryServer</span>(<span style="color:#a6e22e">AuthInterceptor</span>),
+    )
+    <span style="color:#f92672">...</span> 
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AuthInterceptor</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#66d9ef">interface</span>{}, <span style="color:#a6e22e">info</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">UnaryServerInfo</span>, <span style="color:#a6e22e">handler</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">UnaryHandler</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">error</span>) {
+
+    <span style="color:#75715e">// Set up a connection to the server.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">Dial</span>(<span style="color:#a6e22e">authAddress</span>, <span style="color:#a6e22e">grpc</span>.<span style="color:#a6e22e">WithInsecure</span>())
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;did not connect: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Close</span>()
+    <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">NewAuthClient</span>(<span style="color:#a6e22e">conn</span>)
+    <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">ValidateToken</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ValidateToken</span>{<span style="color:#a6e22e">Token</span>: <span style="color:#a6e22e">token</span>})
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;could not authenticate: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">handler</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">req</span>)
+}
+</code></pre></div><p>上面的代码并不能很好的运行在本地网络。但我们并不需要在本地运行每一个微服务。微服务之间需要相互独立，且每个都能在隔离的环境中被测试。具体到当前的例子，我们可能不希望运行 auth-service。我认为在代码中能暂时关闭或开启某项服务是一个好点子。</p>
+<p>比如我在 user-service 中使用了一个控制变量<code>DISABLE_AUTH</code>来控制是否使用 auth-service。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-user-service/main.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">...</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">AuthWrapper</span>(<span style="color:#a6e22e">fn</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">HandlerFunc</span>) <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">HandlerFunc</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">resp</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">error</span> {
+        <span style="color:#75715e">// This skips our auth check if DISABLE_AUTH is set to true
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;DISABLE_AUTH&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;true&#34;</span> {
+			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">resp</span>)
+		}
+		<span style="color:#f92672">...</span>
+	}
+}
+</code></pre></div><p>我们可以在 Makefile 中定义这个控制变量:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// shippy-user-service/Makefile
+</span><span style="color:#75715e"></span><span style="color:#f92672">...</span>
+<span style="color:#a6e22e">run</span>:
+	<span style="color:#a6e22e">docker</span> <span style="color:#a6e22e">run</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">d</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">net</span>=<span style="color:#e6db74">&#34;host&#34;</span> \
+		<span style="color:#f92672">-</span><span style="color:#a6e22e">p</span> <span style="color:#ae81ff">50052</span> \
+		<span style="color:#f92672">-</span><span style="color:#a6e22e">e</span> <span style="color:#a6e22e">MICRO_SERVER_ADDRESS</span>=:<span style="color:#ae81ff">50052</span> \
+		<span style="color:#f92672">-</span><span style="color:#a6e22e">e</span> <span style="color:#a6e22e">MICRO_REGISTRY</span>=<span style="color:#a6e22e">mdns</span> \
+		<span style="color:#f92672">-</span><span style="color:#a6e22e">e</span> <span style="color:#a6e22e">DISABLE_AUTH</span>=<span style="color:#66d9ef">true</span> \
+		<span style="color:#a6e22e">consignment</span><span style="color:#f92672">-</span><span style="color:#a6e22e">service</span>
+</code></pre></div><p>这个方法能让你的一些微服务在本地运行与测试。当然了，有很多实现此功能的方法，我个人认为上面的方法是最简单的。同时，如果你对如何让一个单一仓库在本地运行有任何建议，请务必告诉我，不胜感激！</p>
+<p>任何漏洞，错误或者反馈，欢迎你通过邮件[告诉我](mailto: <a href="mailto:ewan.valentine89@gmail.com">ewan.valentine89@gmail.com</a>)。</p>
+<p>如果你觉得这篇文章对你有所帮助，你可以请原作者喝杯咖啡！链接如下：<a href="https://monzo.me/ewanvalentine">https://monzo.me/ewanvalentine</a>
+你也可以在<a href="https://www.patreon.com/ewanvalentine">patreon</a>上支持原作者！</p>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Ewan Valentine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-05-14</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/golang/">Golang</a>
+          
+          <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+          
+          <a href="/tags/docker/">Docker</a>
+          
+          <a href="/tags/kubernetes/">Kubernetes</a>
+          
+          <a href="/tags/ci/">CI</a>
+          
+          <a href="/tags/microservice_golang/">Microservice_Golang</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/tech/byzantine_general_problem/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">他山之石之Byzantine Generals Problem</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/tech/go_ewan_microservices_in_golang_part_3/">
+            <span class="next-text nav-default">[译]用GoLang实现微服务（三）</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

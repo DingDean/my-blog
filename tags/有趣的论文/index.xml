@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>有趣的论文 on 二向箔</title>
+    <link>https://blog.dingkewz.com/tags/%E6%9C%89%E8%B6%A3%E7%9A%84%E8%AE%BA%E6%96%87/</link>
+    <description>Recent content in 有趣的论文 on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 14 Jul 2018 10:33:02 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/%E6%9C%89%E8%B6%A3%E7%9A%84%E8%AE%BA%E6%96%87/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>他山之石之Byzantine Generals Problem</title>
+      <link>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</link>
+      <pubDate>Sat, 14 Jul 2018 10:33:02 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/byzantine_general_problem/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;论文出处: &lt;a href=&#34;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&#34;&gt;https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reliable computer systems must handle malfunctioning components that give confilicting information to different parts of the system.
+This situation can be expressed abstractly in terms of a group of generals of the Byzantine army camped with their troops around an enmemy city.
+Communicating only by messenger, the generals must agree upon a common battle plan.
+However, one or more of them may be traitors who will try to confuse the others.
+The problem is to &lt;strong&gt;find an algorithm to ensure that the loyal generals will reach agreement.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个可靠的计算系统需要得当的处理其子部件因紊乱而向系统的其他部分发送相左的消息的情况。
+这种情况可以抽象为以下场景：&lt;/p&gt;
+&lt;p&gt;一群拜占庭将军围着一座敌城驻扎了多个军团，每个军团存在一位将军。在只能通过信使通信的情况下，他们需要决定一个共同的作战行动。
+其中的几位将军有可能是叛徒，会不遗余力得误导其他人。
+问题的关键就是&lt;strong&gt;找出一个算法，从而确保所有的忠将作出一致的决定。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>他山之石之Strategies of setting and implementing goals</title>
+      <link>https://blog.dingkewz.com/post/books/strategies_of_setting_and_implementing_goals_gabriele_peter/</link>
+      <pubDate>Sat, 30 Dec 2017 10:54:48 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/books/strategies_of_setting_and_implementing_goals_gabriele_peter/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Life ultimately means tasking the responsibility to find the right answer to its problems and to fulfill the tasks which it constantly sets for each individuals.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这篇&lt;a href=&#34;http://www.psych.nyu.edu/gollwitzer/OettingenGollwitzer.pdf&#34;&gt;论文&lt;/a&gt;论证了设定目标与实现目标的个别方法论，分别为Mental Contrasting以及Implementation Intentions。&lt;/p&gt;
+&lt;p&gt;Mental Contrasting是一个对比的过程：对比理想中的自己与现实中的自己，发现其中的差距。为了弥补两者的差距，需要定量得发觉其中的原因，从而提炼出需要的目标。
+比如我想象一年后的自己拥有六块腹肌，而现实是我有“一大块”腹肌。
+为了拥有六块腹肌，我需要达成的目标是，每天运动1小时，控制饮食等等。
+与Mental Contrasting相伴的还有两种不健康的形式，即Mental Indulging与Mental Dwelling。
+前者只沉浸在对理想的假象中，不面对现实，而后者则想法，只看到了现实的不足而不去设想理想的未来。应该避免这两种情况的发生。&lt;/p&gt;
+&lt;p&gt;Implementation Intentions即一种心理预设，它大致上以“如果&amp;hellip;，我要&amp;hellip;.”的形式出现。
+文中总结了四个阻碍目标达成的原因：难以开始行动，难以坚持，无法意识到目标是徒劳的，以及不挑战自己的极限。
+Implementation Intensions为这四个困难都提供了解决的心理预设。
+比如我要练腹肌，那么我给我自己一个心理预设，“如果看书看不下去时，那么我要做一组卷腹”。
+那么每当看书看不下去时，心理会在很大程度上触发“做一组卷腹”的预设。&lt;/p&gt;
+&lt;p&gt;其实，我们可以把寻找目标，实现目标的过程比喻为运用神经元网络学习数据的过程。
+我们的目标即学习的目标，每一个“如果&amp;hellip;，我要&amp;hellip;”即神经元，“看书看不下去”就是一个阈值，“做一组卷腹”即单元输出。寻找这些“如果..，我要&amp;hellip;”的过程即各种神经元网络算法。&lt;/p&gt;
+&lt;p&gt;以下是详细的摘记，希望能有所裨益。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

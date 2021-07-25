@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[译]用GoLang实现微服务（三） - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Ewan Valentine" /><meta name="description" content="系列文章的第三篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术" />
+<meta name="keywords" content="golang, microservices, google, go, programming, grpc, protobuf, prot, proto" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="[译]用GoLang实现微服务（三）" />
+<meta property="og:description" content="系列文章的第三篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-04-08T17:04:26+08:00" />
+<meta property="article:modified_time" content="2018-04-10T17:04:26+08:00" />
+
+<meta itemprop="name" content="[译]用GoLang实现微服务（三）">
+<meta itemprop="description" content="系列文章的第三篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"><meta itemprop="datePublished" content="2018-04-08T17:04:26+08:00" />
+<meta itemprop="dateModified" content="2018-04-10T17:04:26+08:00" />
+<meta itemprop="wordCount" content="7168">
+<meta itemprop="keywords" content="Golang,翻译,Docker,Kubernetes,CI,Microservice_Golang," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[译]用GoLang实现微服务（三）"/>
+<meta name="twitter:description" content="系列文章的第三篇，讲述用Go实现微服务，同时会用到诸如Docker, Kubernetes, CircleCI, go-micro, MongoDB等技术"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[译]用GoLang实现微服务（三）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-04-08 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7168 字 </span>
+        <span class="more-meta"> 预计阅读 15 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其三。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-3/">https://ewanvalentine.io/microservices-in-golang-part-3/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><del><em><strong>初稿</strong></em></del> -&gt; <em><strong>润色</strong></em></p>
+<p>在<a href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/">上一篇文章中</a>, 我们了解了<a href="https://github.com/micro/go-micro">go-micro</a> 以及 <a href="https://www.docker.com/">Docker</a>的基础。同时引入了我们的第二个微服务，货船服务（vessel-service）。那么在此文中，我们将要了解一下 <a href="https://docs.docker.com/compose/">docker-compose</a>，并学会用它更好的运行和管理部署在本地的众多微服务。此外，我们还会稍微讲一下几种不同的数据库以及写下我们的第三个微服务！</p>
+<h1 id="必要条件">必要条件</h1>
+<p><a href="https://docs.docker.com/compose/install/">安装 docker-compose</a></p>
+<h1 id="选择一个数据库">选择一个数据库</h1>
+<p>至今为止，我们从没有真正保存过我们的数据，它们永远存在于内存中，这以为这当我们的微服务重启时，一切数据都会消失。这绝非好事，所以我们需要保存，恢复和搜寻数据的能力，也就是数据库。</p>
+<p>微服务的魅力之一就是你可以为每一个微服务提供完全不同的数据库。当然绝大部分人是不会这么做的，毕竟要同时管理好几个不同类型的数据库绝非易事。但是总会存在一个微服务，会让你选择一个不同的数据库来更好的处理它所保有的各种数据。所以给一个微服务使用不一样的数据库完全有其意义。而微服务架构让这种数据库的转变来得异常简单，因为两者本来就是分离的——数据库本身就该是一个微服务，不是吗？</p>
+<p>如何为你的微服务选用“正确”的数据库？这问题本身就值得一份完全不同的文章，你可以看看<a href="https://www.infoworld.com/article/3236291/database/how-to-choose-a-database-for-your-microservices.html">这一篇</a>，所以我们就不在此深入了。尽管如此，但如果你的数据可能不那么严谨，或者一致性不高，那么一个 NoSQL 类型的数据库会是一个好选择。因为这样的数据库对于你能保存的东西及格式非常灵活，并且能完美搭配 JSON 使用。我们将要用 MongoDB 作为我们的数据库选型。选择它的原因无外乎它有高效的性能，广泛的支持以及一个非常棒的在线社区。</p>
+<p>如果你的数据在定义上更加完整和严谨，性质上更加关系型的话，选用传统的关系型数据库会更好。在关系型数据库的选择上，也没有什么太多硬性的规定。不过最好仔细研究下你的数据结构，想想你的微服务是读的更多呢，还是写的更多？询问的复杂度几何？试着根据你的回答来寻找合适的数据库吧。而我们呢，将使用 PostgreSQL，因为它高效，且是我熟悉的一种关系型数据库:)。你完全可以使用 MySQL，MariaDB或者其他任何的数据库。</p>
+<p>如果你自己不想运维一个数据库的话，亚马逊和谷歌为这些数据库都提供非常好的云端解决方案（推荐）。<a href="https://www.compose.com/">compose</a>也是一个好方案，它能运行数个不同类型的数据库，并且完全可控的，易拓展，同时它为了优化连接延迟，在云供应商的选择上，它会选择你微服务所使用的云供应商。</p>
+<p>Amazon</p>
+<ul>
+<li>RDBMS: <a href="https://aws.amazon.com/rds/">https://aws.amazon.com/rds/</a></li>
+<li>NoSQL: <a href="https://aws.amazon.com/dynamodb/">https://aws.amazon.com/dynamodb/</a></li>
+</ul>
+<p>Google</p>
+<ul>
+<li>RDBMS: <a href="https://cloud.google.com/spanner/">https://cloud.google.com/spanner/</a></li>
+<li>NoSQL: <a href="https://cloud.google.com/datastore/">https://cloud.google.com/datastore/</a></li>
+</ul>
+<h1 id="docker-compose">Docker-Compose</h1>
+<p>上期我们介绍过 Docker, 它能让我们的微服务运行在一个轻量的，拥有独立运行时和依赖的容器中。但你们大概也感觉到了，为每一个微服务都写一个 Makefile 是在是太麻烦了。让我们看看 docker-compose 是如何解决这个麻烦的！Docker-compose 通过一个 yaml 配置文件就可以让你运行一系列的容器，并且你可以为每一个容器提供它们运行时(runtime)的元数据(metadata)。用 docker-compose 来运行容器类似于使用我们先前使用的 docker 命令。比如我们可以将下面的 docker 命令转换成对应的docker compose 配置文件的内容：</p>
+<p>docker 命令:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -p 50052:50051 -e MICRO_SERVER_ADDRESS<span style="color:#f92672">=</span>:50051 -e MICRO_REGISTRY<span style="color:#f92672">=</span>mdns vessel-service
+</code></pre></div><p>对应的 docker-compose 配置文件:</p>
+<pre><code>version: '3.1'
+
+services: 
+  vessel-service:
+    build: ./vessel-service
+    ports:
+      - 50052:50051
+    environment:
+      MICRO_REGISTRY: &quot;mdns&quot;
+      MICRO_SERVER_ADDRESS: &quot;:50051&quot;
+</code></pre><p>非常简单，不是吗？在你项目的根目录下新建<code>docker-compose.yaml</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
+<span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.1&#39;</span>
+
+<span style="color:#f92672">services</span>:
+
+  <span style="color:#f92672">consignment-cli</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./consignment-cli</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+
+  <span style="color:#f92672">consignment-service</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./consignment-service</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">50051</span>:<span style="color:#ae81ff">50051</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_ADDRESS</span>: <span style="color:#e6db74">&#34;:50051&#34;</span>
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+      <span style="color:#f92672">DB_HOST</span>: <span style="color:#e6db74">&#34;datastore:27017&#34;</span>
+
+  <span style="color:#f92672">vessel-service</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./vessel-service</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">50052</span>:<span style="color:#ae81ff">50051</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_ADDRESS</span>: <span style="color:#e6db74">&#34;:50051&#34;</span>
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+</code></pre></div><p>在这个文件中，我们首先定义了希望使用的 docker-compose 版本——3.1，随后列出了需要运维的微服务。完整的文件内容里会包含一些其他设定，诸如网络和存储(Volume)，但让我们暂时关注与微服务紧密相关的设定上吧。</p>
+<p>每个微服务都定义了一个名字，引入了 <code>build</code> 的路径，它指向一个存有 Dockerfile 的目录。docker-compose 会使用此路径下的 Dockerfile 来编译一个镜像。你也可以用 <code>image</code> 来替代 <code>build</code>，只要 <code>image</code> 的路径指向一个预编译好的镜像即可（我们以后会使用这种方式）。最后，你再定义你的端口指向和一些环境变量。</p>
+<p>你只需要执行 <code>docker-compose build</code> 就可以编译完成你的 docker-compose 栈。<code>docker-compose run</code> 就可以运行你的微服务，你也可以用 <code>docker-compose up -d</code> 可以让你的微服务成为一个后台进程。<code>docker ps</code> 会列出你当前运行的所有容器。<code>docker stop $(docker ps -qa)</code> 会关闭所有正在运行的容器。</p>
+<p>So let&rsquo;s run our stack. You should see lots of output and dockerfile&rsquo;s being built. You may also see an error from our CLI tool, but don&rsquo;t worry about that, it&rsquo;s mostly likely because it&rsquo;s ran prior to our other services. It&rsquo;s simply saying that it can&rsquo;t find them yet.</p>
+<p>Let&rsquo;s test it all worked by running our CLI tool. To run it through docker-compose, simply run $ docker-compose run consignment-cli once all of the other containers are running. You should see it run successfully, just as before.</p>
+<h1 id="entities--protobufs">Entities &amp;&amp; Protobufs</h1>
+<p>至今为止，我们都是把定义好的 protobuf 当作我们的主要数据结构。我们根据他来构建微服务的结构和功能。同时由于 protobuf 对数据的定义非常规范，我们便在数据库中复用了 protobuf 中的数据结构。这仔细想想也是非常神奇的一件事。</p>
+<p>但这种做法也有其局限性。有的时候，在 protobuf 中定义的数据结构不能轻易得被整理成合适的数据库结构。比如，又有的时候，protobuf 中数据的类型和数据库中的数据类型不能一一对应。比如我曾经想了非常久的时间，思考对于一个 MongoDB 数据，如何在 <code>Id string</code> 和 <code>Id bson.ObjectId</code> 类型之间转化。事实上 <code>bson.ObjectId</code> 就是一个 <code>string</code>，所以两个可以简单互换。我之前还遇到过一个问题，那就是</p>
+<p>However this approach does have its down-sides. Sometimes its tricky to marshal the code generated by protobuf into a valid database entity. Sometimes database technologies use custom types which are tricky to translate from the native types generated by protobuf. One problem I spent many many hours thinking about was how I could convert Id string to and from Id bson.ObjectId for Mongodb entities. It turns out that bson.ObjectId, is really just a string anyway, so you can marshal them together. Also, mongodb&rsquo;s id index is stored as _id internally, so you need a way to tie that to your Id string field as you can&rsquo;t really do _Id string. Which means finding a way to define custom tags for your protobuf files. But we&rsquo;ll get to that later.</p>
+<p><a href="https://www.reddit.com/r/golang/comments/77yd72/question_do_you_use_protobufs_in_place_of_structs/">许多人反对使用 protobuf 中的数据结构来作为数据库中的数据结构</a>。因为这样做的话，你的通信和数据存储之间就有很高的耦合性。</p>
+<p>通常来说，最好是在 protobuf 和数据库之间提供一层转换的逻辑。但这样做的话，你有可能会转换两个几乎一摸一样的数据结构，比如:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">service</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Service</span>) (<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+  <span style="color:#a6e22e">entity</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">models</span>.<span style="color:#a6e22e">User</span>{
+    <span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Name</span>.
+    <span style="color:#a6e22e">Email</span>: <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Email</span>,
+    <span style="color:#a6e22e">Password</span>: <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Password</span>, 
+  }
+  <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">entity</span>)
+  <span style="color:#f92672">...</span> 
+}
+</code></pre></div><p>乍看下，这也不太麻烦。但如果一个数据结构有好几层嵌套时，你就会发现要转换这层层嵌套的数据结构是有多么心烦。</p>
+<p>当然了，到底怎么做还是要取决你自己的喜好。我个人觉得为几乎一样的数据结构提供一层转换的逻辑不太有意义。毕竟 protobuf 中的数据结构定义足够严谨，而且我们的业务都是基于它们的，如果在此之上再另起炉灶，感觉是对 protobuf 优点的浪费。所以我个人会使用protobuf 结构作为我们的数据库结构。如果你有什么想法，<a href="mailto:ewan.valentine89@gmail.com">请务必告诉我</a>，我很想听听大家的想法。</p>
+<h1 id="完善货运服务">完善货运服务</h1>
+<p>来完善一下我们的第一个微服务吧。首先，让我们试着整理一下项目结构。至今为止，我们把所有的业务逻辑都放在了 main.go 文件中。虽说我们是在写“微”服务，但也不能不讲究规范。规范因人，因项目而易。
+我先讲讲我采取的路线我会在货运服务项目下直接新建三个文件：handler.go, datastore.go 以及 repository.go。这对一个微服务来说已经足够了。
+有的开发人员可能会下意识的构建一个在传统的，采用 MVC 架构，功能驱动的项目所常采用的结构，即根据功能创建好几个文件夹，然后在文件夹中创建对应的文件，如下：</p>
+<pre><code>main.go
+models/
+  user.go
+handlers/
+  auth.go 
+  user.go
+services/
+  auth.go 
+</code></pre><p>这种方式不是太符合 Golang 项目的风格，尤其不符合小型的 Golang 项目。如果你的 Golang 项目足够复杂， 你应该按照下面的方式来构建项目结构：</p>
+<pre><code>main.go
+users/
+  services/
+    auth.go
+  handlers/
+    auth.go
+    user.go
+  users/
+    user.go
+containers/
+  services/
+    manage.go
+  models/
+    container.go
+</code></pre><p>这种情况下，项目结构是领域驱动（domain driven）的，而非功能驱动。</p>
+<p>我们的微服务本就该简洁，有明确的单一的关注点。配合上 Golang 所强调的简洁性，我才会将所有的文件放在项目的根目录下，同时给每个文件赋上清晰的，自洽的文件名。<a href="https://github.com/go-mgo/mgo">MongoDB 的 Golang 库</a>就是这种简洁性的代表。同时<a href="https://rakyll.org/style-packages/">这篇文章</a>很好的介绍了如何才是一个好的 Golang 项目结构。</p>
+<p>另外说一点，因为我们不会将多出来的三个文件当作独立的包引入 main.go 中（熟悉 Golang 的你应该清楚这一点），所以在项目编译的时候我们要告诉 go 此项目需要这另外三个文件。因此，我们将修改对应的 Dockerfile 如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#ae81ff">RUN CGO_ENABLED=0 GOOS=linux go build  -o consignment-service -a -installsuffix cgo main.go repository.go handler.go datastore.go</span>
+</code></pre></div><p>好了，进入正题，首先看一下 repository.go 的代码内容，和往常一样，请仔细阅读代码及注释，确保你理解它们干了什么:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// consignment-service/repository.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/consignment-service/proto/consignment&#34;</span>
+	<span style="color:#e6db74">&#34;gopkg.in/mgo.v2&#34;</span>
+)
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">dbName</span> = <span style="color:#e6db74">&#34;shippy&#34;</span>
+	<span style="color:#a6e22e">consignmentCollection</span> = <span style="color:#e6db74">&#34;consignments&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Repository</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Create</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>) <span style="color:#66d9ef">error</span>
+	<span style="color:#a6e22e">GetAll</span>() ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>, <span style="color:#66d9ef">error</span>)
+	<span style="color:#a6e22e">Close</span>()
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ConsignmentRepository</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">session</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mgo</span>.<span style="color:#a6e22e">Session</span>
+}
+
+<span style="color:#75715e">// Create a new consignment
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ConsignmentRepository</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">consignment</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">collection</span>().<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">consignment</span>)
+}
+
+<span style="color:#75715e">// GetAll consignments
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ConsignmentRepository</span>) <span style="color:#a6e22e">GetAll</span>() ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>, <span style="color:#66d9ef">error</span>) {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">consignments</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>
+  <span style="color:#75715e">// Find()通常接受一个询问条件(query)，但我们想要所有的货运任务，所以在这里用nil
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 然后把找到的所有货运任务通过All()赋值给consignment
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 另外在mgo中，One可以处理单个结果
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">collection</span>().<span style="color:#a6e22e">Find</span>(<span style="color:#66d9ef">nil</span>).<span style="color:#a6e22e">All</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">consignments</span>)
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">consignments</span>, <span style="color:#a6e22e">err</span>
+}
+
+<span style="color:#75715e">// Close closes the database session after each query has ran.
+</span><span style="color:#75715e">// Mgo creates a &#39;master&#39; session on start-up, it&#39;s then good practice
+</span><span style="color:#75715e">// to copy a new session for each request that&#39;s made. This means that
+</span><span style="color:#75715e">// each request has its own database session. This is safer and more efficient,
+</span><span style="color:#75715e">// as under the hood each session has its own database socket and error handling.
+</span><span style="color:#75715e">// Using one main database socket means requests having to wait for that session.
+</span><span style="color:#75715e">// I.e this approach avoids locking and allows for requests to be processed concurrently. Nice!
+</span><span style="color:#75715e">// But... it does mean we need to ensure each session is closed on completion. Otherwise
+</span><span style="color:#75715e">// you&#39;ll likely build up loads of dud connections and hit a connection limit. Not nice!
+</span><span style="color:#75715e">// （我认为作者这里的描述不太准确，且有点混乱，故放上英文原文。）
+</span><span style="color:#75715e">// Close()会在所有的询问都结束后关闭数据库会话(session)
+</span><span style="color:#75715e">// Mgo会在程序启动时创建一个&#39;master&#39;会话
+</span><span style="color:#75715e">// 一个好习惯就是为每一个数据库请求复制一个新的会话
+</span><span style="color:#75715e">// 这即更安全也更有效率。
+</span><span style="color:#75715e">// 因为，在底层，每一个数据库会话都有他自己的数据库socket和错误的处理机制(handling)。
+</span><span style="color:#75715e">// 让每个请求都只使用同一个数据库socket，这意味着某些请求需要等待socket的使用权。
+</span><span style="color:#75715e">// 这即排除了锁死的可能，也能更好的并发处理数据库请求。
+</span><span style="color:#75715e">// 随之而来的是，我们要确保每个会话结束后关闭会话，不然等待我们的就是一大堆无用的连接了！
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ConsignmentRepository</span>) <span style="color:#a6e22e">Close</span>() {
+	<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">Close</span>()
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ConsignmentRepository</span>) <span style="color:#a6e22e">collection</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">mgo</span>.<span style="color:#a6e22e">Collection</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">DB</span>(<span style="color:#a6e22e">dbName</span>).<span style="color:#a6e22e">C</span>(<span style="color:#a6e22e">consignmentCollection</span>)
+}
+</code></pre></div><p>如你所见，repository.go 被用于和 Mongodb 数据库交互。我们还需要业务逻辑来创建数据库会话，即datastore.go:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// consignment-service/datastore.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;gopkg.in/mgo.v2&#34;</span>
+)
+
+<span style="color:#75715e">// CreateSession creates the main session to our mongodb instance
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateSession</span>(<span style="color:#a6e22e">host</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">mgo</span>.<span style="color:#a6e22e">Session</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">session</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mgo</span>.<span style="color:#a6e22e">Dial</span>(<span style="color:#a6e22e">host</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">SetMode</span>(<span style="color:#a6e22e">mgo</span>.<span style="color:#a6e22e">Monotonic</span>, <span style="color:#66d9ef">true</span>)
+
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">session</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>直截了当。 好了，现在重构我们的 main.go，删除大部分大部分代码，然后引入 MongoDB 库 mgo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// consignment-service/main.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/consignment-service/proto/consignment&#34;</span>
+	<span style="color:#a6e22e">vesselProto</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/vessel-service/proto/vessel&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/micro/go-micro&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+)
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">defaultHost</span> = <span style="color:#e6db74">&#34;localhost:27017&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// Database host from the environment variables
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">host</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;DB_HOST&#34;</span>)
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">host</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+		<span style="color:#a6e22e">host</span> = <span style="color:#a6e22e">defaultHost</span>
+	}
+
+	<span style="color:#a6e22e">session</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateSession</span>(<span style="color:#a6e22e">host</span>)
+
+	<span style="color:#75715e">// 确保在main退出前关闭会话
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">Close</span>()
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Panicf</span>(<span style="color:#e6db74">&#34;Could not connect to datastore with host %s - %v&#34;</span>, <span style="color:#a6e22e">host</span>, <span style="color:#a6e22e">err</span>)
+	}
+
+	<span style="color:#75715e">// Create a new service. Optionally include some options here.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">srv</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">NewService</span>(
+
+		<span style="color:#75715e">// This name must match the package name given in your protobuf definition
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Name</span>(<span style="color:#e6db74">&#34;go.micro.srv.consignment&#34;</span>),
+		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Version</span>(<span style="color:#e6db74">&#34;latest&#34;</span>),
+	)
+
+	<span style="color:#a6e22e">vesselClient</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">vesselProto</span>.<span style="color:#a6e22e">NewVesselServiceClient</span>(<span style="color:#e6db74">&#34;go.micro.srv.vessel&#34;</span>, <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">Client</span>())
+
+	<span style="color:#75715e">// Init will parse the command line flags.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">Init</span>()
+
+	<span style="color:#75715e">// Register handler
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">RegisterShippingServiceHandler</span>(<span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">Server</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">service</span>{<span style="color:#a6e22e">session</span>, <span style="color:#a6e22e">vesselClient</span>})
+
+	<span style="color:#75715e">// Run the server
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">Run</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+	}
+}
+</code></pre></div><p>最后，让我们将 main.go 里实现 gRPC 中的 interface 的代码移到单独的 handler.go 中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// consignment-service/handler.go
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;golang.org/x/net/context&#34;</span>
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/consignment-service/proto/consignment&#34;</span>
+	<span style="color:#a6e22e">vesselProto</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/vessel-service/proto/vessel&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">service</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">vesselClient</span> <span style="color:#a6e22e">vesselProto</span>.<span style="color:#a6e22e">VesselServiceClient</span>
+}
+
+<span style="color:#75715e">// 请注意session.Clone()，为什么要Clone?
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">GetRepo</span>() <span style="color:#a6e22e">Repository</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ConsignmentRepository</span>{<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">Clone</span>()}
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">CreateConsignment</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Consignment</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">repo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GetRepo</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Close</span>()
+	<span style="color:#a6e22e">vesselResponse</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">vesselClient</span>.<span style="color:#a6e22e">FindAvailable</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">vesselProto</span>.<span style="color:#a6e22e">Specification</span>{
+		<span style="color:#a6e22e">MaxWeight</span>: <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Weight</span>,
+		<span style="color:#a6e22e">Capacity</span>: int32(len(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Containers</span>)),
+	})
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Found vessel: %s \n&#34;</span>, <span style="color:#a6e22e">vesselResponse</span>.<span style="color:#a6e22e">Vessel</span>.<span style="color:#a6e22e">Name</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#75715e">// We set the VesselId as the vessel we got back from our
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// vessel service
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">VesselId</span> = <span style="color:#a6e22e">vesselResponse</span>.<span style="color:#a6e22e">Vessel</span>.<span style="color:#a6e22e">Id</span>
+
+	<span style="color:#75715e">// Save our consignment
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">req</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#75715e">// Return matching the `Response` message we created in our
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// protobuf definition.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Created</span> = <span style="color:#66d9ef">true</span>
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Consignment</span> = <span style="color:#a6e22e">req</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">GetConsignments</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">GetRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">repo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GetRepo</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Close</span>()
+	<span style="color:#a6e22e">consignments</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">GetAll</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Consignments</span> = <span style="color:#a6e22e">consignments</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h1 id="copy-vs-clone">Copy vs Clone</h1>
+<p>有心的你肯定注意到了，在 GetRepo() 函数中，我们每次都使用了 Clone() 函数。这是为什么？</p>
+<p>从效果上看，我们在创建了 master 会话之后，其实就没有再真正用过它了，因为在之后的每次数据库请求中，我们都首先使用 Clone 生成了一个新的会话。
+虽然我在代码中有过一段与之相关的注释，但我觉得有必要在这仔细讨论下原因。当你每次只使用 master 会话来发起请求时时，在底层，你是在用同一个socket的同一个连接。这意味着你的部分请求会被某个正在进行的请求阻塞，这是对 Golang 强大并发能力的浪费。</p>
+<p>为了不阻塞请求，mgo 支持使用 Copy() 或者 Clone() 来复制一个会话，这样你就能并发的处理请求了。Copy 和 Clone 功能尽管差不多，但有其细微且重要的区别。Clone 后的会话将使用和 master 会话相同的 socket，但会使用一个新的连接，这既达到了并发的效果，还减少了新创一个 socket 的开销。这点非常适用于那些快速的写入操作。但某些需要长时间处理的操作，比如复杂的询问，大数据操作等，可能会阻塞其他试图使用此 socket 的 goroutine。而 Copy 则是会生成一个新的socket，相对 Clone, 它的开销就稍微大一点了。</p>
+<p>通常情况下，包括我们现在的这个业务场景，使用 Clone 就足够了。</p>
+<h1 id="货船服务">货船服务</h1>
+<p>重构完货运服务，你可以用同样的方法重构货船服务。在此我就不讲具体的内容了，你随时可以参考我的项目<a href="https://github.com/EwanValentine/shippy/tree/tutorial-3">源码</a>。</p>
+<p>除了重构，我们还要为货船服务添加一个新的方法，它将能让我们创建新的货船。照例从 probobuf 开始吧：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf">syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#f92672">package</span> vessel;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">service</span> VesselService {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">rpc</span> FindAvailable(Specification) <span style="color:#66d9ef">returns</span> (Response) {}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">rpc</span> Create(Vessel) <span style="color:#66d9ef">returns</span> (Response) {}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Vessel</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">int32</span> capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">int32</span> max_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">bool</span> available <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">string</span> owner_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Specification</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">int32</span> capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">int32</span> max_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">Response</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  Vessel vessel <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">repeated</span> Vessel vessels <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#66d9ef">bool</span> created <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>我们新建了一个 <code>Create</code> 方法，它接收 Vessel 并获得 Response。注意，我们在 Response 的结构体中加入了一个布尔值 created。运行<code>make build</code>来更新gRPC定义。然后，我们将在 handler.go 和 repository.go 中实现它:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// vessel-service/handler.go
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">GetRepo</span>() <span style="color:#a6e22e">Repository</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">VesselRepository</span>{<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">session</span>.<span style="color:#a6e22e">Clone</span>()}
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Vessel</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">repo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GetRepo</span>()
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Close</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">req</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Vessel</span> = <span style="color:#a6e22e">req</span>
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Created</span> = <span style="color:#66d9ef">true</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// vessel-service/repository.go
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">VesselRepository</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">vessel</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Vessel</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">collection</span>().<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">vessel</span>)
+}
+</code></pre></div><p>很激动不是吗，我们居然可以制造货船了！让我们在 main.go 中使用它来创造一些模拟数据吧，具体的代码参见<a href="https://github.com/EwanValentine/shippy/blob/master/vessel-service/main.go">此处</a>。</p>
+<p>大动干戈了这么会，我们终于让微服务用上了 MongoDB。在试着运行它们之前，记得要修改 docker-compose 以引入 Mongodb 的容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">services</span>: 
+  <span style="color:#ae81ff">... </span>
+  <span style="color:#f92672">datastore</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">27017</span>:<span style="color:#ae81ff">27017</span>
+</code></pre></div><p>同时还得各自为两个微服务更新一个环境变量: <code>DB_HOST:datastore:27017</code>。注意到我们使用<code>datastore</code> 而不是 <code>localhost</code> 作为数据库的主机名。这是因为 docker-compose 有非常聪明的 DNS 逻辑。做完这么多后，你应该有以下文件内容:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.1&#39;</span>
+
+<span style="color:#f92672">services</span>:
+
+  <span style="color:#f92672">consignment-cli</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./consignment-cli</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+
+  <span style="color:#f92672">consignment-service</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./consignment-service</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">50051</span>:<span style="color:#ae81ff">50051</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_ADDRESS</span>: <span style="color:#e6db74">&#34;:50051&#34;</span>
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+      <span style="color:#f92672">DB_HOST</span>: <span style="color:#e6db74">&#34;datastore:27017&#34;</span>
+
+  <span style="color:#f92672">vessel-service</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./vessel-service</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">50052</span>:<span style="color:#ae81ff">50051</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_ADDRESS</span>: <span style="color:#e6db74">&#34;:50051&#34;</span>
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+      <span style="color:#f92672">DB_HOST</span>: <span style="color:#e6db74">&#34;datastore:27017&#34;</span>
+
+  <span style="color:#f92672">datastore</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">27017</span>:<span style="color:#ae81ff">27017</span>
+
+</code></pre></div><p><code>docker-compose build</code>然后<code>docker-compose run</code>来运行更行后的代码。由于 Docker 缓存的缘故，你有时可能得使用 <code>--no-cache</code> 选项来告诉 <code>docker-compose build</code> 去重新编译所有的东西。</p>
+<h1 id="user-service">User Service</h1>
+<p>这是我们的第三个微服务。在 docker-compose.yaml 中给引入 Postgres:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  <span style="color:#ae81ff">...</span>
+  <span style="color:#f92672">user-service</span>:
+    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">./user-service</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">50053</span>:<span style="color:#ae81ff">50051</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">MICRO_ADDRESS</span>: <span style="color:#e6db74">&#34;:50051&#34;</span>
+      <span style="color:#f92672">MICRO_REGISTRY</span>: <span style="color:#e6db74">&#34;mdns&#34;</span>
+
+  <span style="color:#ae81ff">...</span>
+  <span style="color:#f92672">database</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">postgres</span>
+    <span style="color:#f92672">ports</span>:
+      - <span style="color:#ae81ff">5432</span>:<span style="color:#ae81ff">5432</span>
+</code></pre></div><p>在项目的根目录下创建 <code>user-service</code> 文件夹，和以前两个微服务一样，创建下面几个文件: handler.go, main.go, repository.go, database.go, Dockerfile, Makefile，然后在proto文件夹下创建 <code>/user/user.proto</code>。<code>user.proto</code>内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">syntax</span> = <span style="color:#e6db74">&#34;proto3&#34;</span>;
+
+<span style="color:#f92672">package</span> <span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">user</span>;
+
+<span style="color:#a6e22e">service</span> <span style="color:#a6e22e">UserService</span> {
+    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">User</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">Response</span>) {}
+    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">User</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">Response</span>) {}
+    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">GetAll</span>(<span style="color:#a6e22e">Request</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">Response</span>) {}
+    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">Auth</span>(<span style="color:#a6e22e">User</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">Token</span>) {}
+    <span style="color:#a6e22e">rpc</span> <span style="color:#a6e22e">ValidateToken</span>(<span style="color:#a6e22e">Token</span>) <span style="color:#a6e22e">returns</span> (<span style="color:#a6e22e">Token</span>) {}
+}
+
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">User</span> {
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">id</span> = <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">name</span> = <span style="color:#ae81ff">2</span>;
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">company</span> = <span style="color:#ae81ff">3</span>;
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">email</span> = <span style="color:#ae81ff">4</span>;
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">password</span> = <span style="color:#ae81ff">5</span>;
+}
+
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">Request</span> {}
+
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">Response</span> {
+    <span style="color:#a6e22e">User</span> <span style="color:#a6e22e">user</span> = <span style="color:#ae81ff">1</span>;
+    <span style="color:#a6e22e">repeated</span> <span style="color:#a6e22e">User</span> <span style="color:#a6e22e">users</span> = <span style="color:#ae81ff">2</span>;
+    <span style="color:#a6e22e">repeated</span> <span style="color:#a6e22e">Error</span> <span style="color:#a6e22e">errors</span> = <span style="color:#ae81ff">3</span>;
+}
+
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">Token</span> {
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">token</span> = <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">valid</span> = <span style="color:#ae81ff">2</span>;
+    <span style="color:#a6e22e">repeated</span> <span style="color:#a6e22e">Error</span> <span style="color:#a6e22e">errors</span> = <span style="color:#ae81ff">3</span>;
+}
+
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">Error</span> {
+    <span style="color:#66d9ef">int32</span> <span style="color:#a6e22e">code</span> = <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">description</span> = <span style="color:#ae81ff">2</span>;
+}
+</code></pre></div><p>确保你像之前的几个微服务一样创建了 Makefile, 那么你现在应该 <code>make build</code> 来生成 gRPC 代码了。当然了， 我们要实现其中的方法。在本文里，我只实现部分方法。任何有关验证和JWT的部分都会放在下一篇文章里介绍。你的 handler.go 应该如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// user-service/handler.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;golang.org/x/net/context&#34;</span>
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/user-service/proto/user&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">service</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">repo</span> <span style="color:#a6e22e">Repository</span>
+	<span style="color:#a6e22e">tokenService</span> <span style="color:#a6e22e">Authable</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Id</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">User</span> = <span style="color:#a6e22e">user</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">GetAll</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">users</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">GetAll</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Users</span> = <span style="color:#a6e22e">users</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Auth</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">user</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">GetByEmailAndPassword</span>(<span style="color:#a6e22e">req</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Token</span> = <span style="color:#e6db74">&#34;testingabc&#34;</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Response</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">srv</span>.<span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">req</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">User</span> = <span style="color:#a6e22e">req</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">srv</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">service</span>) <span style="color:#a6e22e">ValidateToken</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>而你的 repository.go 应该为:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// user-service/repository.go
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/user-service/proto/user&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/jinzhu/gorm&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Repository</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">GetAll</span>() ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>)
+	<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>)
+	<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) <span style="color:#66d9ef">error</span>
+	<span style="color:#a6e22e">GetByEmailAndPassword</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>)
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">UserRepository</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gorm</span>.<span style="color:#a6e22e">DB</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserRepository</span>) <span style="color:#a6e22e">GetAll</span>() ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">users</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Find</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">users</span>).<span style="color:#a6e22e">Error</span>; <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">users</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserRepository</span>) <span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">id</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>
+	<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Id</span> = <span style="color:#a6e22e">id</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">First</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>).<span style="color:#a6e22e">Error</span>; <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">user</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserRepository</span>) <span style="color:#a6e22e">GetByEmailAndPassword</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">First</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>).<span style="color:#a6e22e">Error</span>; <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">user</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">UserRepository</span>) <span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">user</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">user</span>).<span style="color:#a6e22e">Error</span>; <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+}
+</code></pre></div><p>我们需要修改 ORM 的行为，从而在创建ORM时生成一个<a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a>，而不是一个整型ID。如果你不知道的话，UUID 是随机生成的一个集合，其元素都是用'-&lsquo;串联的字符串，被用于当作ID或者主要标识。他比递增的ID更加安全，因为他能防止别人猜到或者追踪到你的API端点。MongoDB 本身使用了此技术的一个变种，但是我们必须自己告诉 Postgres 去使用 UUID。于是，在 <code>user-service/proto/user</code>下新建 <code>extension.go</code>，内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">go_micro_srv_user</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;github.com/jinzhu/gorm&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/satori/go.uuid&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">model</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">User</span>) <span style="color:#a6e22e">BeforeCreate</span>(<span style="color:#a6e22e">scope</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gorm</span>.<span style="color:#a6e22e">Scope</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#a6e22e">uuid</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">uuid</span>.<span style="color:#a6e22e">NewV4</span>()
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">scope</span>.<span style="color:#a6e22e">SetColumn</span>(<span style="color:#e6db74">&#34;Id&#34;</span>, <span style="color:#a6e22e">uuid</span>.<span style="color:#a6e22e">String</span>())
+}
+</code></pre></div><p>这深入到了 GORM 的<a href="http://jinzhu.me/gorm/callbacks.html">时间生命周期</a>之中，在每个实例创建之前为其生成一个UUID作为ID列。</p>
+<p>你可能会注意到，不像使用 MongoDB 的微服务，我们在这里不需要处理任何关于连接的操作。原生的 SQL/postgres 驱动有着不一样的行为模式，所以我们这回不需要去管这些事情。现在让我们稍微了解下用到的 <code>gorm</code> 库。</p>
+<h1 id="gorm--go--orm">Gorm = Go + ORM</h1>
+<p><a href="http://jinzhu.me/gorm/">Gorm</a>是个相当轻量的对象关系映射(Object-Relational Mapping)，很适合 Postgres, MySQL 或者 Sqlite等数据库。它让你轻松的生成，使用和管理你的数据库格式变化。</p>
+<p>纵然简单，但你不一定要用任何形式的 ORM，毕竟我们在实现微服务，它的数据结构应该更加简单，没有那么多复杂性。</p>
+<p>我们需要测试一下能否创建用户，所以让我们创建另一个命令行工具。在项目根目录下创建<code>user-cli</code>目录，并生成 <code>cli.go</code>如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+
+	<span style="color:#a6e22e">pb</span> <span style="color:#e6db74">&#34;github.com/EwanValentine/shippy/user-service/proto/user&#34;</span>
+	<span style="color:#a6e22e">microclient</span> <span style="color:#e6db74">&#34;github.com/micro/go-micro/client&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/micro/go-micro/cmd&#34;</span>
+	<span style="color:#e6db74">&#34;golang.org/x/net/context&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/micro/cli&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/micro/go-micro&#34;</span>
+)
+
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">cmd</span>.<span style="color:#a6e22e">Init</span>()
+
+	<span style="color:#75715e">// Create new greeter client
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">NewUserServiceClient</span>(<span style="color:#e6db74">&#34;go.micro.srv.user&#34;</span>, <span style="color:#a6e22e">microclient</span>.<span style="color:#a6e22e">DefaultClient</span>)
+    
+    <span style="color:#75715e">// Define our flags
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">service</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">NewService</span>(
+		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Flags</span>(
+			<span style="color:#a6e22e">cli</span>.<span style="color:#a6e22e">StringFlag</span>{
+				<span style="color:#a6e22e">Name</span>:  <span style="color:#e6db74">&#34;name&#34;</span>,
+				<span style="color:#a6e22e">Usage</span>: <span style="color:#e6db74">&#34;You full name&#34;</span>,
+			},
+			<span style="color:#a6e22e">cli</span>.<span style="color:#a6e22e">StringFlag</span>{
+				<span style="color:#a6e22e">Name</span>:  <span style="color:#e6db74">&#34;email&#34;</span>,
+				<span style="color:#a6e22e">Usage</span>: <span style="color:#e6db74">&#34;Your email&#34;</span>,
+			},
+			<span style="color:#a6e22e">cli</span>.<span style="color:#a6e22e">StringFlag</span>{
+				<span style="color:#a6e22e">Name</span>:  <span style="color:#e6db74">&#34;password&#34;</span>,
+				<span style="color:#a6e22e">Usage</span>: <span style="color:#e6db74">&#34;Your password&#34;</span>,
+			},
+			<span style="color:#a6e22e">cli</span>.<span style="color:#a6e22e">StringFlag</span>{
+				<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;company&#34;</span>,
+				<span style="color:#a6e22e">Usage</span>: <span style="color:#e6db74">&#34;Your company&#34;</span>,
+			},
+		),
+	)
+    
+    <span style="color:#75715e">// Start as service
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Init</span>(
+
+		<span style="color:#a6e22e">micro</span>.<span style="color:#a6e22e">Action</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cli</span>.<span style="color:#a6e22e">Context</span>) {
+
+			<span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;name&#34;</span>)
+			<span style="color:#a6e22e">email</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;email&#34;</span>)
+			<span style="color:#a6e22e">password</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;password&#34;</span>)
+			<span style="color:#a6e22e">company</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;company&#34;</span>)
+
+            <span style="color:#75715e">// Call our user service
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">TODO</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{
+				<span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">name</span>,
+				<span style="color:#a6e22e">Email</span>: <span style="color:#a6e22e">email</span>,
+				<span style="color:#a6e22e">Password</span>: <span style="color:#a6e22e">password</span>,
+				<span style="color:#a6e22e">Company</span>: <span style="color:#a6e22e">company</span>,
+			})
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+			}
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Created: %s&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">User</span>.<span style="color:#a6e22e">Id</span>)
+
+			<span style="color:#a6e22e">getAll</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">GetAll</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">Request</span>{})
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not list users: %v&#34;</span>, <span style="color:#a6e22e">err</span>)
+			}
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">getAll</span>.<span style="color:#a6e22e">Users</span> {
+				<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">v</span>)
+			}
+
+			<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+		}),
+	)
+
+	<span style="color:#75715e">// Run the server
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">Run</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+	}
+}
+</code></pre></div><p>运行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker-compose run user-cli command <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Ewan Valentine&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --email<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ewan.valentine89@gmail.com&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Testing123&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  --company<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;BBC&#34;</span>
+</code></pre></div><p>你就应该能看到被创建的用户了！</p>
+<p>可以看到创建的流程一点都不安全，因为我们是明文保存的密码。在下一文章中，我们就聊聊如何在微服务中实现认证和JWT。</p>
+<p>太好了，我们这回多了一个新的微服务和命令行工具，同时还使用了两种数据库技术来保存我们的数据。如果你觉得这节东西讲得太快且太多，我报以诚挚的歉意。如果你有任何问题，欢迎给我<a href="mailto:ewan.valentine89@gmail.com">发邮件</a>！</p>
+<p>如果你觉得这篇文章对你有所帮助，你可以请原作者喝杯咖啡！链接如下：<a href="https://monzo.me/ewanvalentine">https://monzo.me/ewanvalentine</a>
+你也可以在<a href="https://www.patreon.com/ewanvalentine">patreon</a>上支持原作者！</p>
+<p>我们下回见！</p>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Ewan Valentine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-04-10</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/golang/">Golang</a>
+          
+          <a href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a>
+          
+          <a href="/tags/docker/">Docker</a>
+          
+          <a href="/tags/kubernetes/">Kubernetes</a>
+          
+          <a href="/tags/ci/">CI</a>
+          
+          <a href="/tags/microservice_golang/">Microservice_Golang</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/tech/go_ewan_microservices_in_golang_part_4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[译]用GoLang实现微服务（四）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/tech/go_ewan_microservices_in_golang_part_2/">
+            <span class="next-text nav-default">[译]用GoLang实现微服务（二）</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

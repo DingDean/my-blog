@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on 二向箔</title>
+    <link>https://blog.dingkewz.com/tags/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 21 Mar 2018 16:53:53 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[NodeJS源码探秘]之启动全流程</title>
+      <link>https://blog.dingkewz.com/post/tech/nodejs_source_startup03/</link>
+      <pubDate>Wed, 21 Mar 2018 16:53:53 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/nodejs_source_startup03/</guid>
+      <description>&lt;p&gt;&lt;em&gt;NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章将研究NodeJS的启动全流程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>谷歌V8引擎探秘：基础概念</title>
+      <link>https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/</link>
+      <pubDate>Sat, 27 Jan 2018 17:18:37 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/google_v8_core_concepts_01/</guid>
+      <description>&lt;p&gt;&lt;em&gt;V8引擎是驱动NodeJS的核心。为此有必要深入了解其API和运行机制。此系列文章旨在记录我自己探索学习V8引擎的记录。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;本文章是此系列的第一篇，将梳理一遍V8引擎的几个总要概念：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Context&lt;/li&gt;
+&lt;li&gt;Handle&lt;/li&gt;
+&lt;li&gt;Handle Scope&lt;/li&gt;
+&lt;li&gt;Templates&lt;/li&gt;
+&lt;li&gt;Isolates&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

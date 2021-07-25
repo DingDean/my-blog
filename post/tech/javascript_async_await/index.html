@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[简明JavaScript]之async/await - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="丁科" /><meta name="description" content="NodeJS" />
+<meta name="keywords" content="NodeJs, JavaScript" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/javascript_async_await/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="[简明JavaScript]之async/await" />
+<meta property="og:description" content="NodeJS" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/javascript_async_await/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-06-10T14:40:04+08:00" />
+<meta property="article:modified_time" content="2017-06-10T14:40:04+08:00" />
+
+<meta itemprop="name" content="[简明JavaScript]之async/await">
+<meta itemprop="description" content="NodeJS"><meta itemprop="datePublished" content="2017-06-10T14:40:04+08:00" />
+<meta itemprop="dateModified" content="2017-06-10T14:40:04+08:00" />
+<meta itemprop="wordCount" content="637">
+<meta itemprop="keywords" content="NodeJS,JavaScript," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[简明JavaScript]之async/await"/>
+<meta name="twitter:description" content="NodeJS"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[简明JavaScript]之async/await</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-06-10 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+              <a href="/categories/%E7%AE%80%E6%98%8Ejavascript/"> 简明JavaScript </a>
+            
+          </div>
+        <span class="more-meta"> 约 637 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#等待你兑现承诺">等待你兑现承诺</a></li>
+    <li><a href="#catch-me-if-you-can">catch me if you can</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p><em><strong><strong>简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。</strong></strong></em></p>
+<blockquote>
+<p>It will be legen, wait for it&hellip;, and I hope you&rsquo;re not lactose intolerant because the second half of that word is&hellip; dairy!<br>
+-<a href="https://en.wikipedia.org/wiki/Barney_Stinson">Barney Stinson</a></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">echo</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">waitForIt</span> (<span style="color:#a6e22e">words</span>) {
+  <span style="color:#a6e22e">echo</span>(<span style="color:#e6db74">&#34;-wait for it... and I hope you&#39;re not lactose intolerant because the second half of that word is—&#34;</span>)
+
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) {
+    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+      <span style="color:#a6e22e">resolve</span>(<span style="color:#e6db74">&#34;dairy!&#34;</span>)
+    }, <span style="color:#ae81ff">5000</span>)
+  })
+}
+
+<span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">barneySays</span> () {
+  <span style="color:#a6e22e">echo</span>(<span style="color:#e6db74">&#34;It will be legen&#34;</span>)
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">word</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">waitForIt</span>()
+  <span style="color:#a6e22e">echo</span>(<span style="color:#a6e22e">word</span>)
+}
+
+<span style="color:#a6e22e">barneySays</span>()
+<span style="color:#75715e">// It will be legen-wait for it... and I hope you&#39;re not lactose intolerant because the second half of that word is—dairy!
+</span></code></pre></div><p>照例，以下是学习资料:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN</a></li>
+<li><a href="https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9">Why async/await is better than Promise</a></li>
+<li><a href="https://javascript.info/async-await">JavaScript.Info</a></li>
+</ul>
+<h2 id="等待你兑现承诺">等待你兑现承诺</h2>
+<p>async 函数是 JavaScript 处理异步操作的又一个语法，前两个是回调函数和 Promise。</p>
+<p>async 建立在 Promise 之上，其返回值永远是一个 Promise，即使具体的代码并没有返回 Promise。</p>
+<p>如果 async 函数只是用来简化创建 Promise 过程的语法，那么其实没什么用处，其关键在于一个相伴的语法 <strong>await</strong>。</p>
+<p>await 只能在 async 函数内使用，它的作用在于将一个异步的流程用同步流程的语法呈现。await 顾名思义就是等待，等待什么呢？
+等待一个 Promise 被完成或者失败。在 async 函数中，只要碰到 await，那么 await 后面的代码都将在 await 完成后再执行。</p>
+<p>正如篇首的代码事例所展示的，await 会等待 <code>waitForIt</code> 返回的 Promise 完成，并将返回值赋予给<code>word</code>，然后再<code>echo(word)</code>。</p>
+<p><code>let word = await waitForIt()</code> 就像是<code>waitForIt().then(word =&gt; {})</code>。既然我们有了和<code>Promise#then</code>等价的语法，那<code>Promise#catch</code>对应的语法是什么？</p>
+<p>还是我们的老朋友<code>try...catch...</code></p>
+<h2 id="catch-me-if-you-can">catch me if you can</h2>
+<p>在 async 中使用 await 时，我们要使用 <code>try...catch...</code> 来捕获错误。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">pipeline</span> () {
+  <span style="color:#66d9ef">try</span> {
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">file</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">download</span>() 
+  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error downloading&#39;</span>)
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">e</span>)
+  }
+}
+</code></pre></div>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丁科</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017-06-10</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/nodejs/">NodeJS</a>
+          
+          <a href="/tags/javascript/">JavaScript</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/tech/numpy%E5%85%A5%E9%97%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[学无止境]之Numpy概览</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/">
+            <span class="next-text nav-default">弹星者和二向箔</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">丁科</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

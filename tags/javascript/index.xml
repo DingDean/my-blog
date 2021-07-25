@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on 二向箔</title>
+    <link>https://blog.dingkewz.com/tags/javascript/</link>
+    <description>Recent content in JavaScript on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 17 Nov 2017 14:16:22 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[NodeJS源码探秘]之require()</title>
+      <link>https://blog.dingkewz.com/post/tech/nodejs_source_01/</link>
+      <pubDate>Fri, 17 Nov 2017 14:16:22 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/nodejs_source_01/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;部分源码已过时 -&amp;gt; 升级至9.11&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;第一篇文章就是要搞清楚我们经常使用的require()函数到底是如何运作的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[简明JavaScript]之async/await</title>
+      <link>https://blog.dingkewz.com/post/tech/javascript_async_await/</link>
+      <pubDate>Sat, 10 Jun 2017 14:40:04 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/javascript_async_await/</guid>
+      <description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;strong&gt;简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。&lt;/strong&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It will be legen, wait for it&amp;hellip;, and I hope you&amp;rsquo;re not lactose intolerant because the second half of that word is&amp;hellip; dairy!&lt;br&gt;
+-&lt;a href=&#34;https://en.wikipedia.org/wiki/Barney_Stinson&#34;&gt;Barney Stinson&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitForIt&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;) {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-wait for it... and I hope you&amp;#39;re not lactose intolerant because the second half of that word is—&amp;#34;&lt;/span&gt;)
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;setTimeout&lt;/span&gt;(() =&amp;gt; {
+      &lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dairy!&amp;#34;&lt;/span&gt;)
+    }, &lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;)
+  })
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;barneySays&lt;/span&gt; () {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;It will be legen&amp;#34;&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;word&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitForIt&lt;/span&gt;()
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;echo&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;word&lt;/span&gt;)
+}
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;barneySays&lt;/span&gt;()
+&lt;span style=&#34;color:#75715e&#34;&gt;// It will be legen-wait for it... and I hope you&amp;#39;re not lactose intolerant because the second half of that word is—dairy!
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;照例，以下是学习资料:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9&#34;&gt;Why async/await is better than Promise&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://javascript.info/async-await&#34;&gt;JavaScript.Info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[简明JavaScript]之Promise</title>
+      <link>https://blog.dingkewz.com/post/tech/javascript_promise/</link>
+      <pubDate>Mon, 11 Apr 2016 09:33:05 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/javascript_promise/</guid>
+      <description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;&lt;strong&gt;简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。&lt;/strong&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-JavaScript&#34; data-lang=&#34;JavaScript&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;readline&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;require&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;readline&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rl&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;readline&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;createInterface&lt;/span&gt;({
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stdin&lt;/span&gt;,
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;output&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;process&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stdout&lt;/span&gt;
+})
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 请原谅我这庸俗的剧情
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Will you always be here with me?&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Oh dear Alice, why would I ever want to leave you?&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Promise me!&amp;#34;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makePromise&lt;/span&gt;()
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;promise&lt;/span&gt;
+  .&lt;span style=&#34;color:#a6e22e&#34;&gt;then&lt;/span&gt;(() =&amp;gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Alice and Bob were happy ever after.&amp;#39;&lt;/span&gt;)
+  })
+  .&lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt; =&amp;gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob eventually left Alice, what a jerk.&amp;#39;&lt;/span&gt;)
+  })
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;who&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;) {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;who&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; said: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;words&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;)
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 到了这里会有一个问题，试着跑一下？
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makePromise&lt;/span&gt; () {
+  &lt;span style=&#34;color:#a6e22e&#34;&gt;said&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;I promise I would never leave you.&amp;#39;&lt;/span&gt;)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;rl&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;question&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;你来决定故事的走向: &amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;answer&lt;/span&gt; =&amp;gt; {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;answer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;good&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob is true to his words&amp;#39;&lt;/span&gt;)
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;reject&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bob is a total ass&amp;#39;&lt;/span&gt;)
+    })
+  })
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;女士们，先生们，看到了吗，这就是我们今天的主角 Promise。照例，以下是学习资料:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://liubin.org/promises-book/#then-return-new-promise&#34;&gt;JavaScript Promise 迷你书&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://javascript.info/promise-chaining#error-handling&#34;&gt;Promise Chain Error Handling&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://spin.atomicobject.com/2017/04/06/nodejs-promises-callbacks/&#34;&gt;Never Mix Promises and Callbacks in NodeJS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

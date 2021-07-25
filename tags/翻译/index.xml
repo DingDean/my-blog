@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>翻译 on 二向箔</title>
+    <link>https://blog.dingkewz.com/tags/%E7%BF%BB%E8%AF%91/</link>
+    <description>Recent content in 翻译 on 二向箔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Apr 2018 18:11:32 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[译]用GoLang实现微服务（四）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/</link>
+      <pubDate>Tue, 17 Apr 2018 18:11:32 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_4/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其四。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-4/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-3/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们创建用户(User)服务，并且引入了数据库来保存数据。这回，我们希望用户微服务能安全的保存用户密码，并且有完整的机制来验证用户，从而在我们的几个微服务之间分发安全秘钥以互相沟通。&lt;/p&gt;
+&lt;p&gt;请特别注意，我重构了项目结构，现在每个微服务都是一个单独的仓库，不再共处于一个父目录之下了。这样做更方便于代码的部署。你们大概记得，我一开始是想把所有微服务都放在一个仓库下的，但后来发现这样做使我很难管理 Go 项目的依赖，总是遇到一些冲突。随着每个项目的独立，我有必要讲讲如何测试，运行和部署一个个微服务。与此同时，由于各个微服务的独立，我们目前也不能使用 docker-compose 了，但这对我们的影响暂时不大。如果你对此有什么好的建议，欢迎给我&lt;a href=&#34;mailto:ewan.valentine89@gmail.com&#34;&gt;写邮件&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;此外，你需要手动运行数据库了，就像下面这样:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ docker run -d -p 5432:5432 postgres
+$ docker run -d -p 27017:27017 mongo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;独立出来的项目代码链接如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-consignment-service&#34;&gt;https://github.com/EwanValentine/shippy-consignment-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-user-service&#34;&gt;https://github.com/EwanValentine/shippy-user-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-vessel-service&#34;&gt;https://github.com/EwanValentine/shippy-vessel-service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-user-cli&#34;&gt;https://github.com/EwanValentine/shippy-user-cli&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/EwanValentine/shippy-consignment-cli&#34;&gt;https://github.com/EwanValentine/shippy-consignment-cli&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（三）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/</link>
+      <pubDate>Sun, 08 Apr 2018 17:04:26 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其三。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-3/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-3/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们了解了&lt;a href=&#34;https://github.com/micro/go-micro&#34;&gt;go-micro&lt;/a&gt; 以及 &lt;a href=&#34;https://www.docker.com/&#34;&gt;Docker&lt;/a&gt;的基础。同时引入了我们的第二个微服务，货船服务（vessel-service）。那么在此文中，我们将要了解一下 &lt;a href=&#34;https://docs.docker.com/compose/&#34;&gt;docker-compose&lt;/a&gt;，并学会用它更好的运行和管理部署在本地的众多微服务。此外，我们还会稍微讲一下几种不同的数据库以及写下我们的第三个微服务！&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（二）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/</link>
+      <pubDate>Mon, 02 Apr 2018 12:34:31 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其二。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-2/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-2/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;em&gt;&lt;strong&gt;初稿&lt;/strong&gt;&lt;/em&gt;&lt;/del&gt; -&amp;gt; &lt;em&gt;&lt;strong&gt;润色&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&#34;https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/&#34;&gt;上一篇文章中&lt;/a&gt;, 我们大致掌握了如何用gRPC来构建微服务。在这篇文章中，我们要介绍如何容器化(Dockerize)我们的微服务，在此过程中，我们将引入使用go-micro以及写下我们的第二个微服务。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]用GoLang实现微服务（一）</title>
+      <link>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/</link>
+      <pubDate>Mon, 26 Mar 2018 20:19:00 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其首。&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原著作者：&lt;a href=&#34;https://ewanvalentine.io/&#34;&gt;Ewan Valentine&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;&lt;em&gt;原文连接：&lt;a href=&#34;https://ewanvalentine.io/microservices-in-golang-part-1/&#34;&gt;https://ewanvalentine.io/microservices-in-golang-part-1/&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;br&gt;
+&lt;strong&gt;&lt;em&gt;友情提示：系列文章的后五篇翻译请移步至&lt;a href=&#34;https://wuyin.io&#34;&gt;wuYin&amp;rsquo;s blog&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;del&gt;初稿&lt;/del&gt; -&amp;gt; 润色&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id=&#34;导言&#34;&gt;导言&lt;/h1&gt;
+&lt;p&gt;在本文中，我们将了解一些基础的概念，术语。同时将创建我们的第一个微服务，尽管它会非常简陋。&lt;/p&gt;
+&lt;p&gt;在接下来的文章中，我们会陆续创建以下微服务:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;consignments (货运)&lt;/li&gt;
+&lt;li&gt;inventory (仓库)&lt;/li&gt;
+&lt;li&gt;users (用户)&lt;/li&gt;
+&lt;li&gt;authentication (认证)&lt;/li&gt;
+&lt;li&gt;roles (角色)&lt;/li&gt;
+&lt;li&gt;vessels (货船)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完整的技术栈如下：golang, mongodb, grpc, docker, Google Cloud, Kubernetes, NATS, CircleCI, Terrafrom and go-micro.&lt;/p&gt;
+&lt;p&gt;在你跟随此文学习时，请务必设置合适的GOPATH，以及使用这个&lt;a href=&#34;https://github.com/EwanValentine/shippy&#34;&gt;git仓库&lt;/a&gt;(每篇文章对应一个分支)。&lt;/p&gt;
+&lt;p&gt;另外，我的工作平台是Macbook，所以如果你的工作平台有所不同，那么文章中的些许地方需要相应的改动，比如Makefiles中的&lt;code&gt;$GOPATH&lt;/code&gt;和&lt;code&gt;$(GOPATH)&lt;/code&gt;，请您自行关注。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

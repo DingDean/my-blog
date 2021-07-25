@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://dingdean.github.io/my-blog/sitemap.xml
+Sitemap: https://blog.dingkewz.com/sitemap.xml
