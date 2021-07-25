@@ -16,23 +16,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="丁科" />
-  <meta name="description" content="简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。
+<meta name="author" content="丁科" /><meta name="description" content="简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。
 const readline = require(&amp;#39;readline&amp;#39;) const rl = readline.createInterface({ input: process.stdin, output: process.stdout }) // 请原谅我这庸俗的剧情 said(&amp;#39;Alice&amp;#39;, &amp;#34;Will you always be here with me?&amp;#34;) said(&amp;#39;Bob&amp;#39;, &amp;#34;Oh dear Alice, why would I ever want to leave you?&amp;#34;) said(&amp;#39;Alice&amp;#39;, &amp;#34;Promise me!&amp;#34;) let promise = makePromise() promise .then(() =&amp;gt; { console.log(&amp;#39;Alice and Bob were happy ever after.&amp;#39;) }) .catch(e =&amp;gt; { console.log(&amp;#39;Bob eventually left Alice, what a jerk.&amp;#39;) }) function said (who, words) { console.log(`${who}said: ${words}`) } // 到了这里会有一个问题，试着跑一下？ function makePromise () { said(&amp;#39;Bob&amp;#39;, &amp;#39;I promise I would never leave you.&amp;#39;) return new Promise(function (resolve, reject) { rl.question(&amp;#39;你来决定故事的走向: &amp;#39;, answer =&amp;gt; { if (answer === &amp;#39;good&amp;#39;) return resolve(&amp;#39;Bob is true to his words&amp;#39;) return reject(&amp;#39;Bob is a total ass&amp;#39;) }) }) } 女士们，先生们，看到了吗，这就是我们今天的主角 Promise。照例，以下是学习资料:
- MDN JavaScript Promise 迷你书 Promise Chain Error Handling Never Mix Promises and Callbacks in NodeJS " />
-<meta name="keywords" content="NodeJS, JavaScript" />
+ MDN JavaScript Promise 迷你书 Promise Chain Error Handling Never Mix Promises and Callbacks in NodeJS " /><meta name="keywords" content="NodeJS, JavaScript" />
 
 
 
 
 
 
-
-<meta name="generator" content="Hugo 0.86.0" />
+<meta name="generator" content="Hugo 0.86.0 with theme even" />
 
 
 <link rel="canonical" href="https://blog.dingkewz.com/post/tech/javascript_promise/" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -41,14 +37,8 @@ const readline = require(&amp;#39;readline&amp;#39;) const rl = readline.createI
 
 
 
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
-
-
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="[简明JavaScript]之Promise" />
@@ -233,12 +223,21 @@ Never Mix Promises and Callbacks in NodeJS
         <li class="mobile-menu-item">关于我</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">二向箔</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -255,6 +254,7 @@ Never Mix Promises and Callbacks in NodeJS
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -268,23 +268,17 @@ Never Mix Promises and Callbacks in NodeJS
       <div class="post-meta">
         <span class="post-time"> 2016-04-11 </span>
         <div class="post-category">
-            
-              <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
-            
-              <a href="/categories/%E7%AE%80%E6%98%8Ejavascript/"> 简明JavaScript </a>
-            
-          </div>
-        <span class="more-meta"> 约 1361 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="/categories/%E7%AE%80%E6%98%8Ejavascript/"> 简明JavaScript </a>
+            </div>
+          <span class="more-meta"> 约 1361 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
     </header>
 
-    
-    
-<div class="post-toc" id="post-toc">
+    <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
@@ -296,11 +290,6 @@ Never Mix Promises and Callbacks in NodeJS
 </nav>
   </div>
 </div>
-
-    
-    
-
-    
     <div class="post-content">
       <p><em><strong><strong>简明 JavaScript 系列是我自己学习 JavaScript 概念时的笔记，旨在记录学习资料以及自己在实践中的感想。每一期尽量有一个有趣的 Demo 。</strong></strong></em></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">readline</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;readline&#39;</span>)
@@ -516,7 +505,6 @@ Promise.<span style="color:#a6e22e">all</span>(
 <!-- raw HTML omitted -->
     </div>
 
-    
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -524,7 +512,10 @@ Promise.<span style="color:#a6e22e">all</span>(
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2016-04-11</span>
+    <span class="item-content">
+        2016-04-11
+        
+    </span>
   </p>
   
   <p class="copyright-item">
@@ -532,29 +523,18 @@ Promise.<span style="color:#a6e22e">all</span>(
     <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
   </p>
 </div>
-
-    
-    
-
-    <footer class="post-footer">
+<footer class="post-footer">
       <div class="post-tags">
-          
           <a href="/tags/nodejs/">NodeJS</a>
-          
           <a href="/tags/javascript/">JavaScript</a>
-          
-        </div>
-
-      
+          </div>
       <nav class="post-nav">
-        
-          <a class="prev" href="/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/">
+        <a class="prev" href="/post/personal/%E5%BC%B9%E6%98%9F%E8%80%85%E5%92%8C%E4%BA%8C%E5%90%91%E7%AE%94/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">弹星者和二向箔</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        
-          <a class="next" href="/post/musics/miracle_afterlife/">
+        <a class="next" href="/post/musics/miracle_afterlife/">
             <span class="next-text nav-default">Miracle-Afterlife音乐感受</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -564,6 +544,7 @@ Promise.<span style="color:#a6e22e">all</span>(
   </article>
         </div>
         
+
   
 
   
@@ -592,15 +573,11 @@ Promise.<span style="color:#a6e22e">all</span>(
 
   <span class="copyright-year">
     &copy; 
-    
-      2017 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">丁科</span>
+    2017 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>丁科</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -608,19 +585,20 @@ Promise.<span style="color:#a6e22e">all</span>(
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        }
     };
   </script>
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 <script id="baidu_analytics">
   var _hmt = _hmt || [];

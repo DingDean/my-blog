@@ -16,22 +16,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="丁科" />
-  <meta name="description" content="嘿，你好，我叫丁科，来自温州。二向箔是我的博客，在这里你能看到我的一些私人絮语，技术文章以及音乐/游戏体验。" />
-  <meta name="keywords" content="丁科, 温州, 温州中学, SFU, Ke Ding, 后端, 机器学习, 大数据" />
+<meta name="author" content="丁科" /><meta name="description" content="嘿，你好，我叫丁科，来自温州。二向箔是我的博客，在这里你能看到我的一些私人絮语，技术文章以及音乐/游戏体验。" /><meta name="keywords" content="丁科, 温州, 温州中学, SFU, Ke Ding, 后端, 机器学习, 大数据" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.86.0" />
+<meta name="generator" content="Hugo 0.86.0 with theme even" />
 
 
 <link rel="canonical" href="https://blog.dingkewz.com/" />
-<link href="https://blog.dingkewz.com/index.xml" rel="alternate" type="application/rss+xml" title="二向箔" />
+  <link href="https://blog.dingkewz.com/index.xml" rel="alternate" type="application/rss+xml" title="二向箔" />
   <link href="https://blog.dingkewz.com/index.xml" rel="feed" type="application/rss+xml" title="二向箔" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,14 +37,8 @@
 
 
 
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
-
-
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="二向箔" />
@@ -95,12 +86,21 @@
         <li class="mobile-menu-item">关于我</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">二向箔</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -117,45 +117,194 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          
-  <section id="posts" class="posts">
-    
-    
-    
-      <article class="post">
+          <section id="posts" class="posts">
+    <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/">Posts</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/byzantine_general_problem/">他山之石之Byzantine Generals Problem</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-07-14 </span>
-      
-      <span class="more-meta"> 约 0 字 </span>
-      <span class="more-meta"> 预计阅读 0 分钟 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 2443 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      
+      <p><strong>论文出处: <a href="https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf">https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf</a></strong></p>
+<blockquote>
+<p>Reliable computer systems must handle malfunctioning components that give confilicting information to different parts of the system.
+This situation can be expressed abstractly in terms of a group of generals of the Byzantine army camped with their troops around an enmemy city.
+Communicating only by messenger, the generals must agree upon a common battle plan.
+However, one or more of them may be traitors who will try to confuse the others.
+The problem is to <strong>find an algorithm to ensure that the loyal generals will reach agreement.</strong></p>
+<p>一个可靠的计算系统需要得当的处理其子部件因紊乱而向系统的其他部分发送相左的消息的情况。
+这种情况可以抽象为以下场景：</p>
+<p>一群拜占庭将军围着一座敌城驻扎了多个军团，每个军团存在一位将军。在只能通过信使通信的情况下，他们需要决定一个共同的作战行动。
+其中的几位将军有可能是叛徒，会不遗余力得误导其他人。
+问题的关键就是<strong>找出一个算法，从而确保所有的忠将作出一致的决定。</strong></p>
+</blockquote>
     </div>
     <div class="read-more">
-      <a href="/post/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/byzantine_general_problem/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
-    
-  </section>
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/go_ewan_microservices_in_golang_part_4/">[译]用GoLang实现微服务（四）</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-04-17 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 3738 字 </span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其四。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-4/">https://ewanvalentine.io/microservices-in-golang-part-3/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><del><em><strong>初稿</strong></em></del> -&gt; <em><strong>润色</strong></em></p>
+<p>在<a href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_3/">上一篇文章中</a>, 我们创建用户(User)服务，并且引入了数据库来保存数据。这回，我们希望用户微服务能安全的保存用户密码，并且有完整的机制来验证用户，从而在我们的几个微服务之间分发安全秘钥以互相沟通。</p>
+<p>请特别注意，我重构了项目结构，现在每个微服务都是一个单独的仓库，不再共处于一个父目录之下了。这样做更方便于代码的部署。你们大概记得，我一开始是想把所有微服务都放在一个仓库下的，但后来发现这样做使我很难管理 Go 项目的依赖，总是遇到一些冲突。随着每个项目的独立，我有必要讲讲如何测试，运行和部署一个个微服务。与此同时，由于各个微服务的独立，我们目前也不能使用 docker-compose 了，但这对我们的影响暂时不大。如果你对此有什么好的建议，欢迎给我<a href="mailto:ewan.valentine89@gmail.com">写邮件</a>。</p>
+<p>此外，你需要手动运行数据库了，就像下面这样:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -d -p 5432:5432 postgres
+$ docker run -d -p 27017:27017 mongo
+</code></pre></div><p>独立出来的项目代码链接如下:</p>
+<ul>
+<li><a href="https://github.com/EwanValentine/shippy-consignment-service">https://github.com/EwanValentine/shippy-consignment-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-user-service">https://github.com/EwanValentine/shippy-user-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-vessel-service">https://github.com/EwanValentine/shippy-vessel-service</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-user-cli">https://github.com/EwanValentine/shippy-user-cli</a></li>
+<li><a href="https://github.com/EwanValentine/shippy-consignment-cli">https://github.com/EwanValentine/shippy-consignment-cli</a></li>
+</ul>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/go_ewan_microservices_in_golang_part_4/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/go_ewan_microservices_in_golang_part_3/">[译]用GoLang实现微服务（三）</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-04-08 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 7168 字 </span>
+        <span class="more-meta"> 预计阅读 15 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其三。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-3/">https://ewanvalentine.io/microservices-in-golang-part-3/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><del><em><strong>初稿</strong></em></del> -&gt; <em><strong>润色</strong></em></p>
+<p>在<a href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_2/">上一篇文章中</a>, 我们了解了<a href="https://github.com/micro/go-micro">go-micro</a> 以及 <a href="https://www.docker.com/">Docker</a>的基础。同时引入了我们的第二个微服务，货船服务（vessel-service）。那么在此文中，我们将要了解一下 <a href="https://docs.docker.com/compose/">docker-compose</a>，并学会用它更好的运行和管理部署在本地的众多微服务。此外，我们还会稍微讲一下几种不同的数据库以及写下我们的第三个微服务！</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/go_ewan_microservices_in_golang_part_3/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/go_ewan_microservices_in_golang_part_2/">[译]用GoLang实现微服务（二）</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-04-02 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 6976 字 </span>
+        <span class="more-meta"> 预计阅读 14 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其二。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-2/">https://ewanvalentine.io/microservices-in-golang-part-2/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><del><em><strong>初稿</strong></em></del> -&gt; <em><strong>润色</strong></em></p>
+<p>在<a href="https://blog.dingkewz.com/post/tech/go_ewan_microservices_in_golang_part_1/">上一篇文章中</a>, 我们大致掌握了如何用gRPC来构建微服务。在这篇文章中，我们要介绍如何容器化(Dockerize)我们的微服务，在此过程中，我们将引入使用go-micro以及写下我们的第二个微服务。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/go_ewan_microservices_in_golang_part_2/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/go_ewan_microservices_in_golang_part_1/">[译]用GoLang实现微服务（一）</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-03-26 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 4887 字 </span>
+        <span class="more-meta"> 预计阅读 10 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><strong><em>此系列文章介绍如何用GoLang实践微服务, 分十篇。此为其首。</em></strong><br>
+<strong><em>原著作者：<a href="https://ewanvalentine.io/">Ewan Valentine</a></em></strong><br>
+<strong><em>原文连接：<a href="https://ewanvalentine.io/microservices-in-golang-part-1/">https://ewanvalentine.io/microservices-in-golang-part-1/</a></em></strong> <br>
+<strong><em>友情提示：系列文章的后五篇翻译请移步至<a href="https://wuyin.io">wuYin&rsquo;s blog</a></em></strong></p>
+<p><em><del>初稿</del> -&gt; 润色</em></p>
+<h1 id="导言">导言</h1>
+<p>在本文中，我们将了解一些基础的概念，术语。同时将创建我们的第一个微服务，尽管它会非常简陋。</p>
+<p>在接下来的文章中，我们会陆续创建以下微服务:</p>
+<ul>
+<li>consignments (货运)</li>
+<li>inventory (仓库)</li>
+<li>users (用户)</li>
+<li>authentication (认证)</li>
+<li>roles (角色)</li>
+<li>vessels (货船)</li>
+</ul>
+<p>完整的技术栈如下：golang, mongodb, grpc, docker, Google Cloud, Kubernetes, NATS, CircleCI, Terrafrom and go-micro.</p>
+<p>在你跟随此文学习时，请务必设置合适的GOPATH，以及使用这个<a href="https://github.com/EwanValentine/shippy">git仓库</a>(每篇文章对应一个分支)。</p>
+<p>另外，我的工作平台是Macbook，所以如果你的工作平台有所不同，那么文章中的些许地方需要相应的改动，比如Makefiles中的<code>$GOPATH</code>和<code>$(GOPATH)</code>，请您自行关注。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/go_ewan_microservices_in_golang_part_1/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    </section>
   
   <nav class="pagination">
     
-    
+    <a class="next" href="/page/2/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
-
         </div>
         
 
@@ -183,15 +332,11 @@
 
   <span class="copyright-year">
     &copy; 
-    
-      2017 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">丁科</span>
+    2017 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>丁科</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -199,19 +344,20 @@
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
 
 
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
   <script type="text/javascript">
     window.MathJax = {
-      showProcessingMessages: false,
-      messageStyle: 'none'
+      tex: {
+        }
     };
   </script>
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
 
 <script id="baidu_analytics">
   var _hmt = _hmt || [];
