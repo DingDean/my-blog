@@ -126,6 +126,33 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/nodejs_04_process_binding/">[NodeJS源码探秘]之process.binding()</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-03-22 </span>
+      <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+          </div>
+        <span class="more-meta"> 约 1028 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><em>NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。</em></p>
+<p>这篇文章写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。</p>
+<p>我们都知道NodeJS的底层是用C++写的。所以一个NodeJS程序从宏观上看有两个世界：JavaScript 以及 C++。在JS中，我们出于追求性能或者结构限制，需要使用C++的代码。在这种情况下，process.binding()就起到了连接C++函数到JS的功能。简单点将，我们可以将它比作require函数。</p>
+<p>当然process.binding()不是process模块公开API的一部分。它只在我们bootstrap NodeJS的内部C++函数时使用。</p>
+<p>接下来，让我们会看一下其源码。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/nodejs_04_process_binding/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/nodejs_source_startup03/">[NodeJS源码探秘]之启动全流程</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-03-21 </span>
@@ -237,31 +264,6 @@ Implementation Intensions为这四个困难都提供了解决的心理预设。
     </div>
     <div class="read-more">
       <a href="/post/books/strategies_of_setting_and_implementing_goals_gabriele_peter/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/nodejs_source_01/">[NodeJS源码探秘]之require()</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2017-11-17 </span>
-      <div class="post-category">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
-          </div>
-        <span class="more-meta"> 约 2848 字 </span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p><strong><em>部分源码已过时 -&gt; 升级至9.11</em></strong></p>
-<p><em>NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。</em></p>
-<p>第一篇文章就是要搞清楚我们经常使用的require()函数到底是如何运作的。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/nodejs_source_01/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

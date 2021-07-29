@@ -6,7 +6,20 @@
     <description>Recent content in NodeJS源码探秘 on 二向箔</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 21 Mar 2018 16:53:53 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/nodejs%E6%BA%90%E7%A0%81%E6%8E%A2%E7%A7%98/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Mar 2018 17:22:42 +0800</lastBuildDate><atom:link href="https://blog.dingkewz.com/tags/nodejs%E6%BA%90%E7%A0%81%E6%8E%A2%E7%A7%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[NodeJS源码探秘]之process.binding()</title>
+      <link>https://blog.dingkewz.com/post/tech/nodejs_04_process_binding/</link>
+      <pubDate>Thu, 22 Mar 2018 17:22:42 +0800</pubDate>
+      
+      <guid>https://blog.dingkewz.com/post/tech/nodejs_04_process_binding/</guid>
+      <description>&lt;p&gt;&lt;em&gt;NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。&lt;/p&gt;
+&lt;p&gt;我们都知道NodeJS的底层是用C++写的。所以一个NodeJS程序从宏观上看有两个世界：JavaScript 以及 C++。在JS中，我们出于追求性能或者结构限制，需要使用C++的代码。在这种情况下，process.binding()就起到了连接C++函数到JS的功能。简单点将，我们可以将它比作require函数。&lt;/p&gt;
+&lt;p&gt;当然process.binding()不是process模块公开API的一部分。它只在我们bootstrap NodeJS的内部C++函数时使用。&lt;/p&gt;
+&lt;p&gt;接下来，让我们会看一下其源码。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>[NodeJS源码探秘]之启动全流程</title>
       <link>https://blog.dingkewz.com/post/tech/nodejs_source_startup03/</link>

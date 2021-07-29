@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[NodeJS源码探秘]之process.binding() - 二向箔</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="丁科" /><meta name="description" content="NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。 这篇文章是要写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。" /><meta name="keywords" content="NodeJs, 源码探秘, process.binding" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.86.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.dingkewz.com/post/tech/nodejs_04_process_binding/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[NodeJS源码探秘]之process.binding()" />
+<meta property="og:description" content="NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。 这篇文章是要写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.dingkewz.com/post/tech/nodejs_04_process_binding/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-03-22T17:22:42+08:00" />
+<meta property="article:modified_time" content="2018-03-22T17:22:42+08:00" />
+
+<meta itemprop="name" content="[NodeJS源码探秘]之process.binding()">
+<meta itemprop="description" content="NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。 这篇文章是要写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。"><meta itemprop="datePublished" content="2018-03-22T17:22:42+08:00" />
+<meta itemprop="dateModified" content="2018-03-22T17:22:42+08:00" />
+<meta itemprop="wordCount" content="1028">
+<meta itemprop="keywords" content="NodeJS,JavaScript,NodeJS源码探秘,cpp," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[NodeJS源码探秘]之process.binding()"/>
+<meta name="twitter:description" content="NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。 这篇文章是要写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">二向箔</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">二向箔</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[NodeJS源码探秘]之process.binding()</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-22 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 1028 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><em>NodeJS是时下非常流行的服务器语言, 这个系列将着重研究NodeJS的源码，以期为之做出贡献。</em></p>
+<p>这篇文章写给初读NodeJS源码的朋友们。process.binding()大概是初读源码时我们最常碰见的函数。现在我们就聊聊它干了什么和它具体的代码。</p>
+<p>我们都知道NodeJS的底层是用C++写的。所以一个NodeJS程序从宏观上看有两个世界：JavaScript 以及 C++。在JS中，我们出于追求性能或者结构限制，需要使用C++的代码。在这种情况下，process.binding()就起到了连接C++函数到JS的功能。简单点将，我们可以将它比作require函数。</p>
+<p>当然process.binding()不是process模块公开API的一部分。它只在我们bootstrap NodeJS的内部C++函数时使用。</p>
+<p>接下来，让我们会看一下其源码。</p>
+<p>首先，让我们在<a href="https://github.com/nodejs/node/blob/master/lib/internal/bootstrap/loaders.js#L58">lib/internal/bootstrap/loader.js</a>中看一下process.binding()在JS世界的定义:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript">(<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">bootstrapInternalLoaders</span>(<span style="color:#a6e22e">process</span>, <span style="color:#a6e22e">getBinding</span>, <span style="color:#a6e22e">getLinkedBinding</span>,
+                                   <span style="color:#a6e22e">getInternalBinding</span>) {
+  <span style="color:#75715e">// Set up process.moduleLoadList
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">moduleLoadList</span> <span style="color:#f92672">=</span> [];
+  Object.<span style="color:#a6e22e">defineProperty</span>(<span style="color:#a6e22e">process</span>, <span style="color:#e6db74">&#39;moduleLoadList&#39;</span>, {
+    <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">moduleLoadList</span>,
+    <span style="color:#a6e22e">configurable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+    <span style="color:#a6e22e">enumerable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+    <span style="color:#a6e22e">writable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>
+  });
+
+  <span style="color:#75715e">// process.binding()的逻辑很简单
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 先检查传入的模块名称module
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 然后再看缓存bindingObj中是否有对应的代码
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 如果有，那么返回缓存中的代码
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 否则，调用getBinding函数来获取模块代码
+</span><span style="color:#75715e"></span>  {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bindingObj</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#66d9ef">null</span>);
+
+    <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">binding</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">binding</span>(<span style="color:#a6e22e">module</span>) {
+      <span style="color:#a6e22e">module</span> <span style="color:#f92672">=</span> String(<span style="color:#a6e22e">module</span>);
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">mod</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">bindingObj</span>[<span style="color:#a6e22e">module</span>];
+      <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">mod</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;object&#39;</span>) {
+        <span style="color:#a6e22e">mod</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">bindingObj</span>[<span style="color:#a6e22e">module</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">getBinding</span>(<span style="color:#a6e22e">module</span>);
+        <span style="color:#a6e22e">moduleLoadList</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">`Binding </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">module</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+      }
+      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mod</span>;
+    };
+  }
+  
+  <span style="color:#75715e">// ....
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>这个loader.js是在NodeJS启动过程中非常重要的一步，它进一步在process对象上添加辅助函数，比如binding。让我们看看getBinding函数是怎么样的。让我们移步至文件<a href="https://github.com/nodejs/node/blob/master/src/node.cc#L3356">src/node.cc</a>，这里有一个LoadEnvironment函数值得我们注意：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">LoadEnvironment</span>(Environment<span style="color:#f92672">*</span> env) {
+  <span style="color:#75715e">// ...省略
+</span><span style="color:#75715e"></span>  
+  <span style="color:#75715e">// 这就是我们的loader.js
+</span><span style="color:#75715e"></span>  Local<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> loaders_name <span style="color:#f92672">=</span>
+      FIXED_ONE_BYTE_STRING(env<span style="color:#f92672">-&gt;</span>isolate(), <span style="color:#e6db74">&#34;internal/bootstrap/loaders.js&#34;</span>);
+  Local<span style="color:#f92672">&lt;</span>Function<span style="color:#f92672">&gt;</span> loaders_bootstrapper <span style="color:#f92672">=</span>
+      GetBootstrapper(env, LoadersBootstrapperSource(env), loaders_name);
+      
+  <span style="color:#75715e">// 以下三个以_fn结尾的函数对应着我们loader.js的三个加载函数
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 如果你不了解V8，其实没关系，下面这行代码的意思就是说
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 将C++中的一个原生函数GetBinding转换成能给V8中的JS代码使用的函数
+</span><span style="color:#75715e"></span>  v8<span style="color:#f92672">::</span>Local<span style="color:#f92672">&lt;</span>v8<span style="color:#f92672">::</span>Function<span style="color:#f92672">&gt;</span> get_binding_fn <span style="color:#f92672">=</span>
+      env<span style="color:#f92672">-&gt;</span>NewFunctionTemplate(GetBinding)<span style="color:#f92672">-&gt;</span>GetFunction(env<span style="color:#f92672">-&gt;</span>context())
+          .ToLocalChecked();
+
+  v8<span style="color:#f92672">::</span>Local<span style="color:#f92672">&lt;</span>v8<span style="color:#f92672">::</span>Function<span style="color:#f92672">&gt;</span> get_linked_binding_fn <span style="color:#f92672">=</span>
+      env<span style="color:#f92672">-&gt;</span>NewFunctionTemplate(GetLinkedBinding)<span style="color:#f92672">-&gt;</span>GetFunction(env<span style="color:#f92672">-&gt;</span>context())
+          .ToLocalChecked();
+
+  v8<span style="color:#f92672">::</span>Local<span style="color:#f92672">&lt;</span>v8<span style="color:#f92672">::</span>Function<span style="color:#f92672">&gt;</span> get_internal_binding_fn <span style="color:#f92672">=</span>
+      env<span style="color:#f92672">-&gt;</span>NewFunctionTemplate(GetInternalBinding)<span style="color:#f92672">-&gt;</span>GetFunction(env<span style="color:#f92672">-&gt;</span>context())
+          .ToLocalChecked();
+
+  Local<span style="color:#f92672">&lt;</span>Value<span style="color:#f92672">&gt;</span> loaders_bootstrapper_args[] <span style="color:#f92672">=</span> {
+    env<span style="color:#f92672">-&gt;</span>process_object(),
+    get_binding_fn, <span style="color:#75715e">// 这就是loader.js中的getBinding
+</span><span style="color:#75715e"></span>    get_linked_binding_fn,
+    get_internal_binding_fn
+  };
+
+  <span style="color:#75715e">// Bootstrap internal loaders
+</span><span style="color:#75715e"></span>  Local<span style="color:#f92672">&lt;</span>Value<span style="color:#f92672">&gt;</span> bootstrapped_loaders;
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>ExecuteBootstrapper(env, loaders_bootstrapper,
+                           arraysize(loaders_bootstrapper_args),
+                           loaders_bootstrapper_args,
+                           <span style="color:#f92672">&amp;</span>bootstrapped_loaders)) {
+    <span style="color:#66d9ef">return</span>;
+  }
+</code></pre></div><p>按理说，我们应该继续追看GetBinding函数的源码，但我个人认为已经可以了。毕竟剩余的代码部分大概就属于<a href="https://www.entrepreneur.com/article/229813">&lsquo;80/20&rsquo;</a>中的20吧。</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丁科</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2018-03-22
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/nodejs/">NodeJS</a>
+          <a href="/tags/javascript/">JavaScript</a>
+          <a href="/tags/nodejs%E6%BA%90%E7%A0%81%E6%8E%A2%E7%A7%98/">NodeJS源码探秘</a>
+          <a href="/tags/cpp/">cpp</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/go_ewan_microservices_in_golang_part_1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[译]用GoLang实现微服务（一）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/nodejs_source_startup03/">
+            <span class="next-text nav-default">[NodeJS源码探秘]之启动全流程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/DingDean" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/deanacroic" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://blog.dingkewz.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>丁科</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?4f291681012b4d621f71f4207e8964e4";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>
